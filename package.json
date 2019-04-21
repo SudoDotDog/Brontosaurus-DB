@@ -1,0 +1,46 @@
+{
+  "name": "@brontosaurus/db",
+  "description": ":ocean: Schema for brontosaurus",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SudoDotDog/Brontosaurus-DB.git"
+  },
+  "keywords": [
+    "DB",
+    "Thunder"
+  ],
+  "author": "WMXPY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SudoDotDog/Brontosaurus-DB/issues"
+  },
+  "homepage": "https://github.com/SudoDotDog/Brontosaurus-DB#readme",
+  "dependencies": {
+    "mongoose": "^5.5.1"
+  },
+  "devDependencies": {
+    "@sudoo/io": "^1.5.0",
+    "@sudoo/mock": "^1.2.0",
+    "@sudoo/triforce": "^1.6.0",
+    "@sudoo/triforce-mongoose-dev": "^1.1.0"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "script/**/*.ts",
+      "src/**/*.ts"
+    ],
+    "instrument": true,
+    "reporter": [
+      "json",
+      "text-summary"
+    ],
+    "report-dir": "coverage",
+    "require": [
+      "./test/tshook.js"
+    ],
+    "sourceMap": true
+  }
+}
