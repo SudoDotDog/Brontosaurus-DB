@@ -8,6 +8,7 @@
         "devtool",
         "ifeq",
         "setx",
+        "splited",
         "triforce",
         "tshook"
     ],
