@@ -14,6 +14,7 @@ import { parseInfo } from "../util/token";
 export const createUnsavedAccount = (
     username: string,
     password: string,
+    organizations: ObjectID[] = [],
     groups: ObjectID[] = [],
     infos: Record<string, Basics> = {},
     beacons: Record<string, Basics> = {},
@@ -33,6 +34,7 @@ export const createUnsavedAccount = (
         beacons: beaconList,
         mint,
         salt,
+        organizations,
         groups,
     });
 };

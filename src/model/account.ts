@@ -29,12 +29,6 @@ const AccountSchema: Schema = new Schema({
         required: true,
     },
 
-    organizations: {
-        type: [String],
-        required: true,
-        default: [],
-        index: true,
-    },
     infos: {
         type: [String],
         required: true,
@@ -44,6 +38,12 @@ const AccountSchema: Schema = new Schema({
         type: [String],
         required: true,
         default: [],
+    },
+    organizations: {
+        type: [Schema.Types.ObjectId],
+        required: true,
+        default: [],
+        index: true,
     },
     groups: {
         type: [Schema.Types.ObjectId],
