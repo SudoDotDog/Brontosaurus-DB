@@ -5,7 +5,7 @@
  */
 
 import { ObjectID } from "bson";
-import { IOrganizationModel, OrganizationModel } from "../model/Organization";
+import { IOrganizationModel, OrganizationModel } from "../model/organization";
 
 export const getOrganizationById = async (id: ObjectID): Promise<IOrganizationModel | null> =>
     await OrganizationModel.findOne({
