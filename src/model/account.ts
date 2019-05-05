@@ -29,6 +29,12 @@ const AccountSchema: Schema = new Schema({
         required: true,
     },
 
+    organizations: {
+        type: [String],
+        required: true,
+        default: [],
+        index: true,
+    },
     infos: {
         type: [String],
         required: true,

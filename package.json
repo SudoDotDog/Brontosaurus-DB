@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/SudoDotDog/Brontosaurus-DB#readme",
   "dependencies": {
-    "@brontosaurus/definition": "^1.4.0",
+    "@brontosaurus/definition": "^1.4.1",
     "@sudoo/bark": "^2.6.1",
     "mongoose": "^5.5.5"
   },
