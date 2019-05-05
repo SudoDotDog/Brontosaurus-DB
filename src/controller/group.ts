@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Brontosaurus_Mint_Controller
+ * @namespace Brontosaurus_DB_Controller
  * @description Group
  */
 

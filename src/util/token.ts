@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @namespace Brontosaurus_Mint_Util
+ * @namespace Brontosaurus_DB_Util
  * @description Token
  */
 
