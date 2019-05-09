@@ -6,30 +6,31 @@
 
 export type RegisterInfoType = 'string' | 'number';
 export type RegisterInfo = {
-    name: string;
-    type: RegisterInfoType;
+
+    readonly name: string;
+    readonly type: RegisterInfoType;
 };
 
 export type Preferences = {
 
-    registerInfo: RegisterInfo;
-    prepared: boolean;
+    readonly registerInfo: RegisterInfo;
+    readonly prepared: boolean;
 
-    backgroundImages: string[];
-    globalAvatar: string;
+    readonly backgroundImages: string[];
+    readonly globalAvatar: string;
 };
 
 export interface IPreferenceConfig {
 
-    name: string;
-    value: any;
+    readonly name: string;
+    readonly value: any;
 }
 
 export interface IPreference extends IPreferenceConfig {
 
-    active: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    readonly active: boolean;
+    readonly createdAt: Date;
+    readonly updatedAt: Date;
 
-    history: string[];
+    readonly history: string[];
 }

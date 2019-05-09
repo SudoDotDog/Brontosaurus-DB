@@ -10,24 +10,24 @@ export const INFOS_SPLITTER = ':*:';
 
 export interface IAccountConfig {
 
-    username: string;
-    password: string;
+    readonly username: string;
+    readonly password: string;
 
-    infos: string[];
-    beacons: string[];
-    organizations: ObjectID[];
-    groups: ObjectID[];
+    readonly infos: string[];
+    readonly beacons: string[];
+    readonly organizations: ObjectID[];
+    readonly groups: ObjectID[];
 }
 
 export interface IAccount extends IAccountConfig {
 
-    active: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    readonly active: boolean;
+    readonly createdAt: Date;
+    readonly updatedAt: Date;
 
-    mint: string;
-    salt: string;
+    readonly mint: string;
+    readonly salt: string;
 
-    avatar?: string;
-    history: string[];
+    readonly avatar?: string;
+    readonly history: string[];
 }

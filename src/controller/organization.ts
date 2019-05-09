@@ -33,7 +33,6 @@ export const getOrganizationByNames = async (names: string[]): Promise<IOrganiza
 
 export const createUnsavedOrganization = (name: string): IOrganizationModel =>
     new OrganizationModel({
-
         name,
     });
 

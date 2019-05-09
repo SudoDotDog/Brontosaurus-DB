@@ -6,14 +6,14 @@
 
 export interface IOrganizationConfig {
 
-    name: string;
+    readonly name: string;
 }
 
 export interface IOrganization extends IOrganizationConfig {
 
-    active: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    readonly active: boolean;
+    readonly createdAt: Date;
+    readonly updatedAt: Date;
 
-    history: string[];
+    readonly history: string[];
 }

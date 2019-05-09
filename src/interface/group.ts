@@ -12,14 +12,14 @@ export enum INTERNAL_USER_GROUP {
 
 export interface IGroupConfig {
 
-    name: string;
+    readonly name: string;
 }
 
 export interface IGroup extends IGroupConfig {
 
-    active: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    readonly active: boolean;
+    readonly createdAt: Date;
+    readonly updatedAt: Date;
 
-    history: string[];
+    readonly history: string[];
 }
