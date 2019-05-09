@@ -1,6 +1,6 @@
 {
   "name": "@brontosaurus/db",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": ":ocean: Schema for brontosaurus",
   "repository": {
     "type": "git",

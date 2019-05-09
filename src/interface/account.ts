@@ -13,7 +13,7 @@ export interface IAccountConfig {
     username: string;
     password: string;
 
-    organization: ObjectID;
+    organization?: ObjectID;
     infos: string[];
     beacons: string[];
     groups: ObjectID[];
