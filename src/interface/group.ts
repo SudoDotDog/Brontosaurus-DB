@@ -8,18 +8,19 @@ export enum INTERNAL_USER_GROUP {
 
     SUPER_ADMIN = 'BRONTOSAURUS_SUPER_ADMIN',
     SELF_CONTROL = 'BRONTOSAURUS_SELF_CONTROL',
+    ORGANIZATION_CONTROL = 'BRONTOSAURUS_ORGANIZATION_CONTROL',
 }
 
 export interface IGroupConfig {
 
-    readonly name: string;
+    name: string;
 }
 
 export interface IGroup extends IGroupConfig {
 
-    readonly active: boolean;
-    readonly createdAt: Date;
-    readonly updatedAt: Date;
+    active: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 
-    readonly history: string[];
+    history: string[];
 }

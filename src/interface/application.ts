@@ -14,21 +14,21 @@ export enum INTERNAL_APPLICATION {
 
 export interface IApplicationConfig {
 
-    readonly avatar?: string;
-    readonly key: string;
-    readonly name: string;
+    avatar?: string;
+    key: string;
+    name: string;
 
-    readonly expire: number;
-    readonly secret: string;
+    expire: number;
+    secret: string;
 
-    readonly groups: ObjectID[];
+    groups: ObjectID[];
 }
 
 export interface IApplication extends IApplicationConfig {
 
-    readonly active: boolean;
-    readonly createdAt: Date;
-    readonly updatedAt: Date;
+    active: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 
-    readonly history: string[];
+    history: string[];
 }
