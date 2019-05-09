@@ -39,10 +39,8 @@ const AccountSchema: Schema = new Schema({
         required: true,
         default: [],
     },
-    organizations: {
-        type: [Schema.Types.ObjectId],
-        required: true,
-        default: [],
+    organization: {
+        type: Schema.Types.ObjectId,
         index: true,
     },
     groups: {
