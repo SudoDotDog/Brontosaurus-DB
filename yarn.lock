@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@brontosaurus/definition@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@brontosaurus/definition/-/definition-1.4.1.tgz#49c18c139ffd14b78394d98361e40cec32ad7938"
-  integrity sha512-eSUZlizk6cEQnnwC2wLA0+D2JfI1cdQaPtgGWiDcjcEbwAezOvohP/EnlJEwEbDI3TaLoX4UqVCBXlEEnn5Txg==
+"@brontosaurus/definition@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@brontosaurus/definition/-/definition-1.4.3.tgz#95898b2a2c9e02ec88de445d083873236e1e3901"
+  integrity sha512-FdnuyLKTVNmvFsoruVyTENnBAoJZaevDCpMW3K8+qakVqpwgbdT+xnxv/lZPd8/K/go+A7/bTGNtefkcKnuh+A==
 
 "@sudoo/bark@^2.6.1":
   version "2.6.1"
@@ -448,7 +448,7 @@ mongoose-legacy-pluralize@1.0.2:
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
   integrity sha512-Yo/7qQU4/EyIS8YDFSeenIvXxZN+ld7YdV9LqFVQJzTLye8unujAWPZ4NWKfFA+RNjh+wvTWKY9Z3E5XM6ZZiQ==
 
-mongoose@^5.5.5:
+mongoose@^5.5.7:
   version "5.5.7"
   resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.5.7.tgz#496d2142b594579adaba5d4e3f1cc70c5a9ddd74"
   integrity sha512-Xs4SVuMGkMRdmKZ6ATGVvbp2pjI+KENCNhPZMnksjU3ZerkJHGhWKrUE1A6e/5iZ2lTu6Oz9AOPcfrDgp6BCUw==
