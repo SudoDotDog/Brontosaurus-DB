@@ -18,8 +18,8 @@
   "homepage": "https://github.com/SudoDotDog/Brontosaurus-DB#readme",
   "dependencies": {
     "@brontosaurus/definition": "^1.4.3",
-    "@sudoo/bark": "^2.6.1",
-    "mongoose": "^5.5.7"
+    "@sudoo/bark": "^2.6.4",
+    "mongoose": "^5.5.11"
   },
   "devDependencies": {
     "@sudoo/io": "^1.6.0",
