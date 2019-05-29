@@ -15,6 +15,7 @@ export enum INTERNAL_APPLICATION {
 export interface IApplicationConfig {
 
     avatar?: string;
+    help?: string;
     key: string;
     name: string;
 

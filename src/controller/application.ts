@@ -7,10 +7,11 @@
 import { IApplicationConfig } from "../interface/application";
 import { ApplicationModel, IApplicationModel } from "../model/application";
 
-export const createUnsavedApplication = (name: string, key: string, expire: number, secret: string, avatar?: string): IApplicationModel => {
+export const createUnsavedApplication = (name: string, key: string, expire: number, secret: string, avatar?: string, help?: string): IApplicationModel => {
 
     const config: IApplicationConfig = {
         avatar,
+        help,
         key,
         name,
         expire,
