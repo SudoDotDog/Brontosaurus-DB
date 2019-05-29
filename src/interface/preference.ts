@@ -13,11 +13,12 @@ export type RegisterInfo = {
 
 export type Preferences = {
 
-    registerInfo: RegisterInfo;
-    prepared: boolean;
+    readonly registerInfo: RegisterInfo;
+    readonly prepared: boolean;
 
-    backgroundImages: string[];
-    globalAvatar: string;
+    readonly backgroundImages: string[];
+    readonly globalAvatar: string;
+    readonly privacyPolicy: string;
 };
 
 export interface IPreferenceConfig {
