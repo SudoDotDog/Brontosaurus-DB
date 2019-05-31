@@ -7,8 +7,9 @@
 import * as AccountController from "./account";
 import * as ApplicationController from "./application";
 import * as GroupController from "./group";
+import * as InformationController from "./information";
 import * as OrganizationController from "./organization";
 import * as PreferenceController from "./preference";
 
-export { AccountController, ApplicationController, GroupController, OrganizationController, PreferenceController };
+export { AccountController, ApplicationController, InformationController, GroupController, OrganizationController, PreferenceController };
 
