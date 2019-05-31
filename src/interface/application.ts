@@ -12,10 +12,16 @@ export enum INTERNAL_APPLICATION {
     PORTAL = 'BRONTOSAURUS_PORTAL',
 }
 
-export interface IApplicationConfig {
+export type ApplicationOthersConfig = {
 
     avatar?: string;
     help?: string;
+    privacyPolicy?: string;
+    backgroundImage?: string;
+};
+
+export interface IApplicationConfig extends ApplicationOthersConfig {
+
     key: string;
     name: string;
 

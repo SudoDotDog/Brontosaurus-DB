@@ -4,14 +4,16 @@
  * @description Application
  */
 
-import { IApplicationConfig } from "../interface/application";
+import { ApplicationOthersConfig, IApplicationConfig } from "../interface/application";
 import { ApplicationModel, IApplicationModel } from "../model/application";
 
-export const createUnsavedApplication = (name: string, key: string, expire: number, secret: string, avatar?: string, help?: string): IApplicationModel => {
+export const createUnsavedApplication = (name: string, key: string, expire: number, secret: string, others: ApplicationOthersConfig): IApplicationModel => {
 
     const config: IApplicationConfig = {
-        avatar,
-        help,
+        avatar: others.avatar,
+        help: others.help,
+        privacyPolicy: others.privacyPolicy,
+        backgroundImage: others.backgroundImage,
         key,
         name,
         expire,

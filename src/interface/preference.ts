@@ -16,9 +16,10 @@ export type Preferences = {
     readonly registerInfo: RegisterInfo;
     readonly prepared: boolean;
 
-    readonly backgroundImages: string[];
     readonly globalAvatar: string;
-    readonly privacyPolicy: string;
+    readonly globalBackgroundImages: string[];
+    readonly globalHelpLink: string;
+    readonly globalPrivacyPolicy: string;
 };
 
 export interface IPreferenceConfig {

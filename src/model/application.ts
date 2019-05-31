@@ -22,6 +22,14 @@ const ApplicationSchema: Schema = new Schema({
         type: String,
         required: false,
     },
+    privacyPolicy: {
+        type: String,
+        required: false,
+    },
+    backgroundImage: {
+        type: String,
+        required: false,
+    },
     expire: {
         type: Number,
         required: true,
