@@ -10,13 +10,7 @@ import { IApplicationModel } from "../model/application";
 import { getApplicationByKey } from "./application";
 import { getSinglePreference } from "./preference";
 
-export const getApplicationOtherInformation = async (key: string): Promise<ApplicationOthersConfig | null> => {
-
-    const application: IApplicationModel | null = await getApplicationByKey(key);
-
-    if (!application) {
-        return null;
-    }
+export const getApplicationOtherInformationByApplication = async (application: IApplicationModel): Promise<ApplicationOthersConfig> => {
 
     const response: ApplicationOthersConfig = {
         avatar: application.avatar,
@@ -58,4 +52,15 @@ export const getApplicationOtherInformation = async (key: string): Promise<Appli
     }
 
     return response;
+};
+
+export const getApplicationOtherInformationByKey = async (key: string): Promise<ApplicationOthersConfig | null> => {
+
+    const application: IApplicationModel | null = await getApplicationByKey(key);
+
+    if (!application) {
+        return null;
+    }
+
+    return await getApplicationOtherInformationByApplication(application);
 };
