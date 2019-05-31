@@ -15,7 +15,7 @@ export enum INTERNAL_APPLICATION {
 export type ApplicationOthersConfig = {
 
     avatar?: string;
-    help?: string;
+    helpLink?: string;
     privacyPolicy?: string;
     backgroundImage?: string;
 };

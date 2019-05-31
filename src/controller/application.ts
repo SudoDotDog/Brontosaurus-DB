@@ -11,7 +11,7 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
 
     const config: IApplicationConfig = {
         avatar: others.avatar,
-        help: others.help,
+        helpLink: others.helpLink,
         privacyPolicy: others.privacyPolicy,
         backgroundImage: others.backgroundImage,
         key,

@@ -18,7 +18,7 @@ const ApplicationSchema: Schema = new Schema({
         type: String,
         required: false,
     },
-    help: {
+    helpLink: {
         type: String,
         required: false,
     },

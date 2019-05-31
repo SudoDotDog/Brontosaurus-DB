@@ -21,7 +21,7 @@ export const getApplicationOtherInformation = async (key: string): Promise<Appli
     const response: ApplicationOthersConfig = {
         avatar: application.avatar,
         backgroundImage: application.backgroundImage,
-        help: application.help,
+        helpLink: application.helpLink,
         privacyPolicy: application.privacyPolicy,
     };
 
@@ -41,11 +41,11 @@ export const getApplicationOtherInformation = async (key: string): Promise<Appli
         }
     }
 
-    if (!response.help) {
+    if (!response.helpLink) {
         const globalHelpLink: string | null = await getSinglePreference('globalHelpLink');
 
         if (globalHelpLink) {
-            response.help = globalHelpLink;
+            response.helpLink = globalHelpLink;
         }
     }
 
