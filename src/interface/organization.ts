@@ -6,6 +6,14 @@
 
 import { ObjectID } from "bson";
 
+export type OrganizationDetail = {
+
+    name: string;
+    owner: string;
+    logo?: string;
+    address?: OrganizationAddress;
+};
+
 export type OrganizationAddress = {
 
     readonly first: string;

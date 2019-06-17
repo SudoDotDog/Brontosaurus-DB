@@ -5,13 +5,40 @@
  */
 
 import { ObjectID } from "bson";
-import { OrganizationAddress } from "../interface/organization";
+import { OrganizationAddress, OrganizationDetail } from "../interface/organization";
+import { AccountModel, IAccountModel } from "../model/account";
 import { IOrganizationModel, OrganizationModel } from "../model/organization";
 
 export const getOrganizationById = async (id: ObjectID): Promise<IOrganizationModel | null> =>
     await OrganizationModel.findOne({
         _id: id,
     });
+
+export const getOrganizationDetailsById = async (id: ObjectID): Promise<OrganizationDetail | null> => {
+
+    const organzation: IOrganizationModel | null = await OrganizationModel.findOne({
+        _id: id,
+    });
+
+    if (!organzation) {
+        return null;
+    }
+
+    const owner: IAccountModel | null = await AccountModel.findOne({
+        _id: organzation.owner,
+    });
+
+    if (!owner) {
+        return null;
+    }
+
+    return {
+        name: organzation.name,
+        owner: owner.username,
+        address: organzation.address,
+        logo: organzation.logo,
+    };
+};
 
 export const getOrganizationsByIds = async (ids: ObjectID[]): Promise<IOrganizationModel[]> =>
     await OrganizationModel.find({
