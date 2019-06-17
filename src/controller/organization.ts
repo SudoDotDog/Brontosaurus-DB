@@ -5,6 +5,7 @@
  */
 
 import { ObjectID } from "bson";
+import { OrganizationAddress } from "../interface/organization";
 import { IOrganizationModel, OrganizationModel } from "../model/organization";
 
 export const getOrganizationById = async (id: ObjectID): Promise<IOrganizationModel | null> =>
@@ -31,9 +32,21 @@ export const getOrganizationByNames = async (names: string[]): Promise<IOrganiza
         },
     });
 
-export const createUnsavedOrganization = (name: string): IOrganizationModel =>
+export const getOrganizationsByOwner = async (owner: ObjectID): Promise<IOrganizationModel[]> =>
+    await OrganizationModel.find({
+        owner,
+    });
+
+export const createUnsavedOrganization = (
+    name: string,
+    owner: ObjectID,
+    address?: OrganizationAddress,
+    logo?: string): IOrganizationModel =>
     new OrganizationModel({
+        owner,
         name,
+        address,
+        logo,
     });
 
 export const isOrganizationDuplicatedByName = async (name: string): Promise<boolean> => {

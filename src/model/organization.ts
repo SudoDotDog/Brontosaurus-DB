@@ -20,6 +20,22 @@ const OrganizationSchema: Schema = new Schema(
             unique: true,
             index: true,
         },
+        owner: {
+            type: Schema.Types.ObjectId,
+            required: true,
+            index: true,
+        },
+        logo: {
+            type: String,
+            required: false,
+        },
+        address: {
+            type: {
+                first: String,
+                second: String,
+                zipcode: String,
+            },
+        },
         history: {
             type: [String],
             required: true,
