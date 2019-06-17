@@ -65,6 +65,11 @@ export const getAccountByUsername = async (username: string): Promise<IAccountMo
 
 export const getAllAccounts = async (): Promise<IAccountModel[]> => AccountModel.find({});
 
+export const getAccountById = async (id: ObjectID | string): Promise<IAccountModel | null> =>
+    await AccountModel.findOne({
+        _id: id,
+    });
+
 export const getTotalAccountPages = async (limit: number): Promise<number> =>
     (await AccountModel.estimatedDocumentCount({})) / limit;
 
