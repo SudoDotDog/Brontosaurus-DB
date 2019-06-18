@@ -16,16 +16,16 @@ export const getOrganizationById = async (id: ObjectID): Promise<IOrganizationMo
 
 export const getOrganizationDetailsById = async (id: ObjectID): Promise<OrganizationDetail | null> => {
 
-    const organzation: IOrganizationModel | null = await OrganizationModel.findOne({
+    const organization: IOrganizationModel | null = await OrganizationModel.findOne({
         _id: id,
     });
 
-    if (!organzation) {
+    if (!organization) {
         return null;
     }
 
     const owner: IAccountModel | null = await AccountModel.findOne({
-        _id: organzation.owner,
+        _id: organization.owner,
     });
 
     if (!owner) {
@@ -33,10 +33,10 @@ export const getOrganizationDetailsById = async (id: ObjectID): Promise<Organiza
     }
 
     return {
-        name: organzation.name,
+        name: organization.name,
         owner: owner.username,
-        address: organzation.address,
-        logo: organzation.logo,
+        address: organization.address,
+        logo: organization.logo,
     };
 };
 

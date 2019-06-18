@@ -35,6 +35,7 @@ const OrganizationSchema: Schema = new Schema(
                 second: String,
                 zipcode: String,
             },
+            required: false,
         },
         history: {
             type: [String],

@@ -8,6 +8,7 @@ import { ObjectID } from "bson";
 
 export enum INTERNAL_APPLICATION {
 
+    AIR = 'BRONTOSAURUS_AIR',
     RED = 'BRONTOSAURUS_RED',
     PORTAL = 'BRONTOSAURUS_PORTAL',
 }

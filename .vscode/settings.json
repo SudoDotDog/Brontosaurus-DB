@@ -11,7 +11,8 @@
         "setx",
         "splited",
         "triforce",
-        "tshook"
+        "tshook",
+        "zipcode"
     ],
     "tslint.configFile": "typescript/tslint.json",
     "files.eol": "\n"
