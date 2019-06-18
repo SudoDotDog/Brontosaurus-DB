@@ -9,7 +9,14 @@ import { IMonitor } from "../interface/monitor";
 
 const MonitorSchema: Schema = new Schema({
 
-    application: Schema.Types.ObjectId,
+    application: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
+    healthCheck: {
+        type: String,
+        required: true,
+    },
     year: {
         type: String,
         required: true,
@@ -74,6 +81,11 @@ const MonitorSchema: Schema = new Schema({
         required: true,
         default: new Array(31).fill('-'.repeat(48)),
     },
+    other: {
+        type: [String],
+        required: true,
+        default: new Array(5).fill('-'.repeat(48)),
+    },
 }, {
         timestamps: {
             createdAt: true,
@@ -85,4 +97,4 @@ const MonitorSchema: Schema = new Schema({
 export interface IMonitorModel extends IMonitor, Document {
 }
 
-export const ApplicationModel: Model<IMonitorModel> = model<IMonitorModel>('Monitor', MonitorSchema);
+export const MonitorModel: Model<IMonitorModel> = model<IMonitorModel>('Monitor', MonitorSchema);

@@ -6,9 +6,17 @@
 
 import { ObjectID } from "bson";
 
+export enum MONITOR_STATUS {
+
+    HEALTHY = "HEALTHY",
+    FAILED = "FAILED",
+    EMPTY = "EMPTY",
+}
+
 export interface IMonitorConfig {
 
     application: ObjectID;
+    healthCheck: string;
     year: string;
 }
 
@@ -26,6 +34,7 @@ export interface IMonitor extends IMonitorConfig {
     october: string[];
     november: string[];
     december: string[];
+    other: string[];
 
     createdAt: Date;
     updatedAt: Date;
