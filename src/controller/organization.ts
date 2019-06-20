@@ -77,13 +77,13 @@ export const createUnsavedOrganization = (
     });
 
 export const isOrganizationDuplicatedByName = async (name: string): Promise<boolean> => {
-    const Organization: IOrganizationModel | null = await getOrganizationByName(name);
-    return Boolean(Organization);
+    const organization: IOrganizationModel | null = await getOrganizationByName(name);
+    return Boolean(organization);
 };
 
 export const isOrganizationDuplicatedById = async (id: ObjectID): Promise<boolean> => {
-    const Organization: IOrganizationModel | null = await getOrganizationById(id);
-    return Boolean(Organization);
+    const organization: IOrganizationModel | null = await getOrganizationById(id);
+    return Boolean(organization);
 };
 
 export const getTotalActiveOrganizationPages = async (limit: number): Promise<number> =>
@@ -106,13 +106,13 @@ export const getActiveOrganizationsByPage = async (keyword: string, limit: numbe
     }
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    const Organizations: IOrganizationModel[] = await OrganizationModel.find({
+    const organizations: IOrganizationModel[] = await OrganizationModel.find({
         name: {
             $regex: regexp,
         },
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
-    return Organizations;
+    return organizations;
 };
 
 export const getAllActiveOrganizationsByPage = async (limit: number, page: number): Promise<IOrganizationModel[]> => {
@@ -121,8 +121,22 @@ export const getAllActiveOrganizationsByPage = async (limit: number, page: numbe
         return [];
     }
 
-    const Organizations: IOrganizationModel[] = await OrganizationModel.find({
+    const organizations: IOrganizationModel[] = await OrganizationModel.find({
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
-    return Organizations;
+    return organizations;
+};
+
+export const getAllOrganizationName = async (): Promise<string[]> => {
+
+    const organizations: IOrganizationModel[] = await OrganizationModel.find({});
+    return organizations.map((organization: IOrganizationModel) => organization.name);
+};
+
+export const getAllActiveOrganizationName = async (): Promise<string[]> => {
+
+    const organizations: IOrganizationModel[] = await OrganizationModel.find({
+        active: true,
+    });
+    return organizations.map((organization: IOrganizationModel) => organization.name);
 };
