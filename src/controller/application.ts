@@ -74,3 +74,27 @@ export const getAllActiveApplicationsByPage = async (limit: number, page: number
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
     return applications;
 };
+
+export const checkGreenApplicationMatch = async (applicationKey: string, green: string): Promise<boolean> => {
+
+    const application: IApplicationModel | null = await getApplicationByKey(applicationKey);
+
+    if (!application) {
+        return false;
+    }
+
+    return application.green === green;
+};
+
+export const refreshGreen = async (applicationKey: string): Promise<IApplicationModel | null> => {
+
+    const application: IApplicationModel | null = await getApplicationByKey(applicationKey);
+
+    if (!application) {
+        return null;
+    }
+
+    application.refreshGreen();
+    await application.save();
+    return application;
+};

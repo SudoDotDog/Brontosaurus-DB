@@ -73,7 +73,6 @@ const AccountSchema: Schema = new Schema({
         },
     });
 
-
 export interface IAccountModel extends IAccount, Document {
     readonly getInfoRecords: () => Record<string, Basics>;
     readonly getBeaconRecords: () => Record<string, Basics>;

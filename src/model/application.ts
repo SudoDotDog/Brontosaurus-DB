@@ -4,6 +4,7 @@
  * @description Application
  */
 
+import { trustable } from "@sudoo/bark/random";
 import { Document, model, Model, Schema } from "mongoose";
 import { IApplication } from "../interface/application";
 
@@ -50,6 +51,10 @@ const ApplicationSchema: Schema = new Schema({
         required: true,
         index: true,
     },
+    green: {
+        type: String,
+        required: true,
+    },
     secret: {
         type: String,
         required: true,
@@ -66,10 +71,17 @@ const ApplicationSchema: Schema = new Schema({
         },
     });
 
-
 export interface IApplicationModel extends IApplication, Document {
     pushHistory: (history: string) => IApplicationModel;
+    refreshGreen: () => IApplicationModel;
 }
+
+ApplicationSchema.methods.refreshGreen = function (this: IApplicationModel): IApplicationModel {
+
+    this.green = trustable();
+
+    return this;
+};
 
 ApplicationSchema.methods.pushHistory = function (this: IApplicationModel, history: string): IApplicationModel {
 

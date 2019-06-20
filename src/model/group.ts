@@ -32,7 +32,6 @@ const GroupSchema: Schema = new Schema({
         },
     });
 
-
 export interface IGroupModel extends IGroup, Document {
     pushHistory: (history: string) => IGroupModel;
 }
