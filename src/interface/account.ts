@@ -22,6 +22,7 @@ export interface IAccountConfig {
 export interface IAccount extends IAccountConfig {
 
     active: boolean;
+    limbo: boolean;
     createdAt: Date;
     updatedAt: Date;
 

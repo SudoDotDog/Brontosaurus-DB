@@ -18,6 +18,11 @@ const AccountSchema: Schema = new Schema({
         required: true,
         default: true,
     },
+    limbo: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
     username: {
         type: String,
         required: true,

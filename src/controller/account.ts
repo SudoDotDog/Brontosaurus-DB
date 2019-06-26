@@ -30,6 +30,35 @@ export const createUnsavedAccountByConfig = (config: IAccountConfig) => {
     });
 };
 
+export const createOnLimboUnsavedAccount = (
+    username: string,
+    password: string,
+    organization?: ObjectID,
+    groups: ObjectID[] = [],
+    infos: Record<string, Basics> = {},
+    beacons: Record<string, Basics> = {},
+): IAccountModel => {
+
+    const infoList: string[] = parseInfo(infos);
+    const beaconList: string[] = parseInfo(beacons);
+
+    const salt: string = _Random.unique();
+    const mint: string = _Random.unique();
+
+    return new AccountModel({
+
+        limbo: true,
+        username,
+        password: garblePassword(password, salt),
+        infos: infoList,
+        beacons: beaconList,
+        mint,
+        salt,
+        organization,
+        groups,
+    });
+};
+
 export const createUnsavedAccount = (
     username: string,
     password: string,
@@ -115,6 +144,70 @@ export const getAllActiveAccountsByPage = async (limit: number, page: number): P
 };
 
 export const isAccountDuplicatedByUsername = async (username: string): Promise<boolean> => {
+
     const account: IAccountModel | null = await getAccountByUsername(username);
     return Boolean(account);
+};
+
+export const setPasswordAndRemoveFromLimbo = async (username: string, newPassword: string): Promise<IAccountModel | null> => {
+
+    const account: IAccountModel | null = await getAccountByUsername(username);
+
+    if (!account) {
+        return null;
+    }
+
+    if (!account.limbo) {
+        return null;
+    }
+
+    account.setPassword(newPassword);
+
+    await account.save();
+    return account;
+};
+
+export const resetAccountPassword = async (username: string, newPassword: string): Promise<IAccountModel | null> => {
+
+    const account: IAccountModel | null = await getAccountByUsername(username);
+
+    if (!account) {
+        return null;
+    }
+
+    account.setPassword(newPassword);
+
+    await account.save();
+    return account;
+};
+
+export const resetAccountPasswordAndPutInLimbo = async (username: string, newPassword: string): Promise<IAccountModel | null> => {
+
+    const account: IAccountModel | null = await getAccountByUsername(username);
+
+    if (!account) {
+        return null;
+    }
+
+    account.setPassword(newPassword);
+    account.limbo = true;
+
+    await account.save();
+    return account;
+};
+
+export const resetAccountPasswordAndPutInLimboAndReactivate = async (username: string, newPassword: string): Promise<IAccountModel | null> => {
+
+    const account: IAccountModel | null = await getAccountByUsername(username);
+
+    if (!account) {
+        return null;
+    }
+
+    account.setPassword(newPassword);
+    account.limbo = true;
+    account.active = true;
+
+    await account.save();
+    return account;
 };
