@@ -19,6 +19,7 @@
   "dependencies": {
     "@brontosaurus/definition": "^1.4.3",
     "@sudoo/bark": "^2.7.1",
+    "base32.js": "^0.1.0",
     "mongoose": "^5.5.11"
   },
   "devDependencies": {
