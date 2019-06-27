@@ -162,6 +162,7 @@ export const setPasswordAndRemoveFromLimbo = async (username: string, newPasswor
     }
 
     account.setPassword(newPassword);
+    account.limbo = false;
 
     await account.save();
     return account;
