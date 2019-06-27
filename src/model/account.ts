@@ -23,6 +23,10 @@ const AccountSchema: Schema = new Schema({
         required: true,
         default: false,
     },
+    twoFA: {
+        type: String,
+        required: false,
+    },
     username: {
         type: String,
         required: true,

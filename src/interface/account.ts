@@ -23,6 +23,7 @@ export interface IAccount extends IAccountConfig {
 
     active: boolean;
     limbo: boolean;
+    twoFA?: string;
     createdAt: Date;
     updatedAt: Date;
 
