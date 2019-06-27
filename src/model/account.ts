@@ -9,7 +9,9 @@ import { _Random } from "@sudoo/bark/random";
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
 import { IAccount, INFOS_SPLITTER } from "../interface/account";
+import { generateURL } from "../util/2fa";
 import { garblePassword } from "../util/auth";
+import { generateKey, verifyCode } from "../util/verify";
 
 const AccountSchema: Schema = new Schema({
 
@@ -83,6 +85,8 @@ const AccountSchema: Schema = new Schema({
     });
 
 export interface IAccountModel extends IAccount, Document {
+    readonly generateAndSetTwoFA: () => string;
+    readonly verifyTwoFA: (code: string) => boolean;
     readonly getInfoRecords: () => Record<string, Basics>;
     readonly getBeaconRecords: () => Record<string, Basics>;
     readonly pushHistory: (history: string) => IAccountModel;
@@ -91,6 +95,27 @@ export interface IAccountModel extends IAccount, Document {
     readonly setPassword: (password: string) => IAccountModel;
     readonly verifyPassword: (password: string) => boolean;
 }
+
+AccountSchema.methods.generateAndSetTwoFA = function (this: IAccountModel): string {
+
+    const key: string = generateKey();
+    const url: string = generateURL('Brontosaurus Authorization', this.username, key);
+
+    this.twoFA = key;
+
+    return url;
+};
+
+AccountSchema.methods.verifyTwoFA = function (this: IAccountModel, code: string): boolean {
+
+    const key: string | undefined = this.twoFA;
+
+    if (!key) {
+        return false;
+    }
+
+    return verifyCode(key, code);
+};
 
 AccountSchema.methods.getInfoRecords = function (this: IAccountModel): Record<string, Basics> {
 

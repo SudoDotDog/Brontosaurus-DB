@@ -6,7 +6,7 @@
 
 import * as Crypto from "crypto";
 
-export const generateKey = (): Promise<string> =>
+export const Deprecated_generateKey = (): Promise<string> =>
     new Promise<string>((resolve: (result: string) => void, reject: (reason: any) => void) => {
         const length: number = 32;
 
@@ -27,7 +27,7 @@ export const generateKey = (): Promise<string> =>
         randomBytes();
     });
 
-export const base32Encode = (key: string) => {
+export const Deprecated_base32Encode = (key: string) => {
 
     return key;
 };
@@ -36,7 +36,6 @@ export const generateURL = (name: string, account: string, key: string) => {
 
     const parsedName: string = encodeURIComponent(name);
     const parsedAccount: string = encodeURIComponent(account);
-    const parsedKey: string = base32Encode(key);
 
-    return 'otpauth://totp/' + parsedAccount + '?issuer=' + parsedName + '&secret=' + parsedKey;
+    return 'otpauth://totp/' + parsedAccount + '?issuer=' + parsedName + '&secret=' + key;
 };
