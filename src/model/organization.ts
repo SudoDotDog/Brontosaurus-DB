@@ -51,6 +51,7 @@ const OrganizationSchema: Schema = new Schema(
 );
 
 export interface IOrganizationModel extends IOrganization, Document {
+
     pushHistory: (history: string) => IOrganizationModel;
 }
 

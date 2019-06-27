@@ -20,6 +20,11 @@ const AccountSchema: Schema = new Schema({
         required: true,
         default: true,
     },
+    attemptLeft: {
+        type: Number,
+        required: true,
+        default: 5,
+    },
     limbo: {
         type: Boolean,
         required: true,
@@ -69,9 +74,6 @@ const AccountSchema: Schema = new Schema({
         required: true,
     },
 
-    avatar: {
-        type: String,
-    },
     history: {
         type: [String],
         required: true,
@@ -85,6 +87,8 @@ const AccountSchema: Schema = new Schema({
     });
 
 export interface IAccountModel extends IAccount, Document {
+
+    readonly resetAttempt: () => IAccountModel;
     readonly generateAndSetTwoFA: () => string;
     readonly verifyTwoFA: (code: string) => boolean;
     readonly getInfoRecords: () => Record<string, Basics>;
@@ -95,6 +99,13 @@ export interface IAccountModel extends IAccount, Document {
     readonly setPassword: (password: string) => IAccountModel;
     readonly verifyPassword: (password: string) => boolean;
 }
+
+AccountSchema.methods.resetAttempt = function (this: IAccountModel): IAccountModel {
+
+    this.attemptLeft = 5;
+
+    return this;
+};
 
 AccountSchema.methods.generateAndSetTwoFA = function (this: IAccountModel): string {
 

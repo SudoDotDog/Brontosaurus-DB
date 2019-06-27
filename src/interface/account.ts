@@ -22,6 +22,7 @@ export interface IAccountConfig {
 export interface IAccount extends IAccountConfig {
 
     active: boolean;
+    attemptLeft: number;
     limbo: boolean;
     twoFA?: string;
     createdAt: Date;
@@ -30,6 +31,5 @@ export interface IAccount extends IAccountConfig {
     mint: string;
     salt: string;
 
-    avatar?: string;
     history: string[];
 }
