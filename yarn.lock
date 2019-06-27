@@ -132,6 +132,13 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.10.tgz#4df59e5966b56f512bac98898bcbee5067411f0f"
   integrity sha512-leUNzbFTMX94TWaIKz8N15Chu55F9QSH+INKayQr5xpkasBQBRF3qQXfo3/dOnMU/dEIit+Y/SU8HyOjq++GwA==
 
+"@types/speakeasy@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@types/speakeasy/-/speakeasy-2.0.4.tgz#257c65db8acd57e9701d6c8949aa63b60f1952bb"
+  integrity sha512-WcZalHN3tlh+StC8cszTuh2SkX+vn5s4K+eMwa2fXM4t3GDeYg6JVrpchHs9InqTkgXXsEtE8KNXaQxfkIdmng==
+  dependencies:
+    "@types/node" "*"
+
 ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
@@ -168,10 +175,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
-base32.js@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/base32.js/-/base32.js-0.1.0.tgz#b582dec693c2f11e893cf064ee6ac5b6131a2202"
-  integrity sha1-tYLexpPC8R6JPPBk7mrFthMaIgI=
+base32.js@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/base32.js/-/base32.js-0.0.1.tgz#d045736a57b1f6c139f0c7df42518a84e91bb2ba"
+  integrity sha1-0EVzalex9sE58MffQlGKhOkbsro=
 
 bluebird@3.5.1:
   version "3.5.1"
@@ -596,6 +603,13 @@ sparse-bitfield@^3.0.3:
   integrity sha1-/0rm5oZWBWuks+eSqzM004JzyhE=
   dependencies:
     memory-pager "^1.0.2"
+
+speakeasy@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/speakeasy/-/speakeasy-2.0.0.tgz#85c91a071b09a5cb8642590d983566165f57613a"
+  integrity sha1-hckaBxsJpcuGQlkNmDVmFl9XYTo=
+  dependencies:
+    base32.js "0.0.1"
 
 sprintf-js@~1.0.2:
   version "1.0.3"

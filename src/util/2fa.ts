@@ -6,8 +6,6 @@
 
 import * as Crypto from "crypto";
 
-const base32: any = require("base32.js");
-
 export const generateKey = (): Promise<string> =>
     new Promise<string>((resolve: (result: string) => void, reject: (reason: any) => void) => {
         const length: number = 32;
@@ -31,7 +29,7 @@ export const generateKey = (): Promise<string> =>
 
 export const base32Encode = (key: string) => {
 
-    return base32.encode(Buffer.from(key)).toString().replace(/=/g, '');
+    return key;
 };
 
 export const generateURL = (name: string, account: string, key: string) => {
