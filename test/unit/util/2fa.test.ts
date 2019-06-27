@@ -7,7 +7,7 @@
 
 import { expect } from 'chai';
 import * as Chance from "chance";
-import { generateKey, generateURL } from '../../../src/util/2fa';
+import { Deprecated_generateKey, generateURL } from '../../../src/util/2fa';
 
 describe('Given [2fa] helper functions', (): void => {
 
@@ -15,7 +15,7 @@ describe('Given [2fa] helper functions', (): void => {
 
     it('Should be able to generate key', async (): Promise<void> => {
 
-        const key: string = await generateKey();
+        const key: string = await Deprecated_generateKey();
 
         expect(key).to.have.lengthOf(32);
     });
@@ -25,7 +25,7 @@ describe('Given [2fa] helper functions', (): void => {
         const name: string = chance.string();
         const account: string = chance.string();
 
-        const key: string = await generateKey();
+        const key: string = await Deprecated_generateKey();
         const url: string = await generateURL(name, account, key);
 
         expect(url.length).to.be.greaterThan(30);
