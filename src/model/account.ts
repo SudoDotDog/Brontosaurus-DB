@@ -44,6 +44,14 @@ const AccountSchema: Schema = new Schema({
         type: String,
         required: true,
     },
+    phone: {
+        type: String,
+        required: false,
+    },
+    email: {
+        type: String,
+        required: false,
+    },
 
     infos: {
         type: [String],

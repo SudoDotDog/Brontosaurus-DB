@@ -16,6 +16,9 @@ export type Preferences = {
     readonly registerInfo: RegisterInfo;
     readonly prepared: boolean;
 
+    readonly accountName: string;
+    readonly systemName: string;
+
     readonly globalAvatar: string;
     readonly globalBackgroundImages: string[];
     readonly globalHelpLink: string;

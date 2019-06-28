@@ -13,6 +13,8 @@ export interface IAccountConfig {
     username: string;
     password: string;
 
+    email: string;
+    phone: string;
     organization?: ObjectID;
     infos: string[];
     beacons: string[];
