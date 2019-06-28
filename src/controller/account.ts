@@ -33,8 +33,8 @@ export const createUnsavedAccountByConfig = (config: IAccountConfig) => {
 export const createOnLimboUnsavedAccount = (
     username: string,
     password: string,
-    email: string,
-    phone: string,
+    email?: string,
+    phone?: string,
     organization?: ObjectID,
     groups: ObjectID[] = [],
     infos: Record<string, Basics> = {},
@@ -66,8 +66,8 @@ export const createOnLimboUnsavedAccount = (
 export const createUnsavedAccount = (
     username: string,
     password: string,
-    email: string,
-    phone: string,
+    email?: string,
+    phone?: string,
     organization?: ObjectID,
     groups: ObjectID[] = [],
     infos: Record<string, Basics> = {},
