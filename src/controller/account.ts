@@ -157,25 +157,6 @@ export const isAccountDuplicatedByUsername = async (username: string): Promise<b
     return Boolean(account);
 };
 
-export const setPasswordAndRemoveFromLimbo = async (username: string, newPassword: string): Promise<IAccountModel | null> => {
-
-    const account: IAccountModel | null = await getAccountByUsername(username);
-
-    if (!account) {
-        return null;
-    }
-
-    if (!account.limbo) {
-        return null;
-    }
-
-    account.setPassword(newPassword);
-    account.limbo = false;
-
-    await account.save();
-    return account;
-};
-
 export const resetAccountPassword = async (username: string, newPassword: string): Promise<IAccountModel | null> => {
 
     const account: IAccountModel | null = await getAccountByUsername(username);
@@ -185,37 +166,6 @@ export const resetAccountPassword = async (username: string, newPassword: string
     }
 
     account.setPassword(newPassword);
-
-    await account.save();
-    return account;
-};
-
-export const resetAccountPasswordAndPutInLimbo = async (username: string, newPassword: string): Promise<IAccountModel | null> => {
-
-    const account: IAccountModel | null = await getAccountByUsername(username);
-
-    if (!account) {
-        return null;
-    }
-
-    account.setPassword(newPassword);
-    account.limbo = true;
-
-    await account.save();
-    return account;
-};
-
-export const resetAccountPasswordAndPutInLimboAndReactivate = async (username: string, newPassword: string): Promise<IAccountModel | null> => {
-
-    const account: IAccountModel | null = await getAccountByUsername(username);
-
-    if (!account) {
-        return null;
-    }
-
-    account.setPassword(newPassword);
-    account.limbo = true;
-    account.active = true;
 
     await account.save();
     return account;
