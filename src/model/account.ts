@@ -96,9 +96,9 @@ const AccountSchema: Schema = new Schema({
 
 export interface IAccountModel extends IAccount, Document {
 
-    readonly resetAttempt: () => IAccountModel;
+    readonly resetAttempt: (amount?: number) => IAccountModel;
     readonly useAttemptPoint: (point: number) => IAccountModel;
-    readonly generateAndSetTwoFA: () => string;
+    readonly generateAndSetTwoFA: (systemName?: string) => string;
     readonly verifyTwoFA: (code: string) => boolean;
     readonly getInfoRecords: () => Record<string, Basics>;
     readonly getBeaconRecords: () => Record<string, Basics>;
@@ -116,17 +116,17 @@ AccountSchema.methods.useAttemptPoint = function (this: IAccountModel, point: nu
     return this;
 };
 
-AccountSchema.methods.resetAttempt = function (this: IAccountModel): IAccountModel {
+AccountSchema.methods.resetAttempt = function (this: IAccountModel, amount: number = defaultInitialAttemptPoints): IAccountModel {
 
-    this.attemptPoints = defaultInitialAttemptPoints;
+    this.attemptPoints = amount;
 
     return this;
 };
 
-AccountSchema.methods.generateAndSetTwoFA = function (this: IAccountModel): string {
+AccountSchema.methods.generateAndSetTwoFA = function (this: IAccountModel, systemName: string = 'Brontosaurus Authorization'): string {
 
     const key: string = generateKey();
-    const url: string = generateURL('Brontosaurus Authorization', this.username, key);
+    const url: string = generateURL(systemName, this.username, key);
 
     this.twoFA = key;
 
