@@ -8,7 +8,7 @@ import { Basics } from "@brontosaurus/definition";
 import { _Random } from "@sudoo/bark/random";
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { IAccount, INFOS_SPLITTER } from "../interface/account";
+import { defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER } from "../interface/account";
 import { generateURL } from "../util/2fa";
 import { garblePassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
@@ -20,10 +20,10 @@ const AccountSchema: Schema = new Schema({
         required: true,
         default: true,
     },
-    attemptLeft: {
+    attemptPoints: {
         type: Number,
         required: true,
-        default: 5,
+        default: defaultInitialAttemptPoints,
     },
     limbo: {
         type: Boolean,
@@ -97,6 +97,7 @@ const AccountSchema: Schema = new Schema({
 export interface IAccountModel extends IAccount, Document {
 
     readonly resetAttempt: () => IAccountModel;
+    readonly useAttemptPoint: (point: number) => IAccountModel;
     readonly generateAndSetTwoFA: () => string;
     readonly verifyTwoFA: (code: string) => boolean;
     readonly getInfoRecords: () => Record<string, Basics>;
@@ -108,9 +109,16 @@ export interface IAccountModel extends IAccount, Document {
     readonly verifyPassword: (password: string) => boolean;
 }
 
+AccountSchema.methods.useAttemptPoint = function (this: IAccountModel, point: number): IAccountModel {
+
+    this.attemptPoints = this.attemptPoints - point;
+
+    return this;
+};
+
 AccountSchema.methods.resetAttempt = function (this: IAccountModel): IAccountModel {
 
-    this.attemptLeft = 5;
+    this.attemptPoints = defaultInitialAttemptPoints;
 
     return this;
 };

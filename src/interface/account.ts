@@ -8,6 +8,8 @@ import { ObjectID } from "bson";
 
 export const INFOS_SPLITTER = ':*:';
 
+export const defaultInitialAttemptPoints: number = 100;
+
 export interface IAccountConfig {
 
     username: string;
@@ -24,7 +26,7 @@ export interface IAccountConfig {
 export interface IAccount extends IAccountConfig {
 
     active: boolean;
-    attemptLeft: number;
+    attemptPoints: number;
     limbo: boolean;
     twoFA?: string;
     createdAt: Date;
