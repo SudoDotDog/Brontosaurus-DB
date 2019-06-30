@@ -34,7 +34,7 @@ const GroupSchema: Schema = new Schema({
 
 export interface IGroupModel extends IGroup, Document {
 
-    pushHistory: (history: string) => IGroupModel;
+    pushHistory(history: string): IGroupModel;
 }
 
 GroupSchema.methods.pushHistory = function (this: IGroupModel, history: string): IGroupModel {

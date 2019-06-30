@@ -37,7 +37,7 @@ const PreferenceSchema: Schema = new Schema({
 
 export interface IPreferenceModel extends IPreference, Document {
 
-    pushHistory: (history: string) => IPreferenceModel;
+    pushHistory(history: string): IPreferenceModel;
 }
 
 PreferenceSchema.methods.pushHistory = function (this: IPreferenceModel, history: string): IPreferenceModel {

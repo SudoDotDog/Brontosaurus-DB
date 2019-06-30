@@ -73,8 +73,8 @@ const ApplicationSchema: Schema = new Schema({
 
 export interface IApplicationModel extends IApplication, Document {
 
-    pushHistory: (history: string) => IApplicationModel;
-    refreshGreen: () => IApplicationModel;
+    pushHistory(history: string): IApplicationModel;
+    refreshGreen(): IApplicationModel;
 }
 
 ApplicationSchema.methods.refreshGreen = function (this: IApplicationModel): IApplicationModel {

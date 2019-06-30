@@ -96,17 +96,17 @@ const AccountSchema: Schema = new Schema({
 
 export interface IAccountModel extends IAccount, Document {
 
-    readonly resetAttempt: (amount?: number) => IAccountModel;
-    readonly useAttemptPoint: (point: number) => IAccountModel;
-    readonly generateAndSetTwoFA: (systemName?: string) => string;
-    readonly verifyTwoFA: (code: string) => boolean;
-    readonly getInfoRecords: () => Record<string, Basics>;
-    readonly getBeaconRecords: () => Record<string, Basics>;
-    readonly pushHistory: (history: string) => IAccountModel;
-    readonly addGroup: (id: ObjectID) => IAccountModel;
-    readonly removeGroup: (id: ObjectID) => IAccountModel;
-    readonly setPassword: (password: string) => IAccountModel;
-    readonly verifyPassword: (password: string) => boolean;
+    resetAttempt(amount?: number): IAccountModel;
+    useAttemptPoint(point: number): IAccountModel;
+    generateAndSetTwoFA(systemName?: string): string;
+    verifyTwoFA(code: string): boolean;
+    getInfoRecords(): Record<string, Basics>;
+    getBeaconRecords(): Record<string, Basics>;
+    pushHistory(history: string): IAccountModel;
+    addGroup(id: ObjectID): IAccountModel;
+    removeGroup(id: ObjectID): IAccountModel;
+    setPassword(password: string): IAccountModel;
+    verifyPassword(password: string): boolean;
 }
 
 AccountSchema.methods.useAttemptPoint = function (this: IAccountModel, point: number): IAccountModel {
