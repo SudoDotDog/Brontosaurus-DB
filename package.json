@@ -26,7 +26,7 @@
     "@sudoo/io": "^1.6.0",
     "@sudoo/mock": "^1.2.0",
     "@sudoo/triforce": "^1.6.0",
-    "@sudoo/triforce-mongoose-dev": "^1.1.0",
+    "@sudoo/triforce-mongoose-dev": "^1.2.0",
     "@types/speakeasy": "^2.0.4"
   },
   "nyc": {
