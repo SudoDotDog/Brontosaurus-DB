@@ -53,7 +53,7 @@ const ApplicationSchema: Schema = new Schema({
     },
     green: {
         type: String,
-        required: true,
+        required: false,
     },
     secret: {
         type: String,
