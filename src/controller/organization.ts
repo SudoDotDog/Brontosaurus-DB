@@ -5,7 +5,7 @@
  */
 
 import { ObjectID } from "bson";
-import { OrganizationAddress, OrganizationDetail } from "../interface/organization";
+import { OrganizationDetail } from "../interface/organization";
 import { AccountModel, IAccountModel } from "../model/account";
 import { IOrganizationModel, OrganizationModel } from "../model/organization";
 
@@ -35,7 +35,6 @@ export const getOrganizationDetailsById = async (id: ObjectID): Promise<Organiza
     return {
         name: organization.name,
         owner: owner.username,
-        address: organization.address,
         logo: organization.logo,
     };
 };
@@ -67,12 +66,10 @@ export const getOrganizationsByOwner = async (owner: ObjectID): Promise<IOrganiz
 export const createUnsavedOrganization = (
     name: string,
     owner: ObjectID,
-    address?: OrganizationAddress,
     logo?: string): IOrganizationModel =>
     new OrganizationModel({
         owner,
         name,
-        address,
         logo,
     });
 

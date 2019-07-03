@@ -11,14 +11,6 @@ export type OrganizationDetail = {
     name: string;
     owner: string;
     logo?: string;
-    address?: OrganizationAddress;
-};
-
-export type OrganizationAddress = {
-
-    readonly first: string;
-    readonly second: string;
-    readonly zipcode: string;
 };
 
 export interface IOrganizationConfig {
@@ -26,7 +18,6 @@ export interface IOrganizationConfig {
     name: string;
     owner: ObjectID;
     logo?: string;
-    address?: OrganizationAddress;
 }
 
 export interface IOrganization extends IOrganizationConfig {

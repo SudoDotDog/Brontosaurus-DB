@@ -29,14 +29,6 @@ const OrganizationSchema: Schema = new Schema(
             type: String,
             required: false,
         },
-        address: {
-            type: {
-                first: String,
-                second: String,
-                zipcode: String,
-            },
-            required: false,
-        },
         history: {
             type: [String],
             required: true,
