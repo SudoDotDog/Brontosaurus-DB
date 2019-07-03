@@ -23,8 +23,8 @@ export interface IOrganizationConfig {
 export interface IOrganization extends IOrganizationConfig {
 
     active: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-
     history: string[];
+
+    readonly createdAt: Date;
+    readonly updatedAt: Date;
 }
