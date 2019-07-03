@@ -25,6 +25,7 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
 
     key: string;
     name: string;
+    green: string;
 
     expire: number;
     secret: string;
@@ -37,7 +38,6 @@ export interface IApplication extends IApplicationConfig {
     active: boolean;
     createdAt: Date;
     updatedAt: Date;
-    green: string;
 
     history: string[];
 }

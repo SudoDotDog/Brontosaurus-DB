@@ -4,16 +4,19 @@
  * @description Application
  */
 
+import { trustable } from "@sudoo/bark/random";
 import { ApplicationOthersConfig, IApplicationConfig } from "../interface/application";
 import { ApplicationModel, IApplicationModel } from "../model/application";
 
 export const createUnsavedApplication = (name: string, key: string, expire: number, secret: string, others: ApplicationOthersConfig): IApplicationModel => {
 
+    const tempGreen: string = trustable();
     const config: IApplicationConfig = {
         avatar: others.avatar,
         helpLink: others.helpLink,
         privacyPolicy: others.privacyPolicy,
         backgroundImage: others.backgroundImage,
+        green: tempGreen,
         key,
         name,
         expire,
