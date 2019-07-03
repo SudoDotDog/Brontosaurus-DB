@@ -95,6 +95,16 @@ export const createUnsavedAccount = (
     });
 };
 
+export const getAccountsByOrganization = async (organization: string): Promise<IAccountModel[]> =>
+    await AccountModel.find({
+        organization,
+    });
+
+export const getAccountsByGroup = async (group: string): Promise<IAccountModel[]> =>
+    await AccountModel.find({
+        groups: group,
+    });
+
 export const getAccountByUsername = async (username: string): Promise<IAccountModel | null> =>
     await AccountModel.findOne({
         username,
