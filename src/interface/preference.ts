@@ -18,6 +18,7 @@ export type Preferences = {
 
     readonly accountName: string;
     readonly systemName: string;
+    readonly commandCenterName: string;
 
     readonly globalAvatar: string;
     readonly globalBackgroundImages: string[];

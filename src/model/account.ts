@@ -13,86 +13,92 @@ import { generateURL } from "../util/2fa";
 import { garblePassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
 
-const AccountSchema: Schema = new Schema({
+const AccountSchema: Schema = new Schema(
+    {
+        active: {
+            type: Boolean,
+            required: true,
+            default: true,
+        },
+        attemptPoints: {
+            type: Number,
+            required: true,
+            default: defaultInitialAttemptPoints,
+        },
+        limbo: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        twoFA: {
+            type: String,
+            required: false,
+        },
+        decorators: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
+        username: {
+            type: String,
+            required: true,
+            unique: true,
+            index: true,
+        },
+        password: {
+            type: String,
+            required: true,
+        },
+        phone: {
+            type: String,
+            required: false,
+        },
+        email: {
+            type: String,
+            required: false,
+        },
 
-    active: {
-        type: Boolean,
-        required: true,
-        default: true,
-    },
-    attemptPoints: {
-        type: Number,
-        required: true,
-        default: defaultInitialAttemptPoints,
-    },
-    limbo: {
-        type: Boolean,
-        required: true,
-        default: false,
-    },
-    twoFA: {
-        type: String,
-        required: false,
-    },
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        index: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    phone: {
-        type: String,
-        required: false,
-    },
-    email: {
-        type: String,
-        required: false,
-    },
+        infos: {
+            type: [String],
+            required: true,
+            default: [],
+        },
+        beacons: {
+            type: [String],
+            required: true,
+            default: [],
+        },
+        organization: {
+            type: Schema.Types.ObjectId,
+            index: true,
+        },
+        groups: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
 
-    infos: {
-        type: [String],
-        required: true,
-        default: [],
-    },
-    beacons: {
-        type: [String],
-        required: true,
-        default: [],
-    },
-    organization: {
-        type: Schema.Types.ObjectId,
-        index: true,
-    },
-    groups: {
-        type: [Schema.Types.ObjectId],
-        required: true,
-        default: [],
-    },
+        mint: {
+            type: String,
+            required: true,
+        },
+        salt: {
+            type: String,
+            required: true,
+        },
 
-    mint: {
-        type: String,
-        required: true,
-    },
-    salt: {
-        type: String,
-        required: true,
-    },
-
-    history: {
-        type: [String],
-        required: true,
-        default: [],
-    },
-}, {
+        history: {
+            type: [String],
+            required: true,
+            default: [],
+        },
+    }, {
         timestamps: {
             createdAt: true,
             updatedAt: true,
         },
-    });
+    },
+);
 
 export interface IAccountModel extends IAccount, Document {
 

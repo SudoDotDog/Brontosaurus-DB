@@ -20,6 +20,11 @@ const OrganizationSchema: Schema = new Schema(
             unique: true,
             index: true,
         },
+        decorators: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
         owner: {
             type: Schema.Types.ObjectId,
             required: true,

@@ -7,33 +7,34 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IPreference } from "../interface/preference";
 
-const PreferenceSchema: Schema = new Schema({
-
-    active: {
-        type: Boolean,
-        required: true,
-        default: true,
-    },
-    name: {
-        type: String,
-        required: true,
-        index: true,
-    },
-    value: {
-        type: String,
-        required: true,
-    },
-    history: {
-        type: [String],
-        required: true,
-        default: [],
-    },
-}, {
+const PreferenceSchema: Schema = new Schema(
+    {
+        active: {
+            type: Boolean,
+            required: true,
+            default: true,
+        },
+        name: {
+            type: String,
+            required: true,
+            index: true,
+        },
+        value: {
+            type: String,
+            required: true,
+        },
+        history: {
+            type: [String],
+            required: true,
+            default: [],
+        },
+    }, {
         timestamps: {
             createdAt: true,
             updatedAt: true,
         },
-    });
+    },
+);
 
 export interface IPreferenceModel extends IPreference, Document {
 

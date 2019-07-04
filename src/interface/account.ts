@@ -25,6 +25,8 @@ export interface IAccountConfig {
 
 export interface IAccount extends IAccountConfig {
 
+    decorators: ObjectID[];
+
     active: boolean;
     attemptPoints: number;
     limbo: boolean;

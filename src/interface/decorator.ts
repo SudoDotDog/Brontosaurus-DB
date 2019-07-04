@@ -9,11 +9,16 @@ import { ObjectID } from "bson";
 export interface IDecoratorConfig {
 
     name: string;
-    groups: ObjectID[];
+
+    addableGroups: ObjectID[];
+    removableGroups: ObjectID[];
+
     description?: string;
 }
 
 export interface IDecorator extends IDecoratorConfig {
+
+    decorators: ObjectID[];
 
     active: boolean;
     history: string[];

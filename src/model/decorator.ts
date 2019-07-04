@@ -7,38 +7,49 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IDecorator } from "../interface/decorator";
 
-const DecoratorSchema: Schema = new Schema({
-
-    active: {
-        type: Boolean,
-        required: true,
-        default: true,
-    },
-    name: {
-        type: String,
-        required: true,
-        unique: true,
-        index: true,
-    },
-    description: {
-        type: String,
-    },
-    groups: {
-        type: [Schema.Types.ObjectId],
-        required: true,
-        default: [],
-    },
-    history: {
-        type: [String],
-        required: true,
-        default: [],
-    },
-}, {
+const DecoratorSchema: Schema = new Schema(
+    {
+        active: {
+            type: Boolean,
+            required: true,
+            default: true,
+        },
+        name: {
+            type: String,
+            required: true,
+            unique: true,
+            index: true,
+        },
+        description: {
+            type: String,
+        },
+        decorators: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
+        addableGroups: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
+        removableGroups: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
+        history: {
+            type: [String],
+            required: true,
+            default: [],
+        },
+    }, {
         timestamps: {
             createdAt: true,
             updatedAt: true,
         },
-    });
+    },
+);
 
 export interface IDecoratorModel extends IDecorator, Document {
 
