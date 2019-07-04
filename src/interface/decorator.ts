@@ -10,13 +10,13 @@ export interface IDecoratorConfig {
 
     name: string;
 
-    addableGroups: ObjectID[];
-    removableGroups: ObjectID[];
-
     description?: string;
 }
 
 export interface IDecorator extends IDecoratorConfig {
+
+    addableGroups: ObjectID[];
+    removableGroups: ObjectID[];
 
     decorators: ObjectID[];
 

@@ -8,11 +8,10 @@ import { ObjectID } from "bson";
 import { IDecoratorConfig } from "../interface/decorator";
 import { DecoratorModel, IDecoratorModel } from "../model/decorator";
 
-export const createUnsavedDecorator = (name: string, groups: ObjectID[], description?: string): IDecoratorModel => {
+export const createUnsavedDecorator = (name: string, description?: string): IDecoratorModel => {
 
     const config: IDecoratorConfig = {
         name,
-        groups,
         description,
     };
     return new DecoratorModel(config);
