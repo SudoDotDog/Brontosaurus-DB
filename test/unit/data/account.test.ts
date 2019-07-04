@@ -39,4 +39,13 @@ describe('Given [Account Validate] helper functions', (): void => {
 
         expect(result).to.be.equal(USERNAME_VALIDATE_RESPONSE.ONLY_LETTERS_OR_NUMBERS);
     });
+
+    it('should be able to validate user name only letter and number - 2', async (): Promise<void> => {
+
+        const username: string = 'Aa10d-as92312';
+
+        const result: USERNAME_VALIDATE_RESPONSE = validateUsername(username);
+
+        expect(result).to.be.equal(USERNAME_VALIDATE_RESPONSE.ONLY_LETTERS_OR_NUMBERS);
+    });
 });
