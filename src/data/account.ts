@@ -6,18 +6,34 @@
 
 export enum USERNAME_VALIDATE_RESPONSE {
 
+    TOO_SHORT = "TOO_SHORT",
     NO_SPACE = "NO_SPACE",
+    MUST_START_WITH_LETTER = "MUST_START_WITH_LETTER",
     ONLY_LETTERS_OR_NUMBERS = "ONLY_LETTERS_OR_NUMBERS",
     OK = "OK",
 }
 
-export const validateUsername = (username: string): USERNAME_VALIDATE_RESPONSE => {
+export const validateUsername = (
+    username: string,
+    length: number = 2,
+    startWithLetter: boolean = true,
+): USERNAME_VALIDATE_RESPONSE => {
+
+    if (username.length <= length) {
+        return USERNAME_VALIDATE_RESPONSE.TOO_SHORT;
+    }
+
+    if (startWithLetter) {
+        if (!/^[A-z]$/.test(username.substring(0, 1))) {
+            return USERNAME_VALIDATE_RESPONSE.MUST_START_WITH_LETTER;
+        }
+    }
 
     if (username.includes(' ')) {
         return USERNAME_VALIDATE_RESPONSE.NO_SPACE;
     }
 
-    if (/[A-Z][a-z][0-9]+/.test(username)) {
+    if (!/^[0-z]+$/.test(username)) {
         return USERNAME_VALIDATE_RESPONSE.ONLY_LETTERS_OR_NUMBERS;
     }
 
@@ -46,18 +62,18 @@ export const validatePassword = (
         return PASSWORD_VALIDATE_RESPONSE.TOO_SHORT;
     }
 
-    if (!/[A-Z][a-z][0-9][!@#$%^&*()[\]{};:'",./<>?~`-+_=]+/.test(password)) {
+    if (!/^([0-z]|[!@#$%^&*()[\]{};:'",./<>?~`\-+_=])+$/.test(password)) {
         return PASSWORD_VALIDATE_RESPONSE.ONLY_KEYBOARD_CHARACTER_AVAILABLE;
     }
 
     if (haveToIncludeLetter) {
-        if (!/.+[A-Z][a-z].+/.test(password)) {
+        if (!/^.*[A-z].*$/.test(password)) {
             return PASSWORD_VALIDATE_RESPONSE.HAVE_TO_INCLUDE_LETTER;
         }
     }
 
     if (haveToIncludeNumber) {
-        if (!/.+[0-9].+/.test(password)) {
+        if (!/^.*[0-9].*$/.test(password)) {
             return PASSWORD_VALIDATE_RESPONSE.HAVE_TO_INCLUDE_NUMBER;
         }
     }
