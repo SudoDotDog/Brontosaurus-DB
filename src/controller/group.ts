@@ -8,6 +8,14 @@ import { ObjectID } from "bson";
 import { IGroupConfig } from "../interface/group";
 import { GroupModel, IGroupModel } from "../model/group";
 
+export const createUnsavedGroup = (name: string): IGroupModel => {
+
+    const config: IGroupConfig = {
+        name,
+    };
+    return new GroupModel(config);
+};
+
 export const getGroupById = async (id: ObjectID): Promise<IGroupModel | null> =>
     await GroupModel.findOne({
         _id: id,
@@ -31,14 +39,6 @@ export const getGroupByNames = async (names: string[]): Promise<IGroupModel[]> =
             $in: names,
         },
     });
-
-export const createUnsavedGroup = (name: string): IGroupModel => {
-
-    const config: IGroupConfig = {
-        name,
-    };
-    return new GroupModel(config);
-};
 
 export const isGroupDuplicatedByName = async (name: string): Promise<boolean> => {
     const group: IGroupModel | null = await getGroupByName(name);
