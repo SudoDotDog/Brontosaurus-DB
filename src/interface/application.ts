@@ -36,8 +36,8 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
 export interface IApplication extends IApplicationConfig {
 
     active: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-
     history: string[];
+
+    readonly createdAt: Date;
+    readonly updatedAt: Date;
 }

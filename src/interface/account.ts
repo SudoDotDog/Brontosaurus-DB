@@ -29,11 +29,10 @@ export interface IAccount extends IAccountConfig {
     attemptPoints: number;
     limbo: boolean;
     twoFA?: string;
-    createdAt: Date;
-    updatedAt: Date;
-
     mint: string;
     salt: string;
-
     history: string[];
+
+    readonly createdAt: Date;
+    readonly updatedAt: Date;
 }
