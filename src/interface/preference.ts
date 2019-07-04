@@ -34,6 +34,7 @@ export interface IPreferenceConfig {
 export interface IPreference extends IPreferenceConfig {
 
     active: boolean;
+    history: string[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;
