@@ -8,10 +8,11 @@ import { ObjectID } from "bson";
 import { IGroupConfig } from "../interface/group";
 import { GroupModel, IGroupModel } from "../model/group";
 
-export const createUnsavedGroup = (name: string): IGroupModel => {
+export const createUnsavedGroup = (name: string, description?: string): IGroupModel => {
 
     const config: IGroupConfig = {
         name,
+        description,
     };
     return new GroupModel(config);
 };
