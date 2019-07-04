@@ -17,10 +17,10 @@ export interface IAccountConfig {
 
     email: string;
     phone: string;
-    organization?: ObjectID;
     infos: string[];
     beacons: string[];
     groups: ObjectID[];
+    organization?: ObjectID;
 }
 
 export interface IAccount extends IAccountConfig {

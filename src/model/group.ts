@@ -20,6 +20,9 @@ const GroupSchema: Schema = new Schema({
         unique: true,
         index: true,
     },
+    description: {
+        type: String,
+    },
     history: {
         type: [String],
         required: true,

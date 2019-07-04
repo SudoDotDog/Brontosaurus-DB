@@ -14,6 +14,15 @@ const DecoratorSchema: Schema = new Schema({
         required: true,
         default: true,
     },
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+        index: true,
+    },
+    description: {
+        type: String,
+    },
     groups: {
         type: [Schema.Types.ObjectId],
         required: true,

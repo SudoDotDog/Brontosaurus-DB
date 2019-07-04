@@ -8,7 +8,9 @@ import { ObjectID } from "bson";
 
 export interface IDecoratorConfig {
 
+    name: string;
     groups: ObjectID[];
+    description?: string;
 }
 
 export interface IDecorator extends IDecoratorConfig {

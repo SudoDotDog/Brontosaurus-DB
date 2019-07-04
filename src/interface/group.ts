@@ -14,6 +14,7 @@ export enum INTERNAL_USER_GROUP {
 export interface IGroupConfig {
 
     name: string;
+    description?: string;
 }
 
 export interface IGroup extends IGroupConfig {
