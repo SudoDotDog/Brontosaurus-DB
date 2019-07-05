@@ -56,12 +56,41 @@ export const getTotalActiveDecoratorPages = async (limit: number): Promise<numbe
         active: true,
     })) / limit;
 
+export const getActiveDecoratorPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+
+    const regexp: RegExp = new RegExp(keyword, 'i');
+    return (await DecoratorModel.estimatedDocumentCount({
+        name: {
+            $regex: regexp,
+        },
+        active: true,
+    })) / limit;
+};
+
+export const getDecoratorPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+
+    const regexp: RegExp = new RegExp(keyword, 'i');
+    return (await DecoratorModel.estimatedDocumentCount({
+        name: {
+            $regex: regexp,
+        },
+    })) / limit;
+};
+
 export const getSelectedActiveDecoratorsByPage = async (limit: number, page: number, keyword?: string): Promise<IDecoratorModel[]> => {
 
     if (keyword) {
         return await getActiveDecoratorsByPage(keyword, limit, page);
     }
     return await getAllActiveDecoratorsByPage(limit, page);
+};
+
+export const getSelectedDecoratorsByPage = async (limit: number, page: number, keyword?: string): Promise<IDecoratorModel[]> => {
+
+    if (keyword) {
+        return await getDecoratorsByPage(keyword, limit, page);
+    }
+    return await getAllDecoratorsByPage(limit, page);
 };
 
 export const getAllActiveDecorators = async (): Promise<IDecoratorModel[]> =>
@@ -88,6 +117,21 @@ export const getActiveDecoratorsByPage = async (keyword: string, limit: number, 
     return decorators;
 };
 
+export const getDecoratorsByPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const regexp: RegExp = new RegExp(keyword, 'i');
+    const decorators: IDecoratorModel[] = await DecoratorModel.find({
+        name: {
+            $regex: regexp,
+        },
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return decorators;
+};
+
 export const getAllActiveDecoratorsByPage = async (limit: number, page: number): Promise<IDecoratorModel[]> => {
 
     if (page < 0) {
@@ -97,5 +141,16 @@ export const getAllActiveDecoratorsByPage = async (limit: number, page: number):
     const decorators: IDecoratorModel[] = await DecoratorModel.find({
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return decorators;
+};
+
+export const getAllDecoratorsByPage = async (limit: number, page: number): Promise<IDecoratorModel[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const decorators: IDecoratorModel[] = await DecoratorModel.find({})
+        .skip(page * limit).limit(limit).sort({ _id: -1 });
     return decorators;
 };

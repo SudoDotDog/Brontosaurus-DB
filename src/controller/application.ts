@@ -42,12 +42,41 @@ export const getTotalActiveApplicationPages = async (limit: number): Promise<num
         active: true,
     })) / limit;
 
+export const getActiveApplicationPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+
+    const regexp: RegExp = new RegExp(keyword, 'i');
+    return (await ApplicationModel.estimatedDocumentCount({
+        name: {
+            $regex: regexp,
+        },
+        active: true,
+    })) / limit;
+};
+
+export const getApplicationPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+
+    const regexp: RegExp = new RegExp(keyword, 'i');
+    return (await ApplicationModel.estimatedDocumentCount({
+        name: {
+            $regex: regexp,
+        },
+    })) / limit;
+};
+
 export const getSelectedActiveApplicationsByPage = async (limit: number, page: number, keyword?: string): Promise<IApplicationModel[]> => {
 
     if (keyword) {
         return await getActiveApplicationsByPage(keyword, limit, page);
     }
     return await getAllActiveApplicationsByPage(limit, page);
+};
+
+export const getSelectedApplicationsByPage = async (limit: number, page: number, keyword?: string): Promise<IApplicationModel[]> => {
+
+    if (keyword) {
+        return await getApplicationsByPage(keyword, limit, page);
+    }
+    return await getAllApplicationsByPage(limit, page);
 };
 
 export const getActiveApplicationsByPage = async (keyword: string, limit: number, page: number): Promise<IApplicationModel[]> => {
@@ -66,6 +95,21 @@ export const getActiveApplicationsByPage = async (keyword: string, limit: number
     return applications;
 };
 
+export const getApplicationsByPage = async (keyword: string, limit: number, page: number): Promise<IApplicationModel[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const regexp: RegExp = new RegExp(keyword, 'i');
+    const applications: IApplicationModel[] = await ApplicationModel.find({
+        name: {
+            $regex: regexp,
+        },
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return applications;
+};
+
 export const getAllActiveApplicationsByPage = async (limit: number, page: number): Promise<IApplicationModel[]> => {
 
     if (page < 0) {
@@ -75,6 +119,17 @@ export const getAllActiveApplicationsByPage = async (limit: number, page: number
     const applications: IApplicationModel[] = await ApplicationModel.find({
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return applications;
+};
+
+export const getAllApplicationsByPage = async (limit: number, page: number): Promise<IApplicationModel[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const applications: IApplicationModel[] = await ApplicationModel.find({})
+        .skip(page * limit).limit(limit).sort({ _id: -1 });
     return applications;
 };
 

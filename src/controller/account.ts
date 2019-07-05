@@ -125,12 +125,41 @@ export const getTotalActiveAccountPages = async (limit: number): Promise<number>
         active: true,
     })) / limit;
 
+export const getActiveAccountPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+
+    const regexp: RegExp = new RegExp(keyword, 'i');
+    return (await AccountModel.estimatedDocumentCount({
+        username: {
+            $regex: regexp,
+        },
+        active: true,
+    })) / limit;
+};
+
+export const getAccountPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+
+    const regexp: RegExp = new RegExp(keyword, 'i');
+    return (await AccountModel.estimatedDocumentCount({
+        username: {
+            $regex: regexp,
+        },
+    })) / limit;
+};
+
 export const getSelectedActiveAccountsByPage = async (limit: number, page: number, keyword?: string): Promise<IAccountModel[]> => {
 
     if (keyword) {
         return await getActiveAccountsByPage(keyword, limit, page);
     }
     return await getAllActiveAccountsByPage(limit, page);
+};
+
+export const getSelectedAccountsByPage = async (limit: number, page: number, keyword?: string): Promise<IAccountModel[]> => {
+
+    if (keyword) {
+        return await getAccountsByPage(keyword, limit, page);
+    }
+    return await getAllAccountsByPage(limit, page);
 };
 
 export const getActiveAccountsByPage = async (keyword: string, limit: number, page: number): Promise<IAccountModel[]> => {
@@ -149,6 +178,21 @@ export const getActiveAccountsByPage = async (keyword: string, limit: number, pa
     return accounts;
 };
 
+export const getAccountsByPage = async (keyword: string, limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const regexp: RegExp = new RegExp(keyword, 'i');
+    const accounts: IAccountModel[] = await AccountModel.find({
+        username: {
+            $regex: regexp,
+        },
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return accounts;
+};
+
 export const getAllActiveAccountsByPage = async (limit: number, page: number): Promise<IAccountModel[]> => {
 
     if (page < 0) {
@@ -158,6 +202,17 @@ export const getAllActiveAccountsByPage = async (limit: number, page: number): P
     const accounts: IAccountModel[] = await AccountModel.find({
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return accounts;
+};
+
+export const getAllAccountsByPage = async (limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const accounts: IAccountModel[] = await AccountModel.find({})
+        .skip(page * limit).limit(limit).sort({ _id: -1 });
     return accounts;
 };
 
