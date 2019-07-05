@@ -30,10 +30,6 @@ const OrganizationSchema: Schema = new Schema(
             required: true,
             index: true,
         },
-        logo: {
-            type: String,
-            required: false,
-        },
         history: {
             type: [String],
             required: true,

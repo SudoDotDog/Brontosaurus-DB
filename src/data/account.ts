@@ -19,7 +19,7 @@ export const validateUsername = (
     startWithLetter: boolean = true,
 ): USERNAME_VALIDATE_RESPONSE => {
 
-    if (username.length <= length) {
+    if (username.length < length) {
         return USERNAME_VALIDATE_RESPONSE.TOO_SHORT;
     }
 

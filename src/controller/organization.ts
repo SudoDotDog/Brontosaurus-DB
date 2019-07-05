@@ -35,7 +35,6 @@ export const getOrganizationDetailsById = async (id: ObjectID): Promise<Organiza
     return {
         name: organization.name,
         owner: owner.username,
-        logo: organization.logo,
     };
 };
 
@@ -66,11 +65,10 @@ export const getOrganizationsByOwner = async (owner: ObjectID): Promise<IOrganiz
 export const createUnsavedOrganization = (
     name: string,
     owner: ObjectID,
-    logo?: string): IOrganizationModel =>
+): IOrganizationModel =>
     new OrganizationModel({
         owner,
         name,
-        logo,
     });
 
 export const isOrganizationDuplicatedByName = async (name: string): Promise<boolean> => {

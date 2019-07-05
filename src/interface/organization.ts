@@ -10,14 +10,12 @@ export type OrganizationDetail = {
 
     name: string;
     owner: string;
-    logo?: string;
 };
 
 export interface IOrganizationConfig {
 
     name: string;
     owner: ObjectID;
-    logo?: string;
 }
 
 export interface IOrganization extends IOrganizationConfig {
