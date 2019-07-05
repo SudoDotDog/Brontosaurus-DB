@@ -63,14 +63,14 @@ export const getTotalGroupPages = async (limit: number): Promise<number> =>
     (await GroupModel.estimatedDocumentCount({})) / limit;
 
 export const getTotalActiveGroupPages = async (limit: number): Promise<number> =>
-    (await GroupModel.estimatedDocumentCount({
+    (await GroupModel.countDocuments({
         active: true,
     })) / limit;
 
 export const getActiveGroupPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await GroupModel.estimatedDocumentCount({
+    return (await GroupModel.countDocuments({
         name: {
             $regex: regexp,
         },
@@ -81,7 +81,7 @@ export const getActiveGroupPagesByKeyword = async (limit: number, keyword: strin
 export const getGroupPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await GroupModel.estimatedDocumentCount({
+    return (await GroupModel.countDocuments({
         name: {
             $regex: regexp,
         },

@@ -129,14 +129,14 @@ export const getSelectedActiveAccountPages = async (limit: number, keyword?: str
 };
 
 export const getTotalActiveAccountPages = async (limit: number): Promise<number> =>
-    (await AccountModel.estimatedDocumentCount({
+    (await AccountModel.countDocuments({
         active: true,
     })) / limit;
 
 export const getActiveAccountPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await AccountModel.estimatedDocumentCount({
+    return (await AccountModel.countDocuments({
         username: {
             $regex: regexp,
         },
@@ -147,7 +147,7 @@ export const getActiveAccountPagesByKeyword = async (limit: number, keyword: str
 export const getAccountPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await AccountModel.estimatedDocumentCount({
+    return (await AccountModel.countDocuments({
         username: {
             $regex: regexp,
         },

@@ -63,14 +63,14 @@ export const getTotalDecoratorPages = async (limit: number): Promise<number> =>
     (await DecoratorModel.estimatedDocumentCount({})) / limit;
 
 export const getTotalActiveDecoratorPages = async (limit: number): Promise<number> =>
-    (await DecoratorModel.estimatedDocumentCount({
+    (await DecoratorModel.countDocuments({
         active: true,
     })) / limit;
 
 export const getActiveDecoratorPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await DecoratorModel.estimatedDocumentCount({
+    return (await DecoratorModel.countDocuments({
         name: {
             $regex: regexp,
         },
@@ -81,7 +81,7 @@ export const getActiveDecoratorPagesByKeyword = async (limit: number, keyword: s
 export const getDecoratorPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await DecoratorModel.estimatedDocumentCount({
+    return (await DecoratorModel.countDocuments({
         name: {
             $regex: regexp,
         },

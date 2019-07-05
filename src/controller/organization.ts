@@ -95,14 +95,14 @@ export const getTotalOrganizationPages = async (limit: number): Promise<number> 
     (await OrganizationModel.estimatedDocumentCount({})) / limit;
 
 export const getTotalActiveOrganizationPages = async (limit: number): Promise<number> =>
-    (await OrganizationModel.estimatedDocumentCount({
+    (await OrganizationModel.countDocuments({
         active: true,
     })) / limit;
 
 export const getActiveOrganizationPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await OrganizationModel.estimatedDocumentCount({
+    return (await OrganizationModel.countDocuments({
         name: {
             $regex: regexp,
         },
@@ -113,7 +113,7 @@ export const getActiveOrganizationPagesByKeyword = async (limit: number, keyword
 export const getOrganizationPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await OrganizationModel.estimatedDocumentCount({
+    return (await OrganizationModel.countDocuments({
         name: {
             $regex: regexp,
         },

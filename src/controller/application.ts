@@ -37,6 +37,9 @@ export const isApplicationDuplicatedByKey = async (key: string): Promise<boolean
     return Boolean(application);
 };
 
+export const getTotalApplicationPages = async (limit: number): Promise<number> =>
+    (await ApplicationModel.estimatedDocumentCount({})) / limit;
+
 export const getSelectedActiveApplicationPages = async (limit: number, keyword?: string): Promise<number> => {
 
     if (keyword) {
@@ -46,14 +49,14 @@ export const getSelectedActiveApplicationPages = async (limit: number, keyword?:
 };
 
 export const getTotalActiveApplicationPages = async (limit: number): Promise<number> =>
-    (await ApplicationModel.estimatedDocumentCount({
+    (await ApplicationModel.countDocuments({
         active: true,
     })) / limit;
 
 export const getActiveApplicationPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await ApplicationModel.estimatedDocumentCount({
+    return (await ApplicationModel.countDocuments({
         name: {
             $regex: regexp,
         },
@@ -64,7 +67,7 @@ export const getActiveApplicationPagesByKeyword = async (limit: number, keyword:
 export const getApplicationPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await ApplicationModel.estimatedDocumentCount({
+    return (await ApplicationModel.countDocuments({
         name: {
             $regex: regexp,
         },
