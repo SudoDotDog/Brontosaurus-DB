@@ -23,11 +23,6 @@ const DecoratorSchema: Schema = new Schema(
         description: {
             type: String,
         },
-        decorators: {
-            type: [Schema.Types.ObjectId],
-            required: true,
-            default: [],
-        },
         addableGroups: {
             type: [Schema.Types.ObjectId],
             required: true,

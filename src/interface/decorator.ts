@@ -18,8 +18,6 @@ export interface IDecorator extends IDecoratorConfig {
     addableGroups: ObjectID[];
     removableGroups: ObjectID[];
 
-    decorators: ObjectID[];
-
     active: boolean;
     history: string[];
 
