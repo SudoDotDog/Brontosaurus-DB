@@ -8,7 +8,7 @@ export enum COMMON_NAME_VALIDATE_RESPONSE {
 
     TOO_SHORT = "TOO_SHORT",
     NO_SPACE = "NO_SPACE",
-    ONLY_LETTERS_OR_NUMBERS = "ONLY_LETTERS_OR_NUMBERS",
+    ONLY_SELECTED_SYMBOL = "ONLY_SELECTED_SYMBOL",
     OK = "OK",
 }
 
@@ -25,8 +25,8 @@ export const validateCommonName = (
         return COMMON_NAME_VALIDATE_RESPONSE.NO_SPACE;
     }
 
-    if (!/^[0-z]+$/.test(username)) {
-        return COMMON_NAME_VALIDATE_RESPONSE.ONLY_LETTERS_OR_NUMBERS;
+    if (!/^([0-z]|[-_!@#$^&*=+])+$/.test(username)) {
+        return COMMON_NAME_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL;
     }
 
     return COMMON_NAME_VALIDATE_RESPONSE.OK;
