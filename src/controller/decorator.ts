@@ -64,6 +64,14 @@ export const getSelectedActiveDecoratorsByPage = async (limit: number, page: num
     return await getAllActiveDecoratorsByPage(limit, page);
 };
 
+export const getAllActiveDecorators = async (): Promise<IDecoratorModel[]> =>
+    await DecoratorModel.find({
+        active: true,
+    });
+
+export const getAllDecorators = async (): Promise<IDecoratorModel[]> =>
+    await DecoratorModel.find({});
+
 export const getActiveDecoratorsByPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
 
     if (page < 0) {
