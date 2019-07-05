@@ -52,7 +52,7 @@ export enum PASSWORD_VALIDATE_RESPONSE {
 
 export const validatePassword = (
     password: string,
-    length: number = 6,
+    length: number = 8,
     haveToIncludeLetter: boolean = true,
     haveToIncludeNumber: boolean = true,
     haveToIncludeSymbol: boolean = false,
@@ -62,7 +62,7 @@ export const validatePassword = (
         return PASSWORD_VALIDATE_RESPONSE.TOO_SHORT;
     }
 
-    if (!/^([A-Za-z0-9]|[!@#$%^&*()[\]{};:'",./<>?~`\-+_=])+$/.test(password)) {
+    if (!/^([A-Za-z0-9]|[!@#$%^&*()[\]{};:'",./<>?~`\-+_=\\| ])+$/.test(password)) {
         return PASSWORD_VALIDATE_RESPONSE.ONLY_KEYBOARD_CHARACTER_AVAILABLE;
     }
 
