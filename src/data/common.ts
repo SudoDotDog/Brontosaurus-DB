@@ -13,19 +13,19 @@ export enum COMMON_NAME_VALIDATE_RESPONSE {
 }
 
 export const validateCommonName = (
-    username: string,
+    name: string,
     length: number = 2,
 ): COMMON_NAME_VALIDATE_RESPONSE => {
 
-    if (username.length < length) {
+    if (name.length < length) {
         return COMMON_NAME_VALIDATE_RESPONSE.TOO_SHORT;
     }
 
-    if (username.includes(' ')) {
+    if (name.includes(' ')) {
         return COMMON_NAME_VALIDATE_RESPONSE.NO_SPACE;
     }
 
-    if (!/^([0-z]|[-_!@#$^&*=+])+$/.test(username)) {
+    if (!/^([A-Za-z0-9]|[-_!@#$^&*=+])+$/.test(name)) {
         return COMMON_NAME_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL;
     }
 

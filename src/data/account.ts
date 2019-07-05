@@ -33,7 +33,7 @@ export const validateUsername = (
         return USERNAME_VALIDATE_RESPONSE.NO_SPACE;
     }
 
-    if (!/^[0-z]+$/.test(username)) {
+    if (!/^[A-Za-z0-9]+$/.test(username)) {
         return USERNAME_VALIDATE_RESPONSE.ONLY_LETTERS_OR_NUMBERS;
     }
 
@@ -62,7 +62,7 @@ export const validatePassword = (
         return PASSWORD_VALIDATE_RESPONSE.TOO_SHORT;
     }
 
-    if (!/^([0-z]|[!@#$%^&*()[\]{};:'",./<>?~`\-+_=])+$/.test(password)) {
+    if (!/^([A-Za-z0-9]|[!@#$%^&*()[\]{};:'",./<>?~`\-+_=])+$/.test(password)) {
         return PASSWORD_VALIDATE_RESPONSE.ONLY_KEYBOARD_CHARACTER_AVAILABLE;
     }
 

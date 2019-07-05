@@ -63,4 +63,13 @@ describe('Given [Validate Common Name] helper function', (): void => {
 
         expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.OK);
     });
+
+    it('should be able to validate common - no symbol', (): void => {
+
+        const username: string = '<<<123';
+
+        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
+
+        expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL);
+    });
 });
