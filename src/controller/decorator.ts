@@ -51,6 +51,17 @@ export const isDecoratorDuplicatedById = async (id: ObjectID): Promise<boolean> 
     return Boolean(decorator);
 };
 
+export const getSelectedActiveDecoratorPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getActiveDecoratorPagesByKeyword(limit, keyword);
+    }
+    return await getTotalActiveDecoratorPages(limit);
+};
+
+export const getTotalDecoratorPages = async (limit: number): Promise<number> =>
+    (await DecoratorModel.estimatedDocumentCount({})) / limit;
+
 export const getTotalActiveDecoratorPages = async (limit: number): Promise<number> =>
     (await DecoratorModel.estimatedDocumentCount({
         active: true,

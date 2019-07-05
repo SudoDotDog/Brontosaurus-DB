@@ -51,6 +51,17 @@ export const isGroupDuplicatedById = async (id: ObjectID): Promise<boolean> => {
     return Boolean(group);
 };
 
+export const getSelectedActiveGroupPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getActiveGroupPagesByKeyword(limit, keyword);
+    }
+    return await getTotalActiveGroupPages(limit);
+};
+
+export const getTotalGroupPages = async (limit: number): Promise<number> =>
+    (await GroupModel.estimatedDocumentCount({})) / limit;
+
 export const getTotalActiveGroupPages = async (limit: number): Promise<number> =>
     (await GroupModel.estimatedDocumentCount({
         active: true,

@@ -37,6 +37,14 @@ export const isApplicationDuplicatedByKey = async (key: string): Promise<boolean
     return Boolean(application);
 };
 
+export const getSelectedActiveApplicationPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getActiveApplicationPagesByKeyword(limit, keyword);
+    }
+    return await getTotalActiveApplicationPages(limit);
+};
+
 export const getTotalActiveApplicationPages = async (limit: number): Promise<number> =>
     (await ApplicationModel.estimatedDocumentCount({
         active: true,

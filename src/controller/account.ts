@@ -120,6 +120,14 @@ export const getAccountById = async (id: ObjectID | string): Promise<IAccountMod
 export const getTotalAccountPages = async (limit: number): Promise<number> =>
     (await AccountModel.estimatedDocumentCount({})) / limit;
 
+export const getSelectedActiveAccountPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getActiveAccountPagesByKeyword(limit, keyword);
+    }
+    return await getTotalActiveAccountPages(limit);
+};
+
 export const getTotalActiveAccountPages = async (limit: number): Promise<number> =>
     (await AccountModel.estimatedDocumentCount({
         active: true,

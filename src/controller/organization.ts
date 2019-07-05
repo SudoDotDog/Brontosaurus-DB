@@ -83,6 +83,17 @@ export const isOrganizationDuplicatedById = async (id: ObjectID): Promise<boolea
     return Boolean(organization);
 };
 
+export const getSelectedActiveOrganizationPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getActiveOrganizationPagesByKeyword(limit, keyword);
+    }
+    return await getTotalActiveOrganizationPages(limit);
+};
+
+export const getTotalOrganizationPages = async (limit: number): Promise<number> =>
+    (await OrganizationModel.estimatedDocumentCount({})) / limit;
+
 export const getTotalActiveOrganizationPages = async (limit: number): Promise<number> =>
     (await OrganizationModel.estimatedDocumentCount({
         active: true,
