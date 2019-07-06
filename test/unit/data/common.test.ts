@@ -43,7 +43,7 @@ describe('Given [Validate Common Name] helper function', (): void => {
 
         const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
 
-        expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.ONLY_LETTERS_OR_NUMBERS);
+        expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL);
     });
 
     it('should be able to validate common name too short', (): void => {
@@ -55,12 +55,21 @@ describe('Given [Validate Common Name] helper function', (): void => {
         expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.TOO_SHORT);
     });
 
-    it('should be able to validate common name only letter and number - 2', (): void => {
+    it('should be able to validate common name selected symbol', (): void => {
 
-        const username: string = 'Aa10d-as92312';
+        const username: string = 'Aa10d^&as92312';
 
         const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
 
-        expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.ONLY_LETTERS_OR_NUMBERS);
+        expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.OK);
+    });
+
+    it('should be able to validate common - no symbol', (): void => {
+
+        const username: string = '<<<123';
+
+        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
+
+        expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL);
     });
 });

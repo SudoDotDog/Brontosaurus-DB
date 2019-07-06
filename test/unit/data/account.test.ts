@@ -126,5 +126,14 @@ describe('Given [Validate Password] helper function', (): void => {
 
         expect(result).to.be.equal(PASSWORD_VALIDATE_RESPONSE.HAVE_TO_INCLUDE_LETTER);
     });
+
+    it('should be able to validate with space and slash', (): void => {
+
+        const password: string = '!fs87JD\\  [}}||';
+
+        const result: PASSWORD_VALIDATE_RESPONSE = validatePassword(password);
+
+        expect(result).to.be.equal(PASSWORD_VALIDATE_RESPONSE.OK);
+    });
 });
 
