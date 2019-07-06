@@ -4,7 +4,7 @@
  * @description Preference
  */
 
-export type RegisterInfoType = 'string' | 'number';
+export type RegisterInfoType = 'string' | 'number' | 'email' | 'password';
 export type RegisterInfo = {
 
     name: string;
