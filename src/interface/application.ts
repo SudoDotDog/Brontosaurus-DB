@@ -23,9 +23,9 @@ export type ApplicationOthersConfig = {
 
 export interface IApplicationConfig extends ApplicationOthersConfig {
 
-    anchor: string;
+    readonly anchor: string;
+    readonly key: string;
 
-    key: string;
     name: string;
     green: string;
 

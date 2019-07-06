@@ -16,9 +16,9 @@ export enum INTERNAL_USER_GROUP {
 
 export interface IGroupConfig {
 
-    anchor: string;
+    readonly anchor: string;
+    readonly name: string;
 
-    name: string;
     description?: string;
 }
 

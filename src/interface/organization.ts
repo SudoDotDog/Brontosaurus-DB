@@ -14,9 +14,9 @@ export type OrganizationDetail = {
 
 export interface IOrganizationConfig {
 
-    anchor: string;
+    readonly anchor: string;
+    readonly name: string;
 
-    name: string;
     owner: ObjectID;
 }
 
