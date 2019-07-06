@@ -6,7 +6,7 @@
  */
 
 import { expect } from 'chai';
-import { COMMON_NAME_VALIDATE_RESPONSE, validateCommonName } from '../../../src/data/common';
+import { COMMON_NAME_VALIDATE_RESPONSE, fitAnchor, validateCommonName } from '../../../src/data/common';
 
 describe('Given [Validate Common Name] helper function', (): void => {
 
@@ -73,3 +73,25 @@ describe('Given [Validate Common Name] helper function', (): void => {
         expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL);
     });
 });
+
+describe('Given [Fit Anchor] helper function', (): void => {
+
+    it('should be able to return empty string', (): void => {
+
+        const name: string = '';
+
+        const result: string = fitAnchor(name);
+
+        expect(result).to.be.equal('');
+    });
+
+    it('should be able to remove space and parse lower case', (): void => {
+
+        const name: string = ' So ME Thin G ';
+
+        const result: string = fitAnchor(name);
+
+        expect(result).to.be.equal('something');
+    });
+});
+
