@@ -15,6 +15,11 @@ const ApplicationSchema: Schema = new Schema(
             required: true,
             default: true,
         },
+        anchor: {
+            type: String,
+            required: true,
+            index: true,
+        },
         avatar: {
             type: String,
             required: false,

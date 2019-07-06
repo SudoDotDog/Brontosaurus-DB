@@ -14,6 +14,11 @@ const OrganizationSchema: Schema = new Schema(
             required: true,
             default: true,
         },
+        anchor: {
+            type: String,
+            required: true,
+            index: true,
+        },
         name: {
             type: String,
             required: true,

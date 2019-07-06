@@ -20,6 +20,11 @@ const AccountSchema: Schema = new Schema(
             required: true,
             default: true,
         },
+        anchor: {
+            type: String,
+            required: true,
+            index: true,
+        },
         attemptPoints: {
             type: Number,
             required: true,
