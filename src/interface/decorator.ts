@@ -8,6 +8,8 @@ import { ObjectID } from "bson";
 
 export interface IDecoratorConfig {
 
+    anchor: string;
+
     name: string;
 
     description?: string;

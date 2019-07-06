@@ -12,6 +12,8 @@ export const defaultInitialAttemptPoints: number = 100;
 
 export interface IAccountConfig {
 
+    anchor: string;
+
     username: string;
     password: string;
 

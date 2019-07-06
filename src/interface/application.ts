@@ -23,6 +23,8 @@ export type ApplicationOthersConfig = {
 
 export interface IApplicationConfig extends ApplicationOthersConfig {
 
+    anchor: string;
+
     key: string;
     name: string;
     green: string;
