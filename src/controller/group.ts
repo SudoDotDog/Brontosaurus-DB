@@ -5,12 +5,16 @@
  */
 
 import { ObjectID } from "bson";
+import { fitAnchor } from "../data/common";
 import { IGroupConfig } from "../interface/group";
 import { GroupModel, IGroupModel } from "../model/group";
 
 export const createUnsavedGroup = (name: string, description?: string): IGroupModel => {
 
+    const anchor: string = fitAnchor(name);
+
     const config: IGroupConfig = {
+        anchor,
         name,
         description,
     };

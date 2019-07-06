@@ -5,7 +5,8 @@
  */
 
 import { ObjectID } from "bson";
-import { OrganizationDetail } from "../interface/organization";
+import { fitAnchor } from "../data/common";
+import { IOrganizationConfig, OrganizationDetail } from "../interface/organization";
 import { AccountModel, IAccountModel } from "../model/account";
 import { IOrganizationModel, OrganizationModel } from "../model/organization";
 
@@ -65,11 +66,18 @@ export const getOrganizationsByOwner = async (owner: ObjectID): Promise<IOrganiz
 export const createUnsavedOrganization = (
     name: string,
     owner: ObjectID,
-): IOrganizationModel =>
-    new OrganizationModel({
+): IOrganizationModel => {
+
+    const anchor: string = fitAnchor(name);
+
+    const config: IOrganizationConfig = {
+        anchor,
         owner,
         name,
-    });
+    };
+
+    return new OrganizationModel(config);
+};
 
 export const isOrganizationDuplicatedByName = async (name: string): Promise<boolean> => {
     const organization: IOrganizationModel | null = await getOrganizationByName(name);

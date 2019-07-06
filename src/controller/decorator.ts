@@ -5,12 +5,16 @@
  */
 
 import { ObjectID } from "bson";
+import { fitAnchor } from "../data/common";
 import { IDecoratorConfig } from "../interface/decorator";
 import { DecoratorModel, IDecoratorModel } from "../model/decorator";
 
 export const createUnsavedDecorator = (name: string, description?: string): IDecoratorModel => {
 
+    const anchor: string = fitAnchor(name);
+
     const config: IDecoratorConfig = {
+        anchor,
         name,
         description,
     };

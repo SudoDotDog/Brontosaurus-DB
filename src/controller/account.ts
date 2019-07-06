@@ -7,6 +7,7 @@
 import { Basics } from "@brontosaurus/definition";
 import { _Random } from "@sudoo/bark/random";
 import { ObjectID } from "bson";
+import { fitAnchor } from "../data/common";
 import { IAccountConfig } from "../interface/account";
 import { AccountModel, IAccountModel } from "../model/account";
 import { garblePassword } from "../util/auth";
@@ -79,9 +80,11 @@ export const createUnsavedAccount = (
 
     const salt: string = _Random.unique();
     const mint: string = _Random.unique();
+    const anchor: string = fitAnchor(username);
 
-    return new AccountModel({
+    const config: IAccountConfig = {
 
+        anchor,
         username,
         password: garblePassword(password, salt),
         email,
@@ -92,7 +95,9 @@ export const createUnsavedAccount = (
         salt,
         organization,
         groups,
-    });
+    };
+
+    return new AccountModel(config);
 };
 
 export const getAccountsByOrganization = async (organization: string): Promise<IAccountModel[]> =>

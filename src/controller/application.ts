@@ -5,13 +5,17 @@
  */
 
 import { trustable } from "@sudoo/bark/random";
+import { fitAnchor } from "../data/common";
 import { ApplicationOthersConfig, IApplicationConfig } from "../interface/application";
 import { ApplicationModel, IApplicationModel } from "../model/application";
 
 export const createUnsavedApplication = (name: string, key: string, expire: number, secret: string, others: ApplicationOthersConfig): IApplicationModel => {
 
     const tempGreen: string = trustable();
+    const anchor: string = fitAnchor(name);
+
     const config: IApplicationConfig = {
+        anchor,
         avatar: others.avatar,
         helpLink: others.helpLink,
         privacyPolicy: others.privacyPolicy,

@@ -12,11 +12,12 @@ export const defaultInitialAttemptPoints: number = 100;
 
 export interface IAccountConfig {
 
-    anchor: string;
+    readonly anchor: string;
+    readonly username: string;
 
-    username: string;
     password: string;
-
+    mint: string;
+    salt: string;
     email: string;
     phone: string;
     infos: string[];
@@ -33,8 +34,7 @@ export interface IAccount extends IAccountConfig {
     attemptPoints: number;
     limbo: boolean;
     twoFA?: string;
-    mint: string;
-    salt: string;
+
     history: string[];
 
     readonly createdAt: Date;
