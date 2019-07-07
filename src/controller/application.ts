@@ -27,7 +27,6 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
         secret,
         groups: [],
     };
-
     return new ApplicationModel(config);
 };
 

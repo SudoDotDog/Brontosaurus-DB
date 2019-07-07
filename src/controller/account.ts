@@ -13,22 +13,34 @@ import { AccountModel, IAccountModel } from "../model/account";
 import { garblePassword } from "../util/auth";
 import { parseInfo } from "../util/token";
 
-export const createUnsavedAccountByConfig = (config: IAccountConfig) => {
+export const createUnsavedAccountByConfig = (
+    config: IAccountConfig,
+    infos: Record<string, Basics> = {},
+    beacons: Record<string, Basics> = {},
+) => {
+
+    const infoList: string[] = parseInfo(infos);
+    const beaconList: string[] = parseInfo(beacons);
 
     const salt: string = _Random.unique();
     const mint: string = _Random.unique();
+    const anchor: string = fitAnchor(config.username);
 
-    return new AccountModel({
+    const parsedConfig: IAccountConfig = {
 
+        anchor,
         username: config.username,
-        password: garblePassword(config.password, salt),
-        infos: config.infos,
-        beacons: config.beacons,
+        password: garblePassword(config.username, salt),
+        email: config.email,
+        phone: config.phone,
+        infos: infoList,
+        beacons: beaconList,
         mint,
         salt,
         organization: config.organization,
         groups: config.groups,
-    });
+    };
+    return new AccountModel(parsedConfig);
 };
 
 export const createOnLimboUnsavedAccount = (
@@ -47,10 +59,11 @@ export const createOnLimboUnsavedAccount = (
 
     const salt: string = _Random.unique();
     const mint: string = _Random.unique();
+    const anchor: string = fitAnchor(username);
 
-    return new AccountModel({
+    const config: IAccountConfig = {
 
-        limbo: true,
+        anchor,
         username,
         password: garblePassword(password, salt),
         email,
@@ -61,6 +74,11 @@ export const createOnLimboUnsavedAccount = (
         salt,
         organization,
         groups,
+    };
+    return new AccountModel({
+
+        limbo: true,
+        ...config,
     });
 };
 
@@ -96,7 +114,6 @@ export const createUnsavedAccount = (
         organization,
         groups,
     };
-
     return new AccountModel(config);
 };
 
