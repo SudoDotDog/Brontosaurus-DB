@@ -17,13 +17,13 @@ const DecoratorSchema: Schema = new Schema(
         anchor: {
             type: String,
             required: true,
+            unique: true,
             index: true,
         },
         name: {
             type: String,
             required: true,
             unique: true,
-            index: true,
         },
         description: {
             type: String,

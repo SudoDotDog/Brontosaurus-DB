@@ -23,7 +23,13 @@ const AccountSchema: Schema = new Schema(
         anchor: {
             type: String,
             required: true,
+            unique: true,
             index: true,
+        },
+        username: {
+            type: String,
+            required: true,
+            unique: true,
         },
         attemptPoints: {
             type: Number,
@@ -43,12 +49,6 @@ const AccountSchema: Schema = new Schema(
             type: [Schema.Types.ObjectId],
             required: true,
             default: [],
-        },
-        username: {
-            type: String,
-            required: true,
-            unique: true,
-            index: true,
         },
         password: {
             type: String,

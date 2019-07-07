@@ -17,13 +17,13 @@ const GroupSchema: Schema = new Schema(
         anchor: {
             type: String,
             required: true,
+            unique: true,
             index: true,
         },
         name: {
             type: String,
             required: true,
             unique: true,
-            index: true,
         },
         decorators: {
             type: [Schema.Types.ObjectId],

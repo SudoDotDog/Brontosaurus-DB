@@ -18,6 +18,7 @@ const ApplicationSchema: Schema = new Schema(
         anchor: {
             type: String,
             required: true,
+            unique: true,
             index: true,
         },
         avatar: {
@@ -49,11 +50,11 @@ const ApplicationSchema: Schema = new Schema(
             type: String,
             required: true,
             unique: true,
-            index: true,
         },
         name: {
             type: String,
             required: true,
+            unique: true,
             index: true,
         },
         green: {
