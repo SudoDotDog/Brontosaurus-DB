@@ -48,6 +48,7 @@ export const getApplicationByKey = async (key: string): Promise<IApplicationMode
 };
 
 export const isApplicationDuplicatedByKey = async (key: string): Promise<boolean> => {
+
     const application: IApplicationModel | null = await getApplicationByKey(key);
     return Boolean(application);
 };
@@ -70,22 +71,40 @@ export const getTotalActiveApplicationPages = async (limit: number): Promise<num
 
 export const getActiveApplicationPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
+    const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(keyword, 'i');
+    const anchorRegExp: RegExp = new RegExp(anchor);
     return (await ApplicationModel.countDocuments({
-        name: {
-            $regex: regexp,
+        $or: [{
+            name: {
+                $regex: regexp,
+            },
         },
+        {
+            anchor: {
+                $regex: anchorRegExp,
+            },
+        }],
         active: true,
     })) / limit;
 };
 
 export const getApplicationPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
+    const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(keyword, 'i');
+    const anchorRegExp: RegExp = new RegExp(anchor);
     return (await ApplicationModel.countDocuments({
-        name: {
-            $regex: regexp,
+        $or: [{
+            name: {
+                $regex: regexp,
+            },
         },
+        {
+            anchor: {
+                $regex: anchorRegExp,
+            },
+        }],
     })) / limit;
 };
 
@@ -111,11 +130,20 @@ export const getActiveApplicationsByPage = async (keyword: string, limit: number
         return [];
     }
 
+    const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(keyword, 'i');
+    const anchorRegExp: RegExp = new RegExp(anchor);
     const applications: IApplicationModel[] = await ApplicationModel.find({
-        name: {
-            $regex: regexp,
+        $or: [{
+            name: {
+                $regex: regexp,
+            },
         },
+        {
+            anchor: {
+                $regex: anchorRegExp,
+            },
+        }],
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
     return applications;
@@ -127,11 +155,20 @@ export const getApplicationsByPage = async (keyword: string, limit: number, page
         return [];
     }
 
+    const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(keyword, 'i');
+    const anchorRegExp: RegExp = new RegExp(anchor);
     const applications: IApplicationModel[] = await ApplicationModel.find({
-        name: {
-            $regex: regexp,
+        $or: [{
+            name: {
+                $regex: regexp,
+            },
         },
+        {
+            anchor: {
+                $regex: anchorRegExp,
+            },
+        }],
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
     return applications;
 };
