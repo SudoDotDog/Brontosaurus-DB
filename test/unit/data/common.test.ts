@@ -6,62 +6,128 @@
  */
 
 import { expect } from 'chai';
-import { COMMON_NAME_VALIDATE_RESPONSE, fitAnchor, validateCommonName } from '../../../src/data/common';
+import { COMMON_KEY_VALIDATE_RESPONSE, COMMON_NAME_VALIDATE_RESPONSE, fitAnchor, validateCommonKey, validateCommonName } from '../../../src/data/common';
 
 describe('Given [Validate Common Name] helper function', (): void => {
 
     it('should be able to validate common name OK', (): void => {
 
-        const username: string = 'Aa10';
+        const name: string = 'Aa 10';
 
-        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
+        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(name);
 
         expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.OK);
     });
 
     it('should be able to validate common name ok start with number', (): void => {
 
-        const username: string = '3a';
+        const name: string = '3a';
 
-        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
+        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(name);
 
         expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.OK);
     });
 
     it('should be able to validate common name only letter and number', (): void => {
 
-        const username: string = 'Aa10(';
+        const name: string = 'Aa10(';
 
-        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
+        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(name);
 
         expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL);
     });
 
     it('should be able to validate common name too short', (): void => {
 
-        const username: string = 'a';
+        const name: string = 'a';
 
-        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
+        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(name);
 
         expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.TOO_SHORT);
     });
 
     it('should be able to validate common name selected symbol', (): void => {
 
-        const username: string = 'Aa10d^&as92312';
+        const name: string = 'Aa10d^&as92312';
 
-        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
+        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(name);
 
         expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.OK);
     });
 
     it('should be able to validate common - no symbol', (): void => {
 
-        const username: string = '<<<123';
+        const name: string = '<<<123';
 
-        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(username);
+        const result: COMMON_NAME_VALIDATE_RESPONSE = validateCommonName(name);
 
         expect(result).to.be.equal(COMMON_NAME_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL);
+    });
+});
+
+describe('Given [Validate Common Key] helper function', (): void => {
+
+    it('should be able to validate common name OK', (): void => {
+
+        const key: string = 'Aa10';
+
+        const result: COMMON_KEY_VALIDATE_RESPONSE = validateCommonKey(key);
+
+        expect(result).to.be.equal(COMMON_KEY_VALIDATE_RESPONSE.OK);
+    });
+
+    it('should be able to validate common name ok start with number', (): void => {
+
+        const name: string = '3a';
+
+        const result: COMMON_KEY_VALIDATE_RESPONSE = validateCommonKey(name);
+
+        expect(result).to.be.equal(COMMON_KEY_VALIDATE_RESPONSE.OK);
+    });
+
+    it('should be able to validate common name no space', (): void => {
+
+        const key: string = 'Aa 10';
+
+        const result: COMMON_KEY_VALIDATE_RESPONSE = validateCommonKey(key);
+
+        expect(result).to.be.equal(COMMON_KEY_VALIDATE_RESPONSE.NO_SPACE);
+    });
+
+    it('should be able to validate common name only letter and number', (): void => {
+
+        const name: string = 'Aa10(';
+
+        const result: COMMON_KEY_VALIDATE_RESPONSE = validateCommonKey(name);
+
+        expect(result).to.be.equal(COMMON_KEY_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL);
+    });
+
+    it('should be able to validate common name too short', (): void => {
+
+        const name: string = 'a';
+
+        const result: COMMON_KEY_VALIDATE_RESPONSE = validateCommonKey(name);
+
+        expect(result).to.be.equal(COMMON_KEY_VALIDATE_RESPONSE.TOO_SHORT);
+    });
+
+    it('should be able to validate common name selected symbol', (): void => {
+
+        const name: string = 'Aa10d^&as92312';
+
+        const result: COMMON_KEY_VALIDATE_RESPONSE = validateCommonKey(name);
+
+        expect(result).to.be.equal(COMMON_KEY_VALIDATE_RESPONSE.OK);
+    });
+
+    it('should be able to validate common - no symbol', (): void => {
+
+        const name: string = '<<<123';
+
+        const result: COMMON_KEY_VALIDATE_RESPONSE = validateCommonKey(name);
+
+        expect(result).to.be.equal(COMMON_KEY_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL);
     });
 });
 
