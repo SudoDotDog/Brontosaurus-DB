@@ -12,5 +12,5 @@ import * as InformationController from "./information";
 import * as OrganizationController from "./organization";
 import * as PreferenceController from "./preference";
 
-export { AccountController, ApplicationController, DecoratorController, InformationController, GroupController, OrganizationController, PreferenceController };
+export { AccountController, ApplicationController, DecoratorController, GroupController, InformationController, OrganizationController, PreferenceController };
 
