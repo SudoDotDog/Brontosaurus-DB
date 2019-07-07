@@ -22,6 +22,7 @@ export type Preferences = {
 
     readonly globalAvatar: string;
     readonly globalBackgroundImages: string[];
+    readonly globalFavicon: string;
     readonly globalHelpLink: string;
     readonly globalPrivacyPolicy: string;
 };

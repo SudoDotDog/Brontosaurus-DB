@@ -16,9 +16,10 @@ export enum INTERNAL_APPLICATION {
 export type ApplicationOthersConfig = {
 
     avatar?: string;
+    backgroundImage?: string;
+    favicon?: string;
     helpLink?: string;
     privacyPolicy?: string;
-    backgroundImage?: string;
 };
 
 export interface IApplicationConfig extends ApplicationOthersConfig {

@@ -15,6 +15,7 @@ export const getApplicationOtherInformationByApplication = async (application: I
     const response: ApplicationOthersConfig = {
         avatar: application.avatar,
         backgroundImage: application.backgroundImage,
+        favicon: application.favicon,
         helpLink: application.helpLink,
         privacyPolicy: application.privacyPolicy,
     };
@@ -32,6 +33,15 @@ export const getApplicationOtherInformationByApplication = async (application: I
 
         if (globalBackgroundImages) {
             response.backgroundImage = _Array.sample(globalBackgroundImages);
+        }
+    }
+
+    if (!response.favicon) {
+
+        const globalFavicon: string | null = await getSinglePreference('globalFavicon');
+
+        if (globalFavicon) {
+            response.favicon = globalFavicon;
         }
     }
 
