@@ -13,24 +13,6 @@ import { AccountModel, IAccountModel } from "../model/account";
 import { garblePassword } from "../util/auth";
 import { parseInfo } from "../util/token";
 
-export const createUnsavedAccountByConfig = (config: IAccountConfig) => {
-
-    const salt: string = _Random.unique();
-    const mint: string = _Random.unique();
-
-    return new AccountModel({
-
-        username: config.username,
-        password: garblePassword(config.password, salt),
-        infos: config.infos,
-        beacons: config.beacons,
-        mint,
-        salt,
-        organization: config.organization,
-        groups: config.groups,
-    });
-};
-
 export const createOnLimboUnsavedAccount = (
     username: string,
     password: string,
