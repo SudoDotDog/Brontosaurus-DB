@@ -18,11 +18,12 @@ export interface IAccountConfig {
     password: string;
     mint: string;
     salt: string;
-    email: string;
-    phone: string;
     infos: string[];
     beacons: string[];
     groups: ObjectID[];
+
+    email?: string;
+    phone?: string;
     organization?: ObjectID;
 }
 
