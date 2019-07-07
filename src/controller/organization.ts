@@ -115,6 +115,8 @@ export const getSelectedActiveOrganizationPages = async (limit: number, keyword?
     return await getTotalActiveOrganizationPages(limit);
 };
 
+export const getAllOrganizations = async (): Promise<IOrganizationModel[]> => OrganizationModel.find({});
+
 export const getTotalOrganizationPages = async (limit: number): Promise<number> =>
     (await OrganizationModel.estimatedDocumentCount({})) / limit;
 

@@ -154,8 +154,7 @@ export const getAllActiveGroups = async (): Promise<IGroupModel[]> =>
         active: true,
     });
 
-export const getAllGroups = async (): Promise<IGroupModel[]> =>
-    await GroupModel.find({});
+export const getAllGroups = async (): Promise<IGroupModel[]> => GroupModel.find({});
 
 export const getActiveGroupsByRawPage = async (keyword: string, limit: number, page: number): Promise<IGroupModel[]> => {
 

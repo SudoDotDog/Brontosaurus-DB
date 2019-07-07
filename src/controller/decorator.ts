@@ -154,8 +154,7 @@ export const getAllActiveDecorators = async (): Promise<IDecoratorModel[]> =>
         active: true,
     });
 
-export const getAllDecorators = async (): Promise<IDecoratorModel[]> =>
-    await DecoratorModel.find({});
+export const getAllDecorators = async (): Promise<IDecoratorModel[]> => DecoratorModel.find({});
 
 export const getActiveDecoratorsByRawPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
 

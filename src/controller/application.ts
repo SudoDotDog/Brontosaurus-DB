@@ -32,6 +32,8 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
     return new ApplicationModel(config);
 };
 
+export const getAllApplications = async (): Promise<IApplicationModel[]> => ApplicationModel.find({});
+
 export const getApplicationByRawKey = async (key: string): Promise<IApplicationModel | null> =>
     await ApplicationModel.findOne({
         key,
