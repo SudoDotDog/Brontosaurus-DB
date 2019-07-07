@@ -12,16 +12,18 @@ import { ApplicationModel, IApplicationModel } from "../model/application";
 export const createUnsavedApplication = (name: string, key: string, expire: number, secret: string, others: ApplicationOthersConfig): IApplicationModel => {
 
     const tempGreen: string = trustable();
-    const anchor: string = fitAnchor(name);
+    const anchor: string = fitAnchor(key);
 
     const config: IApplicationConfig = {
+
         anchor,
+        key,
+
         avatar: others.avatar,
         helpLink: others.helpLink,
         privacyPolicy: others.privacyPolicy,
         backgroundImage: others.backgroundImage,
         green: tempGreen,
-        key,
         name,
         expire,
         secret,
@@ -30,10 +32,18 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
     return new ApplicationModel(config);
 };
 
-export const getApplicationByKey = async (key: string): Promise<IApplicationModel | null> =>
+export const getApplicationByRawKey = async (key: string): Promise<IApplicationModel | null> =>
     await ApplicationModel.findOne({
         key,
     });
+
+export const getApplicationByKey = async (key: string): Promise<IApplicationModel | null> => {
+
+    const anchor: string = fitAnchor(key);
+    return await ApplicationModel.findOne({
+        anchor,
+    });
+};
 
 export const isApplicationDuplicatedByKey = async (key: string): Promise<boolean> => {
     const application: IApplicationModel | null = await getApplicationByKey(key);

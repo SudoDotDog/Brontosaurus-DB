@@ -33,17 +33,35 @@ export const getDecoratorsByIds = async (ids: ObjectID[]): Promise<IDecoratorMod
         },
     });
 
-export const getDecoratorByName = async (name: string): Promise<IDecoratorModel | null> =>
+export const getDecoratorByRawName = async (name: string): Promise<IDecoratorModel | null> =>
     await DecoratorModel.findOne({
         name,
     });
 
-export const getDecoratorByNames = async (names: string[]): Promise<IDecoratorModel[]> =>
+export const getDecoratorByName = async (name: string): Promise<IDecoratorModel | null> => {
+
+    const anchor: string = fitAnchor(name);
+    return await DecoratorModel.findOne({
+        anchor,
+    });
+};
+
+export const getDecoratorByRawNames = async (names: string[]): Promise<IDecoratorModel[]> =>
     await DecoratorModel.find({
         name: {
             $in: names,
         },
     });
+
+export const getDecoratorByNames = async (names: string[]): Promise<IDecoratorModel[]> => {
+
+    const anchors: string[] = names.map((name: string) => fitAnchor(name));
+    return await DecoratorModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    });
+};
 
 export const isDecoratorDuplicatedByName = async (name: string): Promise<boolean> => {
     const decorator: IDecoratorModel | null = await getDecoratorByName(name);
@@ -71,7 +89,7 @@ export const getTotalActiveDecoratorPages = async (limit: number): Promise<numbe
         active: true,
     })) / limit;
 
-export const getActiveDecoratorPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+export const getActiveDecoratorPagesByRawKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
     return (await DecoratorModel.countDocuments({
@@ -82,11 +100,34 @@ export const getActiveDecoratorPagesByKeyword = async (limit: number, keyword: s
     })) / limit;
 };
 
-export const getDecoratorPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+export const getActiveDecoratorPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    return (await DecoratorModel.countDocuments({
+        anchor: {
+            $regex: regexp,
+        },
+        active: true,
+    })) / limit;
+};
+
+export const getDecoratorPagesByRawKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const regexp: RegExp = new RegExp(keyword, 'i');
     return (await DecoratorModel.countDocuments({
         name: {
+            $regex: regexp,
+        },
+    })) / limit;
+};
+
+export const getDecoratorPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    return (await DecoratorModel.countDocuments({
+        anchor: {
             $regex: regexp,
         },
     })) / limit;
@@ -116,7 +157,7 @@ export const getAllActiveDecorators = async (): Promise<IDecoratorModel[]> =>
 export const getAllDecorators = async (): Promise<IDecoratorModel[]> =>
     await DecoratorModel.find({});
 
-export const getActiveDecoratorsByPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
+export const getActiveDecoratorsByRawPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
 
     if (page < 0) {
         return [];
@@ -132,7 +173,24 @@ export const getActiveDecoratorsByPage = async (keyword: string, limit: number, 
     return decorators;
 };
 
-export const getDecoratorsByPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
+export const getActiveDecoratorsByPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const decorators: IDecoratorModel[] = await DecoratorModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return decorators;
+};
+
+export const getDecoratorsByRawPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
 
     if (page < 0) {
         return [];
@@ -141,6 +199,22 @@ export const getDecoratorsByPage = async (keyword: string, limit: number, page: 
     const regexp: RegExp = new RegExp(keyword, 'i');
     const decorators: IDecoratorModel[] = await DecoratorModel.find({
         name: {
+            $regex: regexp,
+        },
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return decorators;
+};
+
+export const getDecoratorsByPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const decorators: IDecoratorModel[] = await DecoratorModel.find({
+        anchor: {
             $regex: regexp,
         },
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
