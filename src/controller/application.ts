@@ -34,11 +34,6 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
 
 export const getAllApplications = async (): Promise<IApplicationModel[]> => ApplicationModel.find({});
 
-export const getApplicationByRawKey = async (key: string): Promise<IApplicationModel | null> =>
-    await ApplicationModel.findOne({
-        key,
-    });
-
 export const getApplicationByKey = async (key: string): Promise<IApplicationModel | null> => {
 
     const anchor: string = fitAnchor(key);

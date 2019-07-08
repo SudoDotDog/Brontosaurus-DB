@@ -46,11 +46,6 @@ export const getOrganizationsByIds = async (ids: ObjectID[]): Promise<IOrganizat
         },
     });
 
-export const getOrganizationByRawName = async (name: string): Promise<IOrganizationModel | null> =>
-    await OrganizationModel.findOne({
-        name,
-    });
-
 export const getOrganizationByName = async (name: string): Promise<IOrganizationModel | null> => {
 
     const anchor: string = fitAnchor(name);
@@ -58,13 +53,6 @@ export const getOrganizationByName = async (name: string): Promise<IOrganization
         anchor,
     });
 };
-
-export const getOrganizationByRawNames = async (names: string[]): Promise<IOrganizationModel[]> =>
-    await OrganizationModel.find({
-        name: {
-            $in: names,
-        },
-    });
 
 export const getOrganizationByNames = async (names: string[]): Promise<IOrganizationModel[]> => {
 
@@ -125,17 +113,6 @@ export const getTotalActiveOrganizationPages = async (limit: number): Promise<nu
         active: true,
     })) / limit;
 
-export const getActiveOrganizationPagesByRawKeyword = async (limit: number, keyword: string): Promise<number> => {
-
-    const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await OrganizationModel.countDocuments({
-        name: {
-            $regex: regexp,
-        },
-        active: true,
-    })) / limit;
-};
-
 export const getActiveOrganizationPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const anchor: string = fitAnchor(keyword);
@@ -145,16 +122,6 @@ export const getActiveOrganizationPagesByKeyword = async (limit: number, keyword
             $regex: regexp,
         },
         active: true,
-    })) / limit;
-};
-
-export const getOrganizationPagesByRawKeyword = async (limit: number, keyword: string): Promise<number> => {
-
-    const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await OrganizationModel.countDocuments({
-        name: {
-            $regex: regexp,
-        },
     })) / limit;
 };
 
@@ -185,22 +152,6 @@ export const getSelectedOrganizationsByPage = async (limit: number, page: number
     return await getAllOrganizationsByPage(limit, page);
 };
 
-export const getActiveOrganizationsByRawPage = async (keyword: string, limit: number, page: number): Promise<IOrganizationModel[]> => {
-
-    if (page < 0) {
-        return [];
-    }
-
-    const regexp: RegExp = new RegExp(keyword, 'i');
-    const organizations: IOrganizationModel[] = await OrganizationModel.find({
-        name: {
-            $regex: regexp,
-        },
-        active: true,
-    }).skip(page * limit).limit(limit).sort({ _id: -1 });
-    return organizations;
-};
-
 export const getActiveOrganizationsByPage = async (keyword: string, limit: number, page: number): Promise<IOrganizationModel[]> => {
 
     if (page < 0) {
@@ -214,21 +165,6 @@ export const getActiveOrganizationsByPage = async (keyword: string, limit: numbe
             $regex: regexp,
         },
         active: true,
-    }).skip(page * limit).limit(limit).sort({ _id: -1 });
-    return organizations;
-};
-
-export const getOrganizationsByRawPage = async (keyword: string, limit: number, page: number): Promise<IOrganizationModel[]> => {
-
-    if (page < 0) {
-        return [];
-    }
-
-    const regexp: RegExp = new RegExp(keyword, 'i');
-    const organizations: IOrganizationModel[] = await OrganizationModel.find({
-        name: {
-            $regex: regexp,
-        },
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
     return organizations;
 };

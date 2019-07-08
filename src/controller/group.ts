@@ -33,11 +33,6 @@ export const getGroupsByIds = async (ids: ObjectID[]): Promise<IGroupModel[]> =>
         },
     });
 
-export const getGroupByRawName = async (name: string): Promise<IGroupModel | null> =>
-    await GroupModel.findOne({
-        name,
-    });
-
 export const getGroupByName = async (name: string): Promise<IGroupModel | null> => {
 
     const anchor: string = fitAnchor(name);
@@ -45,13 +40,6 @@ export const getGroupByName = async (name: string): Promise<IGroupModel | null> 
         anchor,
     });
 };
-
-export const getGroupByRawNames = async (names: string[]): Promise<IGroupModel[]> =>
-    await GroupModel.find({
-        name: {
-            $in: names,
-        },
-    });
 
 export const getGroupByNames = async (names: string[]): Promise<IGroupModel[]> => {
 
@@ -89,17 +77,6 @@ export const getTotalActiveGroupPages = async (limit: number): Promise<number> =
         active: true,
     })) / limit;
 
-export const getActiveGroupPagesByRawKeyword = async (limit: number, keyword: string): Promise<number> => {
-
-    const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await GroupModel.countDocuments({
-        name: {
-            $regex: regexp,
-        },
-        active: true,
-    })) / limit;
-};
-
 export const getActiveGroupPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
     const anchor: string = fitAnchor(keyword);
@@ -109,16 +86,6 @@ export const getActiveGroupPagesByKeyword = async (limit: number, keyword: strin
             $regex: regexp,
         },
         active: true,
-    })) / limit;
-};
-
-export const getGroupPagesByRawKeyword = async (limit: number, keyword: string): Promise<number> => {
-
-    const regexp: RegExp = new RegExp(keyword, 'i');
-    return (await GroupModel.countDocuments({
-        name: {
-            $regex: regexp,
-        },
     })) / limit;
 };
 
@@ -156,22 +123,6 @@ export const getAllActiveGroups = async (): Promise<IGroupModel[]> =>
 
 export const getAllGroups = async (): Promise<IGroupModel[]> => GroupModel.find({});
 
-export const getActiveGroupsByRawPage = async (keyword: string, limit: number, page: number): Promise<IGroupModel[]> => {
-
-    if (page < 0) {
-        return [];
-    }
-
-    const regexp: RegExp = new RegExp(keyword, 'i');
-    const groups: IGroupModel[] = await GroupModel.find({
-        name: {
-            $regex: regexp,
-        },
-        active: true,
-    }).skip(page * limit).limit(limit).sort({ _id: -1 });
-    return groups;
-};
-
 export const getActiveGroupsByPage = async (keyword: string, limit: number, page: number): Promise<IGroupModel[]> => {
 
     if (page < 0) {
@@ -185,21 +136,6 @@ export const getActiveGroupsByPage = async (keyword: string, limit: number, page
             $regex: regexp,
         },
         active: true,
-    }).skip(page * limit).limit(limit).sort({ _id: -1 });
-    return groups;
-};
-
-export const getGroupsByRawPage = async (keyword: string, limit: number, page: number): Promise<IGroupModel[]> => {
-
-    if (page < 0) {
-        return [];
-    }
-
-    const regexp: RegExp = new RegExp(keyword, 'i');
-    const groups: IGroupModel[] = await GroupModel.find({
-        name: {
-            $regex: regexp,
-        },
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
     return groups;
 };
