@@ -177,6 +177,34 @@ export const getAccountPagesByKeyword = async (limit: number, keyword: string): 
     })) / limit;
 };
 
+export const getStandaloneAccountsCountByKeyword = async (keyword: string): Promise<number> => {
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    return await AccountModel.countDocuments({
+        anchor: {
+            $regex: regexp,
+        },
+        organization: {
+            $exists: false,
+        },
+    });
+};
+
+export const getFirstPageStandaloneAccountsByKeyword = async (limit: number, keyword: string): Promise<IAccountModel[]> => {
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    return await AccountModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+        organization: {
+            $exists: false,
+        },
+    }).limit(limit);
+};
+
 export const getSelectedActiveAccountsByPage = async (limit: number, page: number, keyword?: string): Promise<IAccountModel[]> => {
 
     if (keyword) {
