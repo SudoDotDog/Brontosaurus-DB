@@ -20,7 +20,7 @@ export const validateCommonName = (
         return COMMON_NAME_VALIDATE_RESPONSE.TOO_SHORT;
     }
 
-    if (!/^([A-Za-z0-9]|[-_!@#$^&*=+ ])+$/.test(name)) {
+    if (!/^([A-Za-z0-9]|[-_!@#$^&*=+., ])+$/.test(name)) {
         return COMMON_NAME_VALIDATE_RESPONSE.ONLY_SELECTED_SYMBOL;
     }
 
