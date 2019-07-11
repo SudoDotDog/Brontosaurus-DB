@@ -10,4 +10,5 @@ export * from "./decorator";
 export * from "./group";
 export * from "./organization";
 export * from "./preference";
+export * from "./tag";
 
