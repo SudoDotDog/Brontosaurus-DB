@@ -23,6 +23,7 @@ export interface IOrganizationConfig {
 export interface IOrganization extends IOrganizationConfig {
 
     decorators: ObjectID[];
+    tags: ObjectID[];
 
     active: boolean;
     history: string[];

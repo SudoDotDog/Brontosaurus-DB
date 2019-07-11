@@ -82,6 +82,11 @@ const AccountSchema: Schema = new Schema(
             required: true,
             default: [],
         },
+        tags: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
 
         mint: {
             type: String,

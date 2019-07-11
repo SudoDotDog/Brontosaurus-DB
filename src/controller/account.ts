@@ -22,6 +22,7 @@ export const createOnLimboUnsavedAccount = (
     groups: ObjectID[] = [],
     infos: Record<string, Basics> = {},
     beacons: Record<string, Basics> = {},
+    tags: ObjectID[] = [],
 ): IAccountModel => {
 
     const infoList: string[] = parseInfo(infos);
@@ -44,6 +45,7 @@ export const createOnLimboUnsavedAccount = (
         salt,
         organization,
         groups,
+        tags,
     };
     return new AccountModel({
 
@@ -61,6 +63,7 @@ export const createUnsavedAccount = (
     groups: ObjectID[] = [],
     infos: Record<string, Basics> = {},
     beacons: Record<string, Basics> = {},
+    tags: ObjectID[] = [],
 ): IAccountModel => {
 
     const infoList: string[] = parseInfo(infos);
@@ -83,6 +86,7 @@ export const createUnsavedAccount = (
         salt,
         organization,
         groups,
+        tags,
     };
     return new AccountModel(config);
 };
@@ -128,7 +132,24 @@ export const getTotalActiveAccountPages = async (limit: number): Promise<number>
         active: true,
     })) / limit;
 
+export const getActiveAccountsByTags = async (tags: string[]): Promise<IAccountModel[]> => {
 
+    return await AccountModel.find({
+        tags: {
+            $in: tags,
+        },
+        active: true,
+    });
+};
+
+export const getAccountsByTags = async (tags: string[]): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
+        tags: {
+            $in: tags,
+        },
+    });
+};
 
 export const getActiveAccountPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 

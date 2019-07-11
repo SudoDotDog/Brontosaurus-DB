@@ -21,6 +21,7 @@ export interface IAccountConfig {
     infos: string[];
     beacons: string[];
     groups: ObjectID[];
+    tags: ObjectID[];
 
     email?: string;
     phone?: string;

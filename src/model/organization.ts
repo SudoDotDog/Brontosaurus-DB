@@ -30,6 +30,11 @@ const OrganizationSchema: Schema = new Schema(
             required: true,
             default: [],
         },
+        tags: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
         owner: {
             type: Schema.Types.ObjectId,
             required: true,

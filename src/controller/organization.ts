@@ -64,6 +64,25 @@ export const getOrganizationByNames = async (names: string[]): Promise<IOrganiza
     });
 };
 
+export const getActiveOrganizationsByTags = async (tags: string[]): Promise<IOrganizationModel[]> => {
+
+    return await OrganizationModel.find({
+        tags: {
+            $in: tags,
+        },
+        active: true,
+    });
+};
+
+export const getOrganizationsByTags = async (tags: string[]): Promise<IOrganizationModel[]> => {
+
+    return await OrganizationModel.find({
+        tags: {
+            $in: tags,
+        },
+    });
+};
+
 export const getOrganizationsByOwner = async (owner: ObjectID): Promise<IOrganizationModel[]> =>
     await OrganizationModel.find({
         owner,
