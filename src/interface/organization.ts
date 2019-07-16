@@ -8,8 +8,8 @@ import { ObjectID } from "bson";
 
 export type OrganizationDetail = {
 
-    name: string;
-    owner: string;
+    readonly name: string;
+    readonly owner: string;
 };
 
 export interface IOrganizationConfig {
@@ -24,6 +24,7 @@ export interface IOrganization extends IOrganizationConfig {
 
     decorators: ObjectID[];
     tags: ObjectID[];
+    limit: number;
 
     active: boolean;
     history: string[];

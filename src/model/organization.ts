@@ -35,6 +35,11 @@ const OrganizationSchema: Schema = new Schema(
             required: true,
             default: [],
         },
+        limit: {
+            type: Number,
+            required: true,
+            default: 25,
+        },
         owner: {
             type: Schema.Types.ObjectId,
             required: true,
