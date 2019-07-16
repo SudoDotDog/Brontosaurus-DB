@@ -300,3 +300,11 @@ export const resetAccountPassword = async (username: string, newPassword: string
     await account.save();
     return account;
 };
+
+export const getAccountCountByOrganization = async (organizationId: ObjectID): Promise<number> => {
+
+    return await AccountModel.countDocuments({
+        organization: organizationId,
+        active: true,
+    });
+};
