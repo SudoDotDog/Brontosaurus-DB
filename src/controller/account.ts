@@ -308,3 +308,19 @@ export const getAccountCountByOrganization = async (organizationId: ObjectID): P
         active: true,
     });
 };
+
+export const getActiveAccountCountByGroup = async (group: ObjectID): Promise<number> => {
+
+    return await AccountModel.countDocuments({
+        groups: group,
+        active: true,
+    });
+};
+
+export const getActiveAccountsByGroup = async (group: ObjectID): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
+        groups: group,
+        active: true,
+    });
+};
