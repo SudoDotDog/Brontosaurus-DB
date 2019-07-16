@@ -23,6 +23,7 @@ export interface IAccountConfig {
     groups: ObjectID[];
     tags: ObjectID[];
 
+    displayName?: string;
     email?: string;
     phone?: string;
     organization?: ObjectID;

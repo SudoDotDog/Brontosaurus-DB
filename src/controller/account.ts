@@ -16,6 +16,7 @@ import { parseInfo } from "../util/token";
 export const createOnLimboUnsavedAccount = (
     username: string,
     password: string,
+    displayName?: string,
     email?: string,
     phone?: string,
     organization?: ObjectID,
@@ -36,6 +37,7 @@ export const createOnLimboUnsavedAccount = (
 
         anchor,
         username,
+        displayName,
         password: garblePassword(password, salt),
         email,
         phone,
@@ -57,6 +59,7 @@ export const createOnLimboUnsavedAccount = (
 export const createUnsavedAccount = (
     username: string,
     password: string,
+    displayName?: string,
     email?: string,
     phone?: string,
     organization?: ObjectID,
@@ -77,6 +80,7 @@ export const createUnsavedAccount = (
 
         anchor,
         username,
+        displayName,
         password: garblePassword(password, salt),
         email,
         phone,
@@ -106,6 +110,15 @@ export const getAccountByUsername = async (username: string): Promise<IAccountMo
     const anchor: string = fitAnchor(username);
     return await AccountModel.findOne({
         anchor,
+    });
+};
+
+export const getActiveAccountByUsername = async (username: string): Promise<IAccountModel | null> => {
+
+    const anchor: string = fitAnchor(username);
+    return await AccountModel.findOne({
+        anchor,
+        active: true,
     });
 };
 

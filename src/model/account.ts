@@ -31,6 +31,10 @@ const AccountSchema: Schema = new Schema(
             required: true,
             unique: true,
         },
+        displayName: {
+            type: String,
+            required: false,
+        },
         attemptPoints: {
             type: Number,
             required: true,
