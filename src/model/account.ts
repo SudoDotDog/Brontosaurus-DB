@@ -126,6 +126,8 @@ export interface IAccountModel extends IAccount, Document {
     addGroup(id: ObjectID): IAccountModel;
     removeGroup(id: ObjectID): IAccountModel;
     setPassword(password: string): IAccountModel;
+    setTempPassword(): IAccountModel;
+    resetMint(): IAccountModel;
     verifyPassword(password: string): boolean;
 }
 
@@ -223,10 +225,25 @@ AccountSchema.methods.removeGroup = function (this: IAccountModel, id: ObjectID)
     return this;
 };
 
+AccountSchema.methods.setTempPassword = function (this: IAccountModel): IAccountModel {
+
+    const tempPassword: string = _Random.random(6);
+    this.setPassword(tempPassword);
+
+    return this;
+};
+
 AccountSchema.methods.setPassword = function (this: IAccountModel, password: string): IAccountModel {
 
     const saltedPassword: string = garblePassword(password, this.salt);
     this.password = saltedPassword;
+    this.resetMint();
+
+    return this;
+};
+
+AccountSchema.methods.resetMint = function (this: IAccountModel): IAccountModel {
+
     this.mint = _Random.unique();
 
     return this;
