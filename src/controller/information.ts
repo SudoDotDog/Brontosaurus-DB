@@ -5,12 +5,11 @@
  */
 
 import { _Array } from "@sudoo/bark/array";
-import { ApplicationOthersConfig } from "../interface/application";
-import { IApplicationModel } from "../model/application";
-import { getApplicationByKey } from "./application";
+import { ApplicationOthersConfig, IApplication } from "../interface/application";
+import { getApplicationByKeyLean } from "./application";
 import { getSinglePreference } from "./preference";
 
-export const getApplicationOtherInformationByApplication = async (application: IApplicationModel): Promise<ApplicationOthersConfig> => {
+export const getApplicationOtherInformationByApplication = async (application: IApplication): Promise<ApplicationOthersConfig> => {
 
     const response: ApplicationOthersConfig = {
         avatar: application.avatar,
@@ -66,7 +65,7 @@ export const getApplicationOtherInformationByApplication = async (application: I
 
 export const getApplicationOtherInformationByKey = async (key: string): Promise<ApplicationOthersConfig | null> => {
 
-    const application: IApplicationModel | null = await getApplicationByKey(key);
+    const application: IApplication | null = await getApplicationByKeyLean(key);
 
     if (!application) {
         return null;

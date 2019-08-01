@@ -21,17 +21,21 @@ export const createUnsavedGroup = (name: string, description?: string): IGroupMo
     return new GroupModel(config);
 };
 
-export const getGroupById = async (id: ObjectID): Promise<IGroupModel | null> =>
-    await GroupModel.findOne({
+export const getGroupById = async (id: ObjectID): Promise<IGroupModel | null> => {
+
+    return await GroupModel.findOne({
         _id: id,
     });
+};
 
-export const getGroupsByIds = async (ids: ObjectID[]): Promise<IGroupModel[]> =>
-    await GroupModel.find({
+export const getGroupsByIds = async (ids: ObjectID[]): Promise<IGroupModel[]> => {
+
+    return await GroupModel.find({
         _id: {
             $in: ids,
         },
     });
+};
 
 export const getGroupByName = async (name: string): Promise<IGroupModel | null> => {
 
@@ -69,13 +73,17 @@ export const getSelectedActiveGroupPages = async (limit: number, keyword?: strin
     return await getTotalActiveGroupPages(limit);
 };
 
-export const getTotalGroupPages = async (limit: number): Promise<number> =>
-    (await GroupModel.estimatedDocumentCount({})) / limit;
+export const getTotalGroupPages = async (limit: number): Promise<number> => {
 
-export const getTotalActiveGroupPages = async (limit: number): Promise<number> =>
-    (await GroupModel.countDocuments({
+    return (await GroupModel.estimatedDocumentCount({})) / limit;
+};
+
+export const getTotalActiveGroupPages = async (limit: number): Promise<number> => {
+
+    return (await GroupModel.countDocuments({
         active: true,
     })) / limit;
+};
 
 export const getActiveGroupPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
@@ -116,10 +124,12 @@ export const getSelectedGroupsByPage = async (limit: number, page: number, keywo
     return await getAllGroupsByPage(limit, page);
 };
 
-export const getAllActiveGroups = async (): Promise<IGroupModel[]> =>
-    await GroupModel.find({
+export const getAllActiveGroups = async (): Promise<IGroupModel[]> => {
+
+    return await GroupModel.find({
         active: true,
     });
+};
 
 export const getAllGroups = async (): Promise<IGroupModel[]> => GroupModel.find({});
 

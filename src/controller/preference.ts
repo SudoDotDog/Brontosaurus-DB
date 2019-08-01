@@ -4,14 +4,14 @@
  * @description Preference
  */
 
-import { Preferences } from "../interface/preference";
+import { IPreference, Preferences } from "../interface/preference";
 import { IPreferenceModel, PreferenceModel } from "../model/preference";
 
 export const getSinglePreference = async <N extends keyof Preferences>(name: N): Promise<Preferences[N] | null> => {
 
-    const preference: IPreferenceModel | null = await PreferenceModel.findOne({
+    const preference: IPreference | null = await PreferenceModel.findOne({
         name,
-    });
+    }).lean();
 
     if (!preference) {
         return null;
@@ -33,11 +33,11 @@ export const addMultiplePreference = async <N extends keyof Preferences>(name: N
 
 export const getMultiplePreference = async <N extends keyof Preferences>(name: N): Promise<Array<Preferences[N]>> => {
 
-    const preferences: IPreferenceModel[] = await PreferenceModel.find({
+    const preferences: IPreference[] = await PreferenceModel.find({
         name,
-    });
+    }).lean();
 
-    return preferences.map((model: IPreferenceModel) => JSON.parse(model.value));
+    return preferences.map((model: IPreference) => JSON.parse(model.value));
 };
 
 export const setSinglePreference = async <N extends keyof Preferences>(name: N, value: Preferences[N]): Promise<void> => {
