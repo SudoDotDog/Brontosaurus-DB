@@ -6,7 +6,7 @@
 
 import { ObjectID } from "bson";
 import { fitAnchor } from "../data/common";
-import { IGroupConfig } from "../interface/group";
+import { IGroup, IGroupConfig } from "../interface/group";
 import { GroupModel, IGroupModel } from "../model/group";
 
 export const createUnsavedGroup = (name: string, description?: string): IGroupModel => {
@@ -28,6 +28,13 @@ export const getGroupById = async (id: ObjectID): Promise<IGroupModel | null> =>
     });
 };
 
+export const getGroupByIdLean = async (id: ObjectID): Promise<IGroup | null> => {
+
+    return await GroupModel.findOne({
+        _id: id,
+    }).lean();
+};
+
 export const getGroupsByIds = async (ids: ObjectID[]): Promise<IGroupModel[]> => {
 
     return await GroupModel.find({
@@ -35,6 +42,15 @@ export const getGroupsByIds = async (ids: ObjectID[]): Promise<IGroupModel[]> =>
             $in: ids,
         },
     });
+};
+
+export const getGroupsByIdsLean = async (ids: ObjectID[]): Promise<IGroup[]> => {
+
+    return await GroupModel.find({
+        _id: {
+            $in: ids,
+        },
+    }).lean();
 };
 
 export const getGroupByName = async (name: string): Promise<IGroupModel | null> => {
@@ -45,6 +61,14 @@ export const getGroupByName = async (name: string): Promise<IGroupModel | null> 
     });
 };
 
+export const getGroupByNameLean = async (name: string): Promise<IGroup | null> => {
+
+    const anchor: string = fitAnchor(name);
+    return await GroupModel.findOne({
+        anchor,
+    }).lean();
+};
+
 export const getGroupByNames = async (names: string[]): Promise<IGroupModel[]> => {
 
     const anchors: string[] = names.map((name: string) => fitAnchor(name));
@@ -53,6 +77,16 @@ export const getGroupByNames = async (names: string[]): Promise<IGroupModel[]> =
             $in: anchors,
         },
     });
+};
+
+export const getGroupByNamesLean = async (names: string[]): Promise<IGroup[]> => {
+
+    const anchors: string[] = names.map((name: string) => fitAnchor(name));
+    return await GroupModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    }).lean();
 };
 
 export const isGroupDuplicatedByName = async (name: string): Promise<boolean> => {
@@ -116,12 +150,28 @@ export const getSelectedActiveGroupsByPage = async (limit: number, page: number,
     return await getAllActiveGroupsByPage(limit, page);
 };
 
+export const getSelectedActiveGroupsByPageLean = async (limit: number, page: number, keyword?: string): Promise<IGroup[]> => {
+
+    if (keyword) {
+        return await getActiveGroupsByPageLean(keyword, limit, page);
+    }
+    return await getAllActiveGroupsByPageLean(limit, page);
+};
+
 export const getSelectedGroupsByPage = async (limit: number, page: number, keyword?: string): Promise<IGroupModel[]> => {
 
     if (keyword) {
         return await getGroupsByPage(keyword, limit, page);
     }
     return await getAllGroupsByPage(limit, page);
+};
+
+export const getSelectedGroupsByPageLean = async (limit: number, page: number, keyword?: string): Promise<IGroup[]> => {
+
+    if (keyword) {
+        return await getGroupsByPageLean(keyword, limit, page);
+    }
+    return await getAllGroupsByPageLean(limit, page);
 };
 
 export const getAllActiveGroups = async (): Promise<IGroupModel[]> => {
@@ -131,7 +181,15 @@ export const getAllActiveGroups = async (): Promise<IGroupModel[]> => {
     });
 };
 
+export const getAllActiveGroupsLean = async (): Promise<IGroup[]> => {
+
+    return await GroupModel.find({
+        active: true,
+    }).lean();
+};
+
 export const getAllGroups = async (): Promise<IGroupModel[]> => GroupModel.find({});
+export const getAllGroupsLean = async (): Promise<IGroup[]> => GroupModel.find({}).lean();
 
 export const getActiveGroupsByPage = async (keyword: string, limit: number, page: number): Promise<IGroupModel[]> => {
 
@@ -147,6 +205,23 @@ export const getActiveGroupsByPage = async (keyword: string, limit: number, page
         },
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return groups;
+};
+
+export const getActiveGroupsByPageLean = async (keyword: string, limit: number, page: number): Promise<IGroup[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const groups: IGroup[] = await GroupModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return groups;
 };
 
@@ -166,6 +241,22 @@ export const getGroupsByPage = async (keyword: string, limit: number, page: numb
     return groups;
 };
 
+export const getGroupsByPageLean = async (keyword: string, limit: number, page: number): Promise<IGroup[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const groups: IGroup[] = await GroupModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return groups;
+};
+
 export const getAllActiveGroupsByPage = async (limit: number, page: number): Promise<IGroupModel[]> => {
 
     if (page < 0) {
@@ -178,6 +269,18 @@ export const getAllActiveGroupsByPage = async (limit: number, page: number): Pro
     return groups;
 };
 
+export const getAllActiveGroupsByPageLean = async (limit: number, page: number): Promise<IGroup[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const groups: IGroup[] = await GroupModel.find({
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return groups;
+};
+
 export const getAllGroupsByPage = async (limit: number, page: number): Promise<IGroupModel[]> => {
 
     if (page < 0) {
@@ -186,5 +289,16 @@ export const getAllGroupsByPage = async (limit: number, page: number): Promise<I
 
     const groups: IGroupModel[] = await GroupModel.find({})
         .skip(page * limit).limit(limit).sort({ _id: -1 });
+    return groups;
+};
+
+export const getAllGroupsByPageLean = async (limit: number, page: number): Promise<IGroup[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const groups: IGroup[] = await GroupModel.find({})
+        .skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return groups;
 };
