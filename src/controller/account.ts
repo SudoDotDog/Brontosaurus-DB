@@ -8,7 +8,7 @@ import { Basics } from "@brontosaurus/definition";
 import { _Random } from "@sudoo/bark/random";
 import { ObjectID } from "bson";
 import { fitAnchor } from "../data/common";
-import { IAccountConfig } from "../interface/account";
+import { IAccount, IAccountConfig } from "../interface/account";
 import { AccountModel, IAccountModel } from "../model/account";
 import { garblePassword } from "../util/auth";
 import { parseInfo } from "../util/token";
@@ -95,15 +95,34 @@ export const createUnsavedAccount = (
     return new AccountModel(config);
 };
 
-export const getAccountsByOrganization = async (organization: string): Promise<IAccountModel[]> =>
-    await AccountModel.find({
+export const getAccountsByOrganization = async (organization: string): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
         organization,
     });
+};
 
-export const getAccountsByGroup = async (group: string): Promise<IAccountModel[]> =>
-    await AccountModel.find({
+export const getAccountsByOrganizationLean = async (organization: string): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        organization,
+    }).lean();
+};
+
+export const getAccountsByGroup = async (group: string): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
         groups: group,
     });
+};
+
+
+export const getAccountsByGroupLean = async (group: string): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        groups: group,
+    }).lean();
+};
 
 export const getAccountByUsername = async (username: string): Promise<IAccountModel | null> => {
 
@@ -111,6 +130,14 @@ export const getAccountByUsername = async (username: string): Promise<IAccountMo
     return await AccountModel.findOne({
         anchor,
     });
+};
+
+export const getAccountByUsernameLean = async (username: string): Promise<IAccount | null> => {
+
+    const anchor: string = fitAnchor(username);
+    return await AccountModel.findOne({
+        anchor,
+    }).lean();
 };
 
 export const getActiveAccountByUsername = async (username: string): Promise<IAccountModel | null> => {
@@ -122,12 +149,31 @@ export const getActiveAccountByUsername = async (username: string): Promise<IAcc
     });
 };
 
-export const getAllAccounts = async (): Promise<IAccountModel[]> => AccountModel.find({});
+export const getActiveAccountByUsernameLean = async (username: string): Promise<IAccount | null> => {
 
-export const getAccountById = async (id: ObjectID | string): Promise<IAccountModel | null> =>
-    await AccountModel.findOne({
+    const anchor: string = fitAnchor(username);
+    return await AccountModel.findOne({
+        anchor,
+        active: true,
+    }).lean();
+};
+
+export const getAllAccounts = async (): Promise<IAccountModel[]> => AccountModel.find({});
+export const getAllAccountsLean = async (): Promise<IAccount[]> => AccountModel.find({}).lean();
+
+export const getAccountById = async (id: ObjectID | string): Promise<IAccountModel | null> => {
+
+    return await AccountModel.findOne({
         _id: id,
     });
+};
+
+export const getAccountByIdLean = async (id: ObjectID | string): Promise<IAccount | null> => {
+
+    return await AccountModel.findOne({
+        _id: id,
+    }).lean();
+};
 
 export const getTotalAccountPages = async (limit: number): Promise<number> =>
     (await AccountModel.estimatedDocumentCount({})) / limit;
@@ -155,6 +201,16 @@ export const getActiveAccountsByTags = async (tags: string[]): Promise<IAccountM
     });
 };
 
+export const getActiveAccountsByTagsLean = async (tags: string[]): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        tags: {
+            $in: tags,
+        },
+        active: true,
+    }).lean();
+};
+
 export const getAccountsByTags = async (tags: string[]): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
@@ -162,6 +218,15 @@ export const getAccountsByTags = async (tags: string[]): Promise<IAccountModel[]
             $in: tags,
         },
     });
+};
+
+export const getAccountsByTagsLean = async (tags: string[]): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        tags: {
+            $in: tags,
+        },
+    }).lean();
 };
 
 export const getActiveAccountPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
@@ -222,6 +287,26 @@ export const getStandaloneActiveAccountsByPage = async (keyword: string, limit: 
     return accounts;
 };
 
+export const getStandaloneActiveAccountsByPageLean = async (keyword: string, limit: number, page: number): Promise<IAccount[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const accounts: IAccountModel[] = await AccountModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+        organization: {
+            $exists: false,
+        },
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return accounts;
+};
+
 export const getSelectedActiveAccountsByPage = async (limit: number, page: number, keyword?: string): Promise<IAccountModel[]> => {
 
     if (keyword) {
@@ -230,12 +315,29 @@ export const getSelectedActiveAccountsByPage = async (limit: number, page: numbe
     return await getAllActiveAccountsByPage(limit, page);
 };
 
+
+export const getSelectedActiveAccountsByPageLean = async (limit: number, page: number, keyword?: string): Promise<IAccount[]> => {
+
+    if (keyword) {
+        return await getActiveAccountsByPageLean(keyword, limit, page);
+    }
+    return await getAllActiveAccountsByPageLean(limit, page);
+};
+
 export const getSelectedAccountsByPage = async (limit: number, page: number, keyword?: string): Promise<IAccountModel[]> => {
 
     if (keyword) {
         return await getAccountsByPage(keyword, limit, page);
     }
     return await getAllAccountsByPage(limit, page);
+};
+
+export const getSelectedAccountsByPageLean = async (limit: number, page: number, keyword?: string): Promise<IAccount[]> => {
+
+    if (keyword) {
+        return await getAccountsByPageLean(keyword, limit, page);
+    }
+    return await getAllAccountsByPageLean(limit, page);
 };
 
 export const getActiveAccountsByPage = async (keyword: string, limit: number, page: number): Promise<IAccountModel[]> => {
@@ -255,6 +357,23 @@ export const getActiveAccountsByPage = async (keyword: string, limit: number, pa
     return accounts;
 };
 
+export const getActiveAccountsByPageLean = async (keyword: string, limit: number, page: number): Promise<IAccount[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const accounts: IAccountModel[] = await AccountModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return accounts;
+};
+
 export const getAccountsByPage = async (keyword: string, limit: number, page: number): Promise<IAccountModel[]> => {
 
     if (page < 0) {
@@ -271,6 +390,22 @@ export const getAccountsByPage = async (keyword: string, limit: number, page: nu
     return accounts;
 };
 
+export const getAccountsByPageLean = async (keyword: string, limit: number, page: number): Promise<IAccount[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const accounts: IAccountModel[] = await AccountModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return accounts;
+};
+
 export const getAllActiveAccountsByPage = async (limit: number, page: number): Promise<IAccountModel[]> => {
 
     if (page < 0) {
@@ -283,6 +418,18 @@ export const getAllActiveAccountsByPage = async (limit: number, page: number): P
     return accounts;
 };
 
+export const getAllActiveAccountsByPageLean = async (limit: number, page: number): Promise<IAccount[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const accounts: IAccountModel[] = await AccountModel.find({
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return accounts;
+};
+
 export const getAllAccountsByPage = async (limit: number, page: number): Promise<IAccountModel[]> => {
 
     if (page < 0) {
@@ -291,6 +438,17 @@ export const getAllAccountsByPage = async (limit: number, page: number): Promise
 
     const accounts: IAccountModel[] = await AccountModel.find({})
         .skip(page * limit).limit(limit).sort({ _id: -1 });
+    return accounts;
+};
+
+export const getAllAccountsByPageLean = async (limit: number, page: number): Promise<IAccount[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const accounts: IAccountModel[] = await AccountModel.find({})
+        .skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return accounts;
 };
 
@@ -336,4 +494,12 @@ export const getActiveAccountsByGroup = async (group: ObjectID): Promise<IAccoun
         groups: group,
         active: true,
     });
+};
+
+export const getActiveAccountsByGroupLean = async (group: ObjectID): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        groups: group,
+        active: true,
+    }).lean();
 };
