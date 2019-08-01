@@ -21,17 +21,21 @@ export const createUnsavedDecorator = (name: string, description?: string): IDec
     return new DecoratorModel(config);
 };
 
-export const getDecoratorById = async (id: ObjectID): Promise<IDecoratorModel | null> =>
-    await DecoratorModel.findOne({
+export const getDecoratorById = async (id: ObjectID): Promise<IDecoratorModel | null> => {
+
+    return await DecoratorModel.findOne({
         _id: id,
     });
+};
 
-export const getDecoratorsByIds = async (ids: ObjectID[]): Promise<IDecoratorModel[]> =>
-    await DecoratorModel.find({
+export const getDecoratorsByIds = async (ids: ObjectID[]): Promise<IDecoratorModel[]> => {
+
+    return await DecoratorModel.find({
         _id: {
             $in: ids,
         },
     });
+};
 
 export const getDecoratorByName = async (name: string): Promise<IDecoratorModel | null> => {
 
@@ -69,13 +73,17 @@ export const getSelectedActiveDecoratorPages = async (limit: number, keyword?: s
     return await getTotalActiveDecoratorPages(limit);
 };
 
-export const getTotalDecoratorPages = async (limit: number): Promise<number> =>
-    (await DecoratorModel.estimatedDocumentCount({})) / limit;
+export const getTotalDecoratorPages = async (limit: number): Promise<number> => {
 
-export const getTotalActiveDecoratorPages = async (limit: number): Promise<number> =>
-    (await DecoratorModel.countDocuments({
+    return (await DecoratorModel.estimatedDocumentCount({})) / limit;
+};
+
+export const getTotalActiveDecoratorPages = async (limit: number): Promise<number> => {
+
+    return (await DecoratorModel.countDocuments({
         active: true,
     })) / limit;
+};
 
 export const getActiveDecoratorPagesByKeyword = async (limit: number, keyword: string): Promise<number> => {
 
