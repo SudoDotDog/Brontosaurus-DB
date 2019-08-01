@@ -6,7 +6,7 @@
 
 import { ObjectID } from "bson";
 import { fitAnchor } from "../data/common";
-import { IDecoratorConfig } from "../interface/decorator";
+import { IDecorator, IDecoratorConfig } from "../interface/decorator";
 import { DecoratorModel, IDecoratorModel } from "../model/decorator";
 
 export const createUnsavedDecorator = (name: string, description?: string): IDecoratorModel => {
@@ -28,6 +28,13 @@ export const getDecoratorById = async (id: ObjectID): Promise<IDecoratorModel | 
     });
 };
 
+export const getDecoratorByIdLean = async (id: ObjectID): Promise<IDecorator | null> => {
+
+    return await DecoratorModel.findOne({
+        _id: id,
+    }).lean();
+};
+
 export const getDecoratorsByIds = async (ids: ObjectID[]): Promise<IDecoratorModel[]> => {
 
     return await DecoratorModel.find({
@@ -35,6 +42,15 @@ export const getDecoratorsByIds = async (ids: ObjectID[]): Promise<IDecoratorMod
             $in: ids,
         },
     });
+};
+
+export const getDecoratorsByIdsLean = async (ids: ObjectID[]): Promise<IDecorator[]> => {
+
+    return await DecoratorModel.find({
+        _id: {
+            $in: ids,
+        },
+    }).lean();
 };
 
 export const getDecoratorByName = async (name: string): Promise<IDecoratorModel | null> => {
@@ -45,6 +61,14 @@ export const getDecoratorByName = async (name: string): Promise<IDecoratorModel 
     });
 };
 
+export const getDecoratorByNameLean = async (name: string): Promise<IDecorator | null> => {
+
+    const anchor: string = fitAnchor(name);
+    return await DecoratorModel.findOne({
+        anchor,
+    }).lean();
+};
+
 export const getDecoratorByNames = async (names: string[]): Promise<IDecoratorModel[]> => {
 
     const anchors: string[] = names.map((name: string) => fitAnchor(name));
@@ -53,6 +77,16 @@ export const getDecoratorByNames = async (names: string[]): Promise<IDecoratorMo
             $in: anchors,
         },
     });
+};
+
+export const getDecoratorByNamesLean = async (names: string[]): Promise<IDecorator[]> => {
+
+    const anchors: string[] = names.map((name: string) => fitAnchor(name));
+    return await DecoratorModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    }).lean();
 };
 
 export const isDecoratorDuplicatedByName = async (name: string): Promise<boolean> => {
@@ -116,6 +150,14 @@ export const getSelectedActiveDecoratorsByPage = async (limit: number, page: num
     return await getAllActiveDecoratorsByPage(limit, page);
 };
 
+export const getSelectedActiveDecoratorsByPageLean = async (limit: number, page: number, keyword?: string): Promise<IDecorator[]> => {
+
+    if (keyword) {
+        return await getActiveDecoratorsByPageLean(keyword, limit, page);
+    }
+    return await getAllActiveDecoratorsByPageLean(limit, page);
+};
+
 export const getSelectedDecoratorsByPage = async (limit: number, page: number, keyword?: string): Promise<IDecoratorModel[]> => {
 
     if (keyword) {
@@ -124,12 +166,30 @@ export const getSelectedDecoratorsByPage = async (limit: number, page: number, k
     return await getAllDecoratorsByPage(limit, page);
 };
 
-export const getAllActiveDecorators = async (): Promise<IDecoratorModel[]> =>
-    await DecoratorModel.find({
+export const getSelectedDecoratorsByPageLean = async (limit: number, page: number, keyword?: string): Promise<IDecorator[]> => {
+
+    if (keyword) {
+        return await getDecoratorsByPageLean(keyword, limit, page);
+    }
+    return await getAllDecoratorsByPageLean(limit, page);
+};
+
+export const getAllActiveDecorators = async (): Promise<IDecoratorModel[]> => {
+
+    return await DecoratorModel.find({
         active: true,
     });
+};
+
+export const getAllActiveDecoratorsLean = async (): Promise<IDecorator[]> => {
+
+    return await DecoratorModel.find({
+        active: true,
+    }).lean();
+};
 
 export const getAllDecorators = async (): Promise<IDecoratorModel[]> => DecoratorModel.find({});
+export const getAllDecoratorsLean = async (): Promise<IDecorator[]> => DecoratorModel.find({}).lean();
 
 export const getActiveDecoratorsByPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
 
@@ -145,6 +205,23 @@ export const getActiveDecoratorsByPage = async (keyword: string, limit: number, 
         },
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return decorators;
+};
+
+export const getActiveDecoratorsByPageLean = async (keyword: string, limit: number, page: number): Promise<IDecorator[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const decorators: IDecorator[] = await DecoratorModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return decorators;
 };
 
@@ -164,6 +241,22 @@ export const getDecoratorsByPage = async (keyword: string, limit: number, page: 
     return decorators;
 };
 
+export const getDecoratorsByPageLean = async (keyword: string, limit: number, page: number): Promise<IDecorator[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const decorators: IDecorator[] = await DecoratorModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return decorators;
+};
+
 export const getAllActiveDecoratorsByPage = async (limit: number, page: number): Promise<IDecoratorModel[]> => {
 
     if (page < 0) {
@@ -176,6 +269,18 @@ export const getAllActiveDecoratorsByPage = async (limit: number, page: number):
     return decorators;
 };
 
+export const getAllActiveDecoratorsByPageLean = async (limit: number, page: number): Promise<IDecorator[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const decorators: IDecorator[] = await DecoratorModel.find({
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return decorators;
+};
+
 export const getAllDecoratorsByPage = async (limit: number, page: number): Promise<IDecoratorModel[]> => {
 
     if (page < 0) {
@@ -184,5 +289,16 @@ export const getAllDecoratorsByPage = async (limit: number, page: number): Promi
 
     const decorators: IDecoratorModel[] = await DecoratorModel.find({})
         .skip(page * limit).limit(limit).sort({ _id: -1 });
+    return decorators;
+};
+
+export const getAllDecoratorsByPageLean = async (limit: number, page: number): Promise<IDecorator[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const decorators: IDecorator[] = await DecoratorModel.find({})
+        .skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return decorators;
 };
