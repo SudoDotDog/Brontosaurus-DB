@@ -6,14 +6,24 @@
 
 import { ObjectID } from "bson";
 import { fitAnchor } from "../data/common";
-import { IOrganizationConfig, OrganizationDetail } from "../interface/organization";
-import { AccountModel, IAccountModel } from "../model/account";
+import { IAccount } from "../interface/account";
+import { IOrganization, IOrganizationConfig, OrganizationDetail } from "../interface/organization";
+import { AccountModel } from "../model/account";
 import { IOrganizationModel, OrganizationModel } from "../model/organization";
 
-export const getOrganizationById = async (id: ObjectID): Promise<IOrganizationModel | null> =>
-    await OrganizationModel.findOne({
+export const getOrganizationById = async (id: ObjectID): Promise<IOrganizationModel | null> => {
+
+    return await OrganizationModel.findOne({
         _id: id,
     });
+};
+
+export const getOrganizationByIdLean = async (id: ObjectID): Promise<IOrganization | null> => {
+
+    return await OrganizationModel.findOne({
+        _id: id,
+    }).lean();
+};
 
 export const getOrganizationDetailsById = async (id: ObjectID): Promise<OrganizationDetail | null> => {
 
@@ -25,9 +35,9 @@ export const getOrganizationDetailsById = async (id: ObjectID): Promise<Organiza
         return null;
     }
 
-    const owner: IAccountModel | null = await AccountModel.findOne({
+    const owner: IAccount | null = await AccountModel.findOne({
         _id: organization.owner,
-    });
+    }).lean();
 
     if (!owner) {
         return null;
@@ -39,12 +49,23 @@ export const getOrganizationDetailsById = async (id: ObjectID): Promise<Organiza
     };
 };
 
-export const getOrganizationsByIds = async (ids: ObjectID[]): Promise<IOrganizationModel[]> =>
-    await OrganizationModel.find({
+export const getOrganizationsByIds = async (ids: ObjectID[]): Promise<IOrganizationModel[]> => {
+
+    return await OrganizationModel.find({
         _id: {
             $in: ids,
         },
     });
+};
+
+export const getOrganizationsByIdsLean = async (ids: ObjectID[]): Promise<IOrganization[]> => {
+
+    return await OrganizationModel.find({
+        _id: {
+            $in: ids,
+        },
+    }).lean();
+};
 
 export const getOrganizationByName = async (name: string): Promise<IOrganizationModel | null> => {
 
@@ -52,6 +73,14 @@ export const getOrganizationByName = async (name: string): Promise<IOrganization
     return await OrganizationModel.findOne({
         anchor,
     });
+};
+
+export const getOrganizationByNameLean = async (name: string): Promise<IOrganization | null> => {
+
+    const anchor: string = fitAnchor(name);
+    return await OrganizationModel.findOne({
+        anchor,
+    }).lean();
 };
 
 export const getOrganizationByNames = async (names: string[]): Promise<IOrganizationModel[]> => {
@@ -64,6 +93,16 @@ export const getOrganizationByNames = async (names: string[]): Promise<IOrganiza
     });
 };
 
+export const getOrganizationByNamesLean = async (names: string[]): Promise<IOrganization[]> => {
+
+    const anchors: string[] = names.map((name: string) => fitAnchor(name));
+    return await OrganizationModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    }).lean();
+};
+
 export const getActiveOrganizationsByTags = async (tags: string[]): Promise<IOrganizationModel[]> => {
 
     return await OrganizationModel.find({
@@ -72,6 +111,16 @@ export const getActiveOrganizationsByTags = async (tags: string[]): Promise<IOrg
         },
         active: true,
     });
+};
+
+export const getActiveOrganizationsByTagsLean = async (tags: string[]): Promise<IOrganization[]> => {
+
+    return await OrganizationModel.find({
+        tags: {
+            $in: tags,
+        },
+        active: true,
+    }).lean();
 };
 
 export const getOrganizationsByTags = async (tags: string[]): Promise<IOrganizationModel[]> => {
@@ -83,10 +132,28 @@ export const getOrganizationsByTags = async (tags: string[]): Promise<IOrganizat
     });
 };
 
-export const getOrganizationsByOwner = async (owner: ObjectID): Promise<IOrganizationModel[]> =>
-    await OrganizationModel.find({
+export const getOrganizationsByTagsLean = async (tags: string[]): Promise<IOrganization[]> => {
+
+    return await OrganizationModel.find({
+        tags: {
+            $in: tags,
+        },
+    }).lean();
+};
+
+export const getOrganizationsByOwner = async (owner: ObjectID): Promise<IOrganizationModel[]> => {
+
+    return await OrganizationModel.find({
         owner,
     });
+};
+
+export const getOrganizationsByOwnerLean = async (owner: ObjectID): Promise<IOrganization[]> => {
+
+    return await OrganizationModel.find({
+        owner,
+    }).lean();
+};
 
 export const createUnsavedOrganization = (
     name: string,
@@ -123,6 +190,7 @@ export const getSelectedActiveOrganizationPages = async (limit: number, keyword?
 };
 
 export const getAllOrganizations = async (): Promise<IOrganizationModel[]> => OrganizationModel.find({});
+export const getAllOrganizationsLean = async (): Promise<IOrganization[]> => OrganizationModel.find({}).lean();
 
 export const getTotalOrganizationPages = async (limit: number): Promise<number> =>
     (await OrganizationModel.estimatedDocumentCount({})) / limit;
@@ -163,6 +231,14 @@ export const getSelectedActiveOrganizationsByPage = async (limit: number, page: 
     return await getAllActiveOrganizationsByPage(limit, page);
 };
 
+export const getSelectedActiveOrganizationsByPageLean = async (limit: number, page: number, keyword?: string): Promise<IOrganization[]> => {
+
+    if (keyword) {
+        return await getActiveOrganizationsByPageLean(keyword, limit, page);
+    }
+    return await getAllActiveOrganizationsByPageLean(limit, page);
+};
+
 export const getSelectedOrganizationsByPage = async (limit: number, page: number, keyword?: string): Promise<IOrganizationModel[]> => {
 
     if (keyword) {
@@ -170,6 +246,15 @@ export const getSelectedOrganizationsByPage = async (limit: number, page: number
     }
     return await getAllOrganizationsByPage(limit, page);
 };
+
+export const getSelectedOrganizationsByPageLean = async (limit: number, page: number, keyword?: string): Promise<IOrganization[]> => {
+
+    if (keyword) {
+        return await getOrganizationsByPageLean(keyword, limit, page);
+    }
+    return await getAllOrganizationsByPageLean(limit, page);
+};
+
 
 export const getActiveOrganizationsByPage = async (keyword: string, limit: number, page: number): Promise<IOrganizationModel[]> => {
 
@@ -185,6 +270,23 @@ export const getActiveOrganizationsByPage = async (keyword: string, limit: numbe
         },
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
+    return organizations;
+};
+
+export const getActiveOrganizationsByPageLean = async (keyword: string, limit: number, page: number): Promise<IOrganization[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const organizations: IOrganization[] = await OrganizationModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return organizations;
 };
 
@@ -204,6 +306,22 @@ export const getOrganizationsByPage = async (keyword: string, limit: number, pag
     return organizations;
 };
 
+export const getOrganizationsByPageLean = async (keyword: string, limit: number, page: number): Promise<IOrganization[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const anchor: string = fitAnchor(keyword);
+    const regexp: RegExp = new RegExp(anchor, 'i');
+    const organizations: IOrganization[] = await OrganizationModel.find({
+        anchor: {
+            $regex: regexp,
+        },
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return organizations;
+};
+
 export const getAllActiveOrganizationsByPage = async (limit: number, page: number): Promise<IOrganizationModel[]> => {
 
     if (page < 0) {
@@ -216,6 +334,18 @@ export const getAllActiveOrganizationsByPage = async (limit: number, page: numbe
     return organizations;
 };
 
+export const getAllActiveOrganizationsByPageLean = async (limit: number, page: number): Promise<IOrganization[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const organizations: IOrganization[] = await OrganizationModel.find({
+        active: true,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+    return organizations;
+};
+
 export const getAllOrganizationsByPage = async (limit: number, page: number): Promise<IOrganizationModel[]> => {
 
     if (page < 0) {
@@ -224,6 +354,17 @@ export const getAllOrganizationsByPage = async (limit: number, page: number): Pr
 
     const organizations: IOrganizationModel[] = await OrganizationModel.find({})
         .skip(page * limit).limit(limit).sort({ _id: -1 });
+    return organizations;
+};
+
+export const getAllOrganizationsByPageLean = async (limit: number, page: number): Promise<IOrganization[]> => {
+
+    if (page < 0) {
+        return [];
+    }
+
+    const organizations: IOrganization[] = await OrganizationModel.find({})
+        .skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return organizations;
 };
 
