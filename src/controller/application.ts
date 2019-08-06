@@ -4,15 +4,17 @@
  * @description Application
  */
 
+import { Brontosaurus, BrontosaurusKey } from "@brontosaurus/core";
 import { trustable } from "@sudoo/bark/random";
 import { fitAnchor } from "../data/common";
 import { ApplicationOthersConfig, IApplication, IApplicationConfig } from "../interface/application";
 import { ApplicationModel, IApplicationModel } from "../model/application";
 
-export const createUnsavedApplication = (name: string, key: string, expire: number, secret: string, others: ApplicationOthersConfig): IApplicationModel => {
+export const createUnsavedApplication = (name: string, key: string, expire: number, others: ApplicationOthersConfig): IApplicationModel => {
 
     const tempGreen: string = trustable();
     const anchor: string = fitAnchor(key);
+    const secret: BrontosaurusKey = Brontosaurus.generateBrontosaurusKey();
 
     const config: IApplicationConfig = {
 
@@ -26,7 +28,8 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
         green: tempGreen,
         name,
         expire,
-        secret,
+        publicKey: secret.public,
+        privateKey: secret.private,
         groups: [],
     };
     return new ApplicationModel(config);

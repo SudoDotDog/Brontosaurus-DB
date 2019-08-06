@@ -65,7 +65,11 @@ const ApplicationSchema: Schema = new Schema(
             type: String,
             required: false,
         },
-        secret: {
+        publicKey: {
+            type: String,
+            required: true,
+        },
+        privateKey: {
             type: String,
             required: true,
         },

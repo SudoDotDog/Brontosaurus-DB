@@ -31,7 +31,8 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
     green: string;
 
     expire: number;
-    secret: string;
+    publicKey: string;
+    privateKey: string;
 
     groups: ObjectID[];
 }
