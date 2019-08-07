@@ -4,6 +4,7 @@
  * @description Application
  */
 
+import { Brontosaurus, BrontosaurusKey } from "@brontosaurus/core";
 import { trustable } from "@sudoo/bark/random";
 import { Document, model, Model, Schema } from "mongoose";
 import { IApplication } from "../interface/application";
@@ -90,11 +91,22 @@ export interface IApplicationModel extends IApplication, Document {
 
     pushHistory(history: string): IApplicationModel;
     refreshGreen(): IApplicationModel;
+    refreshKey(): IApplicationModel;
 }
 
 ApplicationSchema.methods.refreshGreen = function (this: IApplicationModel): IApplicationModel {
 
     this.green = trustable();
+
+    return this;
+};
+
+ApplicationSchema.methods.refreshKey = function (this: IApplicationModel): IApplicationModel {
+
+    const secret: BrontosaurusKey = Brontosaurus.generateBrontosaurusKey();
+
+    this.publicKey = secret.public;
+    this.privateKey = secret.private;
 
     return this;
 };
