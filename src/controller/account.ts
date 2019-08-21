@@ -116,7 +116,6 @@ export const getAccountsByGroup = async (group: string): Promise<IAccountModel[]
     });
 };
 
-
 export const getAccountsByGroupLean = async (group: string): Promise<IAccount[]> => {
 
     return await AccountModel.find({
@@ -478,6 +477,24 @@ export const getAccountCountByOrganization = async (organizationId: ObjectID): P
         organization: organizationId,
         active: true,
     });
+};
+
+export const getActiveAccountByGroupAndOrganization = async (group: ObjectID, organization: ObjectID): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
+        groups: group,
+        organization,
+        active: true,
+    });
+};
+
+export const getActiveAccountByGroupAndOrganizationLean = async (group: ObjectID, organization: ObjectID): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        groups: group,
+        organization,
+        active: true,
+    }).lean();
 };
 
 export const getActiveAccountCountByGroup = async (group: ObjectID): Promise<number> => {
