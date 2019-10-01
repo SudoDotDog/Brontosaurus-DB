@@ -57,11 +57,20 @@ describe('Given [Validate Account] helper function', (): void => {
 
     it('should be able to validate username only letter and number - 2', (): void => {
 
-        const username: string = 'Aa10d-as92312';
+        const username: string = 'Aa10d_as92312';
 
         const result: USERNAME_VALIDATE_RESPONSE = validateUsername(username);
 
         expect(result).to.be.equal(USERNAME_VALIDATE_RESPONSE.ONLY_LETTERS_OR_NUMBERS);
+    });
+
+    it('should be able to validate username with hyphen', (): void => {
+
+        const username: string = 'Aa10d-as92312';
+
+        const result: USERNAME_VALIDATE_RESPONSE = validateUsername(username);
+
+        expect(result).to.be.equal(USERNAME_VALIDATE_RESPONSE.OK);
     });
 });
 

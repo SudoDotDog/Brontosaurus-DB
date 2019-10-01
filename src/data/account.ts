@@ -33,7 +33,7 @@ export const validateUsername = (
         return USERNAME_VALIDATE_RESPONSE.NO_SPACE;
     }
 
-    if (!/^[A-Za-z0-9]+$/.test(username)) {
+    if (!/^([A-Za-z0-9]|-)+$/.test(username)) {
         return USERNAME_VALIDATE_RESPONSE.ONLY_LETTERS_OR_NUMBERS;
     }
 

@@ -65,6 +65,7 @@ const AccountSchema: Schema = new Schema(
         email: {
             type: String,
             required: false,
+            unique: true,
         },
 
         infos: {
@@ -107,11 +108,11 @@ const AccountSchema: Schema = new Schema(
             default: [],
         },
     }, {
-        timestamps: {
-            createdAt: true,
-            updatedAt: true,
-        },
+    timestamps: {
+        createdAt: true,
+        updatedAt: true,
     },
+},
 );
 
 export interface IAccountModel extends IAccount, Document {
