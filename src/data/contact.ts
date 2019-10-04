@@ -23,13 +23,23 @@ export const validateEmail = (email: string): EMAIL_VALIDATE_RESPONSE => {
     const user: string = splited[0] as string;
     const domain: string = splited[1] as string;
 
-    if (/^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$/igm.test(domain)) {
+    if (!/^[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$/igm.test(domain)) {
         return EMAIL_VALIDATE_RESPONSE.INVALID_DOMAIN;
     }
 
-    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+$/igm.test(user)) {
+    if (!/^[a-zA-Z0-9][a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+[a-zA-Z0-9]$/igm.test(user)) {
         return EMAIL_VALIDATE_RESPONSE.INVALID_USER;
     }
 
     return EMAIL_VALIDATE_RESPONSE.OK;
+};
+
+export enum PHONE_VALIDATE_RESPONSE {
+
+    OK = "OK",
+}
+
+export const validatePhone = (phone: string): PHONE_VALIDATE_RESPONSE => {
+
+    return PHONE_VALIDATE_RESPONSE.OK;
 };
