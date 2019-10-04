@@ -27,8 +27,16 @@ export const validateEmail = (email: string): EMAIL_VALIDATE_RESPONSE => {
         return EMAIL_VALIDATE_RESPONSE.INVALID_DOMAIN;
     }
 
-    if (!/^[a-zA-Z0-9][a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+[a-zA-Z0-9]$/igm.test(user)) {
-        return EMAIL_VALIDATE_RESPONSE.INVALID_USER;
+    if (user.length <= 2) {
+
+        if (!/^[a-zA-Z0-9]+$/igm.test(user)) {
+            return EMAIL_VALIDATE_RESPONSE.INVALID_USER;
+        }
+    } else {
+
+        if (!/^[a-zA-Z0-9][a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+[a-zA-Z0-9]$/igm.test(user)) {
+            return EMAIL_VALIDATE_RESPONSE.INVALID_USER;
+        }
     }
 
     return EMAIL_VALIDATE_RESPONSE.OK;
