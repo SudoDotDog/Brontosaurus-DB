@@ -6,6 +6,7 @@
 
 import * as Crypto from "crypto";
 
+// tslint:disable-next-line: variable-name
 export const Deprecated_generateKey = (): Promise<string> =>
     new Promise<string>((resolve: (result: string) => void, reject: (reason: any) => void) => {
         const length: number = 32;
@@ -27,6 +28,7 @@ export const Deprecated_generateKey = (): Promise<string> =>
         randomBytes();
     });
 
+// tslint:disable-next-line: variable-name
 export const Deprecated_base32Encode = (key: string) => {
 
     return key;
