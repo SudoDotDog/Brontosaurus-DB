@@ -80,11 +80,11 @@ const ApplicationSchema: Schema = new Schema(
             default: [],
         },
     }, {
-        timestamps: {
-            createdAt: true,
-            updatedAt: true,
-        },
+    timestamps: {
+        createdAt: true,
+        updatedAt: true,
     },
+},
 );
 
 export interface IApplicationModel extends IApplication, Document {
@@ -96,7 +96,7 @@ export interface IApplicationModel extends IApplication, Document {
 
 ApplicationSchema.methods.refreshGreen = function (this: IApplicationModel): IApplicationModel {
 
-    this.green = trustable();
+    this.green = trustable(new Date(), undefined, 64);
 
     return this;
 };

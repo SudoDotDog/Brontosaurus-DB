@@ -12,7 +12,7 @@ import { ApplicationModel, IApplicationModel } from "../model/application";
 
 export const createUnsavedApplication = (name: string, key: string, expire: number, others: ApplicationOthersConfig): IApplicationModel => {
 
-    const tempGreen: string = trustable();
+    const tempGreen: string = trustable(new Date(), undefined, 64);
     const anchor: string = fitAnchor(key);
     const secret: BrontosaurusKey = Brontosaurus.generateBrontosaurusKey();
 

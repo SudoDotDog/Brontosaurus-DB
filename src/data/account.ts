@@ -24,7 +24,7 @@ export const validateUsername = (
     }
 
     if (startWithLetter) {
-        if (!/^[A-z]$/.test(username.substring(0, 1))) {
+        if (!/^[A-Za-z]$/.test(username.substring(0, 1))) {
             return USERNAME_VALIDATE_RESPONSE.MUST_START_WITH_LETTER;
         }
     }
@@ -67,7 +67,7 @@ export const validatePassword = (
     }
 
     if (haveToIncludeLetter) {
-        if (!/^.*[A-z].*$/.test(password)) {
+        if (!/^.*[A-Za-z].*$/.test(password)) {
             return PASSWORD_VALIDATE_RESPONSE.HAVE_TO_INCLUDE_LETTER;
         }
     }
