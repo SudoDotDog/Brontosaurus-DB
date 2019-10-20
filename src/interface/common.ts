@@ -14,5 +14,3 @@ export type History = {
     readonly content: string;
     readonly extra?: any;
 };
-
-export type HistoryActionPattern = Record<string, string[]>;
