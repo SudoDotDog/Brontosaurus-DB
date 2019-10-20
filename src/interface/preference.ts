@@ -4,7 +4,13 @@
  * @description Preference
  */
 
+import { History } from "./common";
+
 export type RegisterInfoType = 'string' | 'number' | 'email' | 'password';
+
+export type PreferenceActions = {
+};
+
 export type RegisterInfo = {
 
     name: string;
@@ -36,7 +42,7 @@ export interface IPreferenceConfig {
 export interface IPreference extends IPreferenceConfig {
 
     active: boolean;
-    history: string[];
+    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

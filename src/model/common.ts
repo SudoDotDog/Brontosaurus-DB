@@ -12,6 +12,10 @@ export const HistorySchema = new Schema({
         type: String,
         required: true,
     },
+    application: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
     by: {
         type: Schema.Types.ObjectId,
         required: true,

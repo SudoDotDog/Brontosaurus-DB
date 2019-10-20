@@ -4,8 +4,9 @@
  * @description Group
  */
 
+import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { IGroup } from "../interface/group";
+import { GroupActions, IGroup } from "../interface/group";
 
 const GroupSchema: Schema = new Schema(
     {
@@ -49,12 +50,35 @@ const GroupSchema: Schema = new Schema(
 
 export interface IGroupModel extends IGroup, Document {
 
-    pushHistory(history: string): IGroupModel;
+    pushHistory<T extends keyof GroupActions>(
+        action: T,
+        application: ObjectID,
+        by: ObjectID,
+        content: string,
+        extra: GroupActions[T],
+    ): IGroupModel;
 }
 
-GroupSchema.methods.pushHistory = function (this: IGroupModel, history: string): IGroupModel {
+GroupSchema.methods.pushHistory = function <T extends keyof GroupActions>(
+    this: IGroupModel,
+    action: T,
+    application: ObjectID,
+    by: ObjectID,
+    content: string,
+    extra: GroupActions[T],
+): IGroupModel {
 
-    this.history = [...this.history, history];
+    this.history = [
+        ...this.history,
+        {
+            action,
+            application,
+            at: new Date(),
+            by,
+            content,
+            extra,
+        },
+    ];
 
     return this;
 };

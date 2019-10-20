@@ -5,6 +5,10 @@
  */
 
 import { ObjectID } from "bson";
+import { History } from "./common";
+
+export type TagActions = {
+};
 
 export enum INTERNAL_TAG {
 
@@ -24,7 +28,7 @@ export interface ITag extends ITagConfig {
     decorators: ObjectID[];
 
     active: boolean;
-    history: string[];
+    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

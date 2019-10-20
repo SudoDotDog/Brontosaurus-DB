@@ -4,6 +4,11 @@
  * @description Webhook
  */
 
+import { History } from "./common";
+
+export type WebhookActions = {
+};
+
 export enum WEBHOOK_EVENT {
 
     ACCOUNT_DEACTIVATE = "ACCOUNT_DEACTIVATE",
@@ -28,7 +33,7 @@ export interface IWebhook extends IWebhookConfig {
     hooks: WEBHOOK_EVENT[];
 
     active: boolean;
-    history: string[];
+    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

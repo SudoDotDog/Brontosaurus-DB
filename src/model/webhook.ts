@@ -4,8 +4,9 @@
  * @description Webhook
  */
 
+import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { IWebhook } from "../interface/webhook";
+import { IWebhook, WebhookActions } from "../interface/webhook";
 import { HistorySchema } from "./common";
 
 const WebhookSchema: Schema = new Schema(
@@ -54,12 +55,35 @@ const WebhookSchema: Schema = new Schema(
 
 export interface IWebhookModel extends IWebhook, Document {
 
-    pushHistory(history: string): IWebhookModel;
+    pushHistory<T extends keyof WebhookActions>(
+        action: T,
+        application: ObjectID,
+        by: ObjectID,
+        content: string,
+        extra: WebhookActions[T],
+    ): IWebhookModel;
 }
 
-WebhookSchema.methods.pushHistory = function (this: IWebhookModel, history: string): IWebhookModel {
+WebhookSchema.methods.pushHistory = function <T extends keyof WebhookActions>(
+    this: IWebhookModel,
+    action: T,
+    application: ObjectID,
+    by: ObjectID,
+    content: string,
+    extra: WebhookActions[T],
+): IWebhookModel {
 
-    this.history = [...this.history, history];
+    this.history = [
+        ...this.history,
+        {
+            action,
+            application,
+            at: new Date(),
+            by,
+            content,
+            extra,
+        },
+    ];
 
     return this;
 };

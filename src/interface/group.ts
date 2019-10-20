@@ -5,6 +5,10 @@
  */
 
 import { ObjectID } from "bson";
+import { History } from "./common";
+
+export type GroupActions = {
+};
 
 export enum INTERNAL_USER_GROUP {
 
@@ -27,7 +31,7 @@ export interface IGroup extends IGroupConfig {
     decorators: ObjectID[];
 
     active: boolean;
-    history: string[];
+    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

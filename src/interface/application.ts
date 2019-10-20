@@ -5,13 +5,17 @@
  */
 
 import { ObjectID } from "bson";
+import { History } from "./common";
 
 export enum INTERNAL_APPLICATION {
 
-    AIR = 'BRONTOSAURUS_AIR',
     RED = 'BRONTOSAURUS_RED',
+    GREEN = 'BRONTOSAURUS_GREEN',
     PORTAL = 'BRONTOSAURUS_PORTAL',
 }
+
+export type ApplicationActions = {
+};
 
 export type ApplicationOthersConfig = {
 
@@ -40,7 +44,7 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
 export interface IApplication extends IApplicationConfig {
 
     active: boolean;
-    history: string[];
+    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

@@ -4,8 +4,9 @@
  * @description Preference
  */
 
+import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { IPreference } from "../interface/preference";
+import { IPreference, PreferenceActions } from "../interface/preference";
 
 const PreferenceSchema: Schema = new Schema(
     {
@@ -39,12 +40,35 @@ const PreferenceSchema: Schema = new Schema(
 
 export interface IPreferenceModel extends IPreference, Document {
 
-    pushHistory(history: string): IPreferenceModel;
+    pushHistory<T extends keyof PreferenceActions>(
+        action: T,
+        application: ObjectID,
+        by: ObjectID,
+        content: string,
+        extra: PreferenceActions[T],
+    ): IPreferenceModel;
 }
 
-PreferenceSchema.methods.pushHistory = function (this: IPreferenceModel, history: string): IPreferenceModel {
+PreferenceSchema.methods.pushHistory = function <T extends keyof PreferenceActions>(
+    this: IPreferenceModel,
+    action: T,
+    application: ObjectID,
+    by: ObjectID,
+    content: string,
+    extra: PreferenceActions[T],
+): IPreferenceModel {
 
-    this.history = [...this.history, history];
+    this.history = [
+        ...this.history,
+        {
+            action,
+            application,
+            at: new Date(),
+            by,
+            content,
+            extra,
+        },
+    ];
 
     return this;
 };

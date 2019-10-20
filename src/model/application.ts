@@ -6,8 +6,9 @@
 
 import { Brontosaurus, BrontosaurusKey } from "@brontosaurus/core";
 import { trustable } from "@sudoo/bark/random";
+import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { IApplication } from "../interface/application";
+import { ApplicationActions, IApplication } from "../interface/application";
 
 const ApplicationSchema: Schema = new Schema(
     {
@@ -90,9 +91,15 @@ const ApplicationSchema: Schema = new Schema(
 
 export interface IApplicationModel extends IApplication, Document {
 
-    pushHistory(history: string): IApplicationModel;
     refreshGreen(): IApplicationModel;
     refreshKey(): IApplicationModel;
+    pushHistory<T extends keyof ApplicationActions>(
+        action: T,
+        application: ObjectID,
+        by: ObjectID,
+        content: string,
+        extra: ApplicationActions[T],
+    ): IApplicationModel;
 }
 
 ApplicationSchema.methods.refreshGreen = function (this: IApplicationModel): IApplicationModel {
@@ -112,9 +119,26 @@ ApplicationSchema.methods.refreshKey = function (this: IApplicationModel): IAppl
     return this;
 };
 
-ApplicationSchema.methods.pushHistory = function (this: IApplicationModel, history: string): IApplicationModel {
+ApplicationSchema.methods.pushHistory = function <T extends keyof ApplicationActions>(
+    this: IApplicationModel,
+    action: T,
+    application: ObjectID,
+    by: ObjectID,
+    content: string,
+    extra: ApplicationActions[T],
+): IApplicationModel {
 
-    this.history = [...this.history, history];
+    this.history = [
+        ...this.history,
+        {
+            action,
+            application,
+            at: new Date(),
+            by,
+            content,
+            extra,
+        },
+    ];
 
     return this;
 };

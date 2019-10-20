@@ -5,6 +5,10 @@
  */
 
 import { ObjectID } from "bson";
+import { History } from "./common";
+
+export type OrganizationActions = {
+};
 
 export type OrganizationDetail = {
 
@@ -27,7 +31,7 @@ export interface IOrganization extends IOrganizationConfig {
     limit: number;
 
     active: boolean;
-    history: string[];
+    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

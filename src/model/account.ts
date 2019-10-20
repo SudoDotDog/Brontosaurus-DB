@@ -130,7 +130,13 @@ export interface IAccountModel extends IAccount, Document {
     setTempPassword(): IAccountModel;
     resetMint(): IAccountModel;
     verifyPassword(password: string): boolean;
-    pushHistory<T extends keyof AccountActions>(action: T, by: ObjectID, content: string, extra: AccountActions[T]): IAccountModel;
+    pushHistory<T extends keyof AccountActions>(
+        action: T,
+        application: ObjectID,
+        by: ObjectID,
+        content: string,
+        extra: AccountActions[T],
+    ): IAccountModel;
 }
 
 AccountSchema.methods.useAttemptPoint = function (this: IAccountModel, point: number): IAccountModel {
@@ -200,6 +206,7 @@ AccountSchema.methods.getBeaconRecords = function (this: IAccountModel): Record<
 AccountSchema.methods.pushHistory = function <T extends keyof AccountActions>(
     this: IAccountModel,
     action: T,
+    application: ObjectID,
     by: ObjectID,
     content: string,
     extra: AccountActions[T],
@@ -209,6 +216,7 @@ AccountSchema.methods.pushHistory = function <T extends keyof AccountActions>(
         ...this.history,
         {
             action,
+            application,
             at: new Date(),
             by,
             content,
