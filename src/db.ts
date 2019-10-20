@@ -12,7 +12,10 @@ export const connect = (database: string): Mongoose.Connection => {
 
     Mongoose.connect(
         database,
-        { useNewUrlParser: true },
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
     );
 
     const connection: Mongoose.Connection = Mongoose.connection;
