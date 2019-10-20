@@ -6,6 +6,7 @@
 
 import { Document, model, Model, Schema } from "mongoose";
 import { IWebhook } from "../interface/webhook";
+import { HistorySchema } from "./common";
 
 const WebhookSchema: Schema = new Schema(
     {
@@ -38,11 +39,12 @@ const WebhookSchema: Schema = new Schema(
             default: [],
         },
         history: {
-            type: [String],
+            type: [HistorySchema],
             required: true,
             default: [],
         },
-    }, {
+    },
+    {
         timestamps: {
             createdAt: true,
             updatedAt: true,

@@ -5,10 +5,16 @@
  */
 
 import { ObjectID } from "bson";
+import { History } from "./common";
 
 export const INFOS_SPLITTER = ':*:';
 
 export const defaultInitialAttemptPoints: number = 100;
+
+export type AccountActions = {
+
+    CREATE: undefined,
+};
 
 export interface IAccountConfig {
 
@@ -38,7 +44,7 @@ export interface IAccount extends IAccountConfig {
     limbo: boolean;
     twoFA?: string;
 
-    history: string[];
+    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

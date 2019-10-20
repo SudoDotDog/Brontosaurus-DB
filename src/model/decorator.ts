@@ -43,7 +43,8 @@ const DecoratorSchema: Schema = new Schema(
             required: true,
             default: [],
         },
-    }, {
+    },
+    {
         timestamps: {
             createdAt: true,
             updatedAt: true,

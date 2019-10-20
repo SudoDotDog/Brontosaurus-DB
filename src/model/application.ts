@@ -79,12 +79,13 @@ const ApplicationSchema: Schema = new Schema(
             required: true,
             default: [],
         },
-    }, {
-    timestamps: {
-        createdAt: true,
-        updatedAt: true,
     },
-},
+    {
+        timestamps: {
+            createdAt: true,
+            updatedAt: true,
+        },
+    },
 );
 
 export interface IApplicationModel extends IApplication, Document {

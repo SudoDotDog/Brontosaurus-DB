@@ -8,7 +8,7 @@ import { Basics } from "@brontosaurus/definition";
 import { _Random } from "@sudoo/bark/random";
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER } from "../interface/account";
+import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER } from "../interface/account";
 import { generateURL } from "../util/2fa";
 import { garblePassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
@@ -107,12 +107,13 @@ const AccountSchema: Schema = new Schema(
             required: true,
             default: [],
         },
-    }, {
-    timestamps: {
-        createdAt: true,
-        updatedAt: true,
     },
-},
+    {
+        timestamps: {
+            createdAt: true,
+            updatedAt: true,
+        },
+    },
 );
 
 export interface IAccountModel extends IAccount, Document {
@@ -123,13 +124,13 @@ export interface IAccountModel extends IAccount, Document {
     verifyTwoFA(code: string): boolean;
     getInfoRecords(): Record<string, Basics>;
     getBeaconRecords(): Record<string, Basics>;
-    pushHistory(history: string): IAccountModel;
     addGroup(id: ObjectID): IAccountModel;
     removeGroup(id: ObjectID): IAccountModel;
     setPassword(password: string): IAccountModel;
     setTempPassword(): IAccountModel;
     resetMint(): IAccountModel;
     verifyPassword(password: string): boolean;
+    pushHistory<T extends keyof AccountActions>(action: T, by: ObjectID, content: string, extra: AccountActions[T]): IAccountModel;
 }
 
 AccountSchema.methods.useAttemptPoint = function (this: IAccountModel, point: number): IAccountModel {
@@ -195,9 +196,25 @@ AccountSchema.methods.getBeaconRecords = function (this: IAccountModel): Record<
     }, {} as Record<string, Basics>);
 };
 
-AccountSchema.methods.pushHistory = function (this: IAccountModel, history: string): IAccountModel {
 
-    this.history = [...this.history, history];
+AccountSchema.methods.pushHistory = function <T extends keyof AccountActions>(
+    this: IAccountModel,
+    action: T,
+    by: ObjectID,
+    content: string,
+    extra: AccountActions[T],
+): IAccountModel {
+
+    this.history = [
+        ...this.history,
+        {
+            action,
+            at: new Date(),
+            by,
+            content,
+            extra,
+        },
+    ];
 
     return this;
 };
