@@ -95,28 +95,28 @@ export const createUnsavedAccount = (
     return new AccountModel(config);
 };
 
-export const getAccountsByOrganization = async (organization: string): Promise<IAccountModel[]> => {
+export const getAccountsByOrganization = async (organization: string | ObjectID): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
         organization,
     });
 };
 
-export const getAccountsByOrganizationLean = async (organization: string): Promise<IAccount[]> => {
+export const getAccountsByOrganizationLean = async (organization: string | ObjectID): Promise<IAccount[]> => {
 
     return await AccountModel.find({
         organization,
     }).lean();
 };
 
-export const getAccountsByGroup = async (group: string): Promise<IAccountModel[]> => {
+export const getAccountsByGroup = async (group: string | ObjectID): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
         groups: group,
     });
 };
 
-export const getAccountsByGroupLean = async (group: string): Promise<IAccount[]> => {
+export const getAccountsByGroupLean = async (group: string | ObjectID): Promise<IAccount[]> => {
 
     return await AccountModel.find({
         groups: group,

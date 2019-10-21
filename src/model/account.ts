@@ -61,11 +61,13 @@ const AccountSchema: Schema = new Schema(
         phone: {
             type: String,
             required: false,
+            index: true,
         },
         email: {
             type: String,
             required: false,
             unique: true,
+            index: true,
         },
 
         infos: {
