@@ -8,6 +8,8 @@ import { ObjectID } from "bson";
 import { History } from "./common";
 
 export type DecoratorActions = {
+
+    CREATE: undefined;
 };
 
 export interface IDecoratorConfig {

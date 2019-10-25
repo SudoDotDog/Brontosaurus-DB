@@ -8,6 +8,8 @@ import { ObjectID } from "bson";
 import { History } from "./common";
 
 export type GroupActions = {
+
+    CREATE: undefined;
 };
 
 export enum INTERNAL_USER_GROUP {

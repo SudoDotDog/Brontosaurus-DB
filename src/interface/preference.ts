@@ -9,6 +9,8 @@ import { History } from "./common";
 export type RegisterInfoType = 'string' | 'number' | 'email' | 'password';
 
 export type PreferenceActions = {
+
+    CREATE: undefined;
 };
 
 export type RegisterInfo = {

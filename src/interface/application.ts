@@ -15,6 +15,8 @@ export enum INTERNAL_APPLICATION {
 }
 
 export type ApplicationActions = {
+
+    CREATE: undefined;
 };
 
 export type ApplicationOthersConfig = {

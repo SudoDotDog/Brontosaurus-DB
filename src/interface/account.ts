@@ -13,8 +13,8 @@ export const defaultInitialAttemptPoints: number = 100;
 
 export type AccountActions = {
 
-    CREATE: undefined,
-    RESET_PASSWORD: undefined,
+    CREATE: undefined;
+    RESET_PASSWORD: undefined;
 };
 
 export interface IAccountConfig {

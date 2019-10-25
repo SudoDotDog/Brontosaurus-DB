@@ -7,6 +7,8 @@
 import { History } from "./common";
 
 export type WebhookActions = {
+
+    CREATE: undefined;
 };
 
 export enum WEBHOOK_EVENT {
