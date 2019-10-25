@@ -20,13 +20,13 @@
     "@brontosaurus/core": "^3.0.0",
     "@brontosaurus/definition": "^3.0.0",
     "@sudoo/bark": "^2.7.1",
-    "mongoose": "^5.7.6",
+    "mongoose": "^5.7.7",
     "speakeasy": "^2.0.0"
   },
   "devDependencies": {
     "@sudoo/io": "^1.6.1",
     "@sudoo/mock": "^1.2.0",
-    "@sudoo/triforce": "^1.8.3",
+    "@sudoo/triforce": "^1.8.4",
     "@sudoo/triforce-mongoose-dev": "^1.3.0",
     "@types/speakeasy": "^2.0.5"
   },
