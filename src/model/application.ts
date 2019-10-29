@@ -65,7 +65,12 @@ const ApplicationSchema: Schema = new Schema(
         },
         green: {
             type: String,
-            required: false,
+            required: true,
+        },
+        greenAccess: {
+            type: Boolean,
+            required: true,
+            default: false,
         },
         publicKey: {
             type: String,

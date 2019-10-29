@@ -35,6 +35,7 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
 
     name: string;
     green: string;
+    greenAccess: boolean;
 
     expire: number;
     publicKey: string;
