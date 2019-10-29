@@ -27,6 +27,7 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
         backgroundImage: others.backgroundImage,
         green: tempGreen,
         greenAccess: false,
+        portalAccess: false,
         name,
         expire,
         publicKey: secret.public,

@@ -72,6 +72,11 @@ const ApplicationSchema: Schema = new Schema(
             required: true,
             default: false,
         },
+        portalAccess: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
         publicKey: {
             type: String,
             required: true,
@@ -98,6 +103,8 @@ export interface IApplicationModel extends IApplication, Document {
 
     refreshGreen(): IApplicationModel;
     refreshKey(): IApplicationModel;
+    toggleGreenAccess(): IApplicationModel;
+    togglePortalAccess(): IApplicationModel;
     pushHistory<T extends keyof ApplicationActions>(
         action: T,
         application: ObjectID,
@@ -121,6 +128,18 @@ ApplicationSchema.methods.refreshKey = function (this: IApplicationModel): IAppl
     this.publicKey = secret.public;
     this.privateKey = secret.private;
 
+    return this;
+};
+
+ApplicationSchema.methods.toggleGreenAccess = function (this: IApplicationModel): IApplicationModel {
+
+    this.greenAccess = !Boolean(this.greenAccess);
+    return this;
+};
+
+ApplicationSchema.methods.togglePortalAccess = function (this: IApplicationModel): IApplicationModel {
+
+    this.portalAccess = !Boolean(this.portalAccess);
     return this;
 };
 
