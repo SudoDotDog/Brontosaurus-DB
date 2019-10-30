@@ -11,6 +11,8 @@ export const connect = (database: string): Mongoose.Connection => {
     Mongoose.connect(
         database,
         {
+            useFindAndModify: false,
+
             useCreateIndex: true,
             useNewUrlParser: true,
             useUnifiedTopology: true,
