@@ -8,13 +8,17 @@ import * as Mongoose from "mongoose";
 
 export const connect = (database: string): Mongoose.Connection => {
 
-    Mongoose.set('useCreateIndex', true);
-
     Mongoose.connect(
         database,
         {
+            useCreateIndex: true,
             useNewUrlParser: true,
             useUnifiedTopology: true,
+
+            autoReconnect: true,
+            reconnectTries: 120,
+            reconnectInterval: 1000,
+            poolSize: 5,
         },
     );
 
