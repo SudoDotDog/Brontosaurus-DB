@@ -69,6 +69,33 @@ export const getGroupByNameLean = async (name: string): Promise<IGroup | null> =
     }).lean();
 };
 
+export const getGroupIdByName = async (name: string): Promise<ObjectID | null> => {
+
+    const anchor: string = fitAnchor(name);
+    const group: IGroupModel | null = await GroupModel.findOne({
+        anchor,
+    }, {
+        _id: 1,
+    });
+    if (group) {
+        return group._id;
+    }
+    return null;
+};
+
+export const getGroupIdsByNames = async (names: string[]): Promise<ObjectID[]> => {
+
+    const anchors: string[] = names.map((name: string) => fitAnchor(name));
+    const groups: IGroupModel[] = await GroupModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    }, {
+        _id: 1,
+    });
+    return groups.map((group: IGroupModel) => group._id);
+};
+
 export const getGroupByNames = async (names: string[]): Promise<IGroupModel[]> => {
 
     const anchors: string[] = names.map((name: string) => fitAnchor(name));

@@ -35,6 +35,33 @@ export const getTagByIdLean = async (id: ObjectID): Promise<ITag | null> => {
     }).lean();
 };
 
+export const getTagIdByName = async (name: string): Promise<ObjectID | null> => {
+
+    const anchor: string = fitAnchor(name);
+    const tag: ITagModel | null = await TagModel.findOne({
+        anchor,
+    }, {
+        _id: 1,
+    });
+    if (tag) {
+        return tag._id;
+    }
+    return null;
+};
+
+export const getTagIdsByNames = async (names: string[]): Promise<ObjectID[]> => {
+
+    const anchors: string[] = names.map((name: string) => fitAnchor(name));
+    const tags: ITagModel[] = await TagModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    }, {
+        _id: 1,
+    });
+    return tags.map((tag: ITagModel) => tag._id);
+};
+
 export const getTagsByIds = async (ids: ObjectID[]): Promise<ITagModel[]> => {
 
     return await TagModel.find({

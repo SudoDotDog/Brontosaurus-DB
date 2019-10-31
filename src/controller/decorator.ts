@@ -28,6 +28,33 @@ export const getDecoratorById = async (id: ObjectID): Promise<IDecoratorModel | 
     });
 };
 
+export const getDecoratorIdByName = async (name: string): Promise<ObjectID | null> => {
+
+    const anchor: string = fitAnchor(name);
+    const decorator: IDecoratorModel | null = await DecoratorModel.findOne({
+        anchor,
+    }, {
+        _id: 1,
+    });
+    if (decorator) {
+        return decorator._id;
+    }
+    return null;
+};
+
+export const getDecoratorIdsByNames = async (names: string[]): Promise<ObjectID[]> => {
+
+    const anchors: string[] = names.map((name: string) => fitAnchor(name));
+    const decorators: IDecoratorModel[] = await DecoratorModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    }, {
+        _id: 1,
+    });
+    return decorators.map((decorator: IDecoratorModel) => decorator._id);
+};
+
 export const getDecoratorByIdLean = async (id: ObjectID): Promise<IDecorator | null> => {
 
     return await DecoratorModel.findOne({
