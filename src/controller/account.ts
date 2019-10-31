@@ -123,6 +123,44 @@ export const getAccountsByGroupLean = async (group: string | ObjectID): Promise<
     }).lean();
 };
 
+export const getActiveAccountsByGroups = async (groups: Array<string | ObjectID>): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
+        groups: {
+            $in: groups,
+        },
+        active: true,
+    });
+};
+
+export const getActiveAccountsByGroupsLean = async (groups: Array<string | ObjectID>): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        groups: {
+            $in: groups,
+        },
+        active: true,
+    }).lean();
+};
+
+export const getAccountsByGroups = async (groups: Array<string | ObjectID>): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
+        groups: {
+            $in: groups,
+        },
+    });
+};
+
+export const getAccountsByGroupsLean = async (groups: Array<string | ObjectID>): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        groups: {
+            $in: groups,
+        },
+    }).lean();
+};
+
 export const getAccountByUsername = async (username: string): Promise<IAccountModel | null> => {
 
     const anchor: string = fitAnchor(username);
