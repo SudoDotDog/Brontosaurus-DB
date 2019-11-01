@@ -255,7 +255,6 @@ export const getSelectedOrganizationsByPageLean = async (limit: number, page: nu
     return await getAllOrganizationsByPageLean(limit, page);
 };
 
-
 export const getActiveOrganizationsByPage = async (keyword: string, limit: number, page: number): Promise<IOrganizationModel[]> => {
 
     if (page < 0) {
@@ -380,4 +379,17 @@ export const getAllActiveOrganizationName = async (): Promise<string[]> => {
         active: true,
     });
     return organizations.map((organization: IOrganizationModel) => organization.name);
+};
+
+export const getOrganizationIdsByNames = async (names: string[]): Promise<ObjectID[]> => {
+
+    const anchors: string[] = names.map((name: string) => fitAnchor(name));
+    const organizations: IOrganizationModel[] = await OrganizationModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    }, {
+        _id: 1,
+    });
+    return organizations.map((organization: IOrganizationModel) => organization._id);
 };

@@ -558,3 +558,13 @@ export const getActiveAccountsByGroupLean = async (group: ObjectID): Promise<IAc
         active: true,
     }).lean();
 };
+
+export const getAccountsByQuery = async (query: Record<string, any>): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find(query);
+};
+
+export const getAccountsByQueryLean = async (query: Record<string, any>): Promise<IAccount[]> => {
+
+    return await AccountModel.find(query).lean();
+};
