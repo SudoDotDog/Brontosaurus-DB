@@ -393,3 +393,13 @@ export const getOrganizationIdsByNames = async (names: string[]): Promise<Object
     });
     return organizations.map((organization: IOrganizationModel) => organization._id);
 };
+
+export const getOrganizationsByQuery = async (query: Record<string, any>): Promise<IOrganizationModel[]> => {
+
+    return await OrganizationModel.find(query);
+};
+
+export const getOrganizationsByQueryLean = async (query: Record<string, any>): Promise<IOrganization[]> => {
+
+    return await OrganizationModel.find(query).lean();
+};
