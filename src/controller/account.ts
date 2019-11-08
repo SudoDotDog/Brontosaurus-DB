@@ -223,6 +223,14 @@ export const getSelectedActiveAccountPages = async (limit: number, keyword?: str
     return await getTotalActiveAccountPages(limit);
 };
 
+export const getSelectedAccountPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getAccountPagesByKeyword(limit, keyword);
+    }
+    return await getTotalAccountPages(limit);
+};
+
 export const getTotalActiveAccountPages = async (limit: number): Promise<number> =>
     (await AccountModel.countDocuments({
         active: true,

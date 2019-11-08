@@ -189,6 +189,14 @@ export const getSelectedActiveOrganizationPages = async (limit: number, keyword?
     return await getTotalActiveOrganizationPages(limit);
 };
 
+export const getSelectedOrganizationPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getOrganizationPagesByKeyword(limit, keyword);
+    }
+    return await getTotalOrganizationPages(limit);
+};
+
 export const getAllOrganizations = async (): Promise<IOrganizationModel[]> => OrganizationModel.find({});
 export const getAllOrganizationsLean = async (): Promise<IOrganization[]> => OrganizationModel.find({}).lean();
 
