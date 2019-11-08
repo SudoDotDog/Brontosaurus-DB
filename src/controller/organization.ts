@@ -45,6 +45,7 @@ export const getOrganizationDetailsById = async (id: ObjectID): Promise<Organiza
 
     return {
         name: organization.name,
+        active: organization.active,
         owner: owner.username,
     };
 };

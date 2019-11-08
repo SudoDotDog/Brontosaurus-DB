@@ -15,6 +15,7 @@ export type OrganizationActions = {
 export type OrganizationDetail = {
 
     readonly name: string;
+    readonly active: boolean;
     readonly owner: string;
 };
 
