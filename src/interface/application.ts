@@ -43,6 +43,7 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
     privateKey: string;
 
     groups: ObjectID[];
+    requires: ObjectID[];
 }
 
 export interface IApplication extends IApplicationConfig {

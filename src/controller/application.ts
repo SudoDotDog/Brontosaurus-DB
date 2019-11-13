@@ -33,6 +33,7 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
         publicKey: secret.public,
         privateKey: secret.private,
         groups: [],
+        requires: [],
     };
     return new ApplicationModel(config);
 };

@@ -52,6 +52,11 @@ const ApplicationSchema: Schema = new Schema(
             required: true,
             default: [],
         },
+        requires: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
         key: {
             type: String,
             required: true,
