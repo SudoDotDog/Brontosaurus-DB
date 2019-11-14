@@ -8,14 +8,14 @@ import * as Mongoose from "mongoose";
 
 export type ConnectLogConfig = {
 
+    readonly connected?: boolean;
+    readonly disconnected?: boolean;
     readonly error?: boolean;
     readonly reconnected?: boolean;
     readonly reconnectedFailed?: boolean;
-    readonly disconnected?: boolean;
-    readonly connected?: boolean;
 };
 
-export const connect = (database: string, logConfig: ConnectLogConfig): Mongoose.Connection => {
+export const connect = (database: string, logConfig?: ConnectLogConfig): Mongoose.Connection => {
 
     Mongoose.connect(
         database,
@@ -27,7 +27,7 @@ export const connect = (database: string, logConfig: ConnectLogConfig): Mongoose
             useUnifiedTopology: true,
 
             autoReconnect: true,
-            reconnectTries: 120,
+            reconnectTries: 150,
             reconnectInterval: 1000,
             poolSize: 5,
         },
@@ -35,11 +35,29 @@ export const connect = (database: string, logConfig: ConnectLogConfig): Mongoose
 
     const connection: Mongoose.Connection = Mongoose.connection;
 
-    connection.on('error', console.log.bind(console, 'Connection Error: '));
-    connection.on('reconnectFailed', console.log.bind(console, 'Reconnected Failed: '));
-    connection.on('reconnected', console.log.bind(console, 'Reconnected: '));
-    connection.on('disconnected', console.log.bind(console, 'Disconnected: '));
-    connection.on('connected', console.log.bind(console, 'Connected: '));
+    if (!logConfig) {
+        return connection;
+    }
+
+    if (logConfig.connected) {
+        connection.on('connected', (...args: any[]) => console.log(`[Brontosaurus-DB](CONNECTED)`, ...args));
+    }
+
+    if (logConfig.disconnected) {
+        connection.on('disconnected', (...args: any[]) => console.log(`[Brontosaurus-DB](DISCONNECTED)`, ...args));
+    }
+
+    if (logConfig.error) {
+        connection.on('error', (...args: any[]) => console.log(`[Brontosaurus-DB](ERROR)`, ...args));
+    }
+
+    if (logConfig.reconnected) {
+        connection.on('reconnected', (...args: any[]) => console.log(`[Brontosaurus-DB](RECONNECTED)`, ...args));
+    }
+
+    if (logConfig.reconnectedFailed) {
+        connection.on('reconnectFailed', (...args: any[]) => console.log(`[Brontosaurus-DB](RECONNECT_FAILED)`, ...args));
+    }
 
     return connection;
 };
