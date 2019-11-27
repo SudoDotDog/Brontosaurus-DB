@@ -8,6 +8,8 @@ export enum COMMON_NAME_VALIDATE_RESPONSE {
 
     TOO_SHORT = "TOO_SHORT",
     ONLY_SELECTED_SYMBOL = "ONLY_SELECTED_SYMBOL",
+    START_WITH_SPACE = "START_WITH_SPACE",
+    END_WITH_SPACE = "END_WITH_SPACE",
     OK = "OK",
 }
 
@@ -18,6 +20,14 @@ export const validateCommonName = (
 
     if (name.length < length) {
         return COMMON_NAME_VALIDATE_RESPONSE.TOO_SHORT;
+    }
+
+    if (name.substring(0, 1) === ' ') {
+        return COMMON_NAME_VALIDATE_RESPONSE.START_WITH_SPACE;
+    }
+
+    if (name.substring(name.length - 1, name.length) === ' ') {
+        return COMMON_NAME_VALIDATE_RESPONSE.END_WITH_SPACE;
     }
 
     if (!/^([A-Za-z0-9]|[-_!@#$^&*=+.,'"/`~ ])+$/.test(name)) {
