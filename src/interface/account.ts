@@ -14,6 +14,7 @@ export const defaultInitialAttemptPoints: number = 100;
 export type AccountActions = {
 
     CREATE: undefined;
+    UPDATE_CONTACT: undefined;
     RESET_PASSWORD: undefined;
 };
 
