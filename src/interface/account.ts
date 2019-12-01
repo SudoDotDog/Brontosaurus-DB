@@ -15,6 +15,7 @@ export type AccountActions = {
 
     CREATE: undefined;
     UPDATE_CONTACT: undefined;
+    UPDATE_GROUP: undefined;
     RESET_PASSWORD: undefined;
 };
 
