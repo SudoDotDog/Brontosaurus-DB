@@ -11,6 +11,14 @@ export type WebhookActions = {
     CREATE: undefined;
 };
 
+export const validateWebhookAction = (action: keyof WebhookActions): boolean => {
+
+    const keys: Array<keyof WebhookActions> = [
+        "CREATE",
+    ];
+    return keys.includes(action);
+};
+
 export enum WEBHOOK_EVENT {
 
     ACCOUNT_DEACTIVATE = "ACCOUNT_DEACTIVATE",

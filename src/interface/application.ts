@@ -19,6 +19,14 @@ export type ApplicationActions = {
     CREATE: undefined;
 };
 
+export const validateApplicationAction = (action: keyof ApplicationActions): boolean => {
+
+    const keys: Array<keyof ApplicationActions> = [
+        "CREATE",
+    ];
+    return keys.includes(action);
+};
+
 export type ApplicationOthersConfig = {
 
     avatar?: string;

@@ -12,6 +12,14 @@ export type OrganizationActions = {
     CREATE: undefined;
 };
 
+export const validateOrganizationAction = (action: keyof OrganizationActions): boolean => {
+
+    const keys: Array<keyof OrganizationActions> = [
+        "CREATE",
+    ];
+    return keys.includes(action);
+};
+
 export type OrganizationDetail = {
 
     readonly name: string;

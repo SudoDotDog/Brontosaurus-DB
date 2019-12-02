@@ -12,6 +12,14 @@ export type GroupActions = {
     CREATE: undefined;
 };
 
+export const validateGroupAction = (action: keyof GroupActions): boolean => {
+
+    const keys: Array<keyof GroupActions> = [
+        "CREATE",
+    ];
+    return keys.includes(action);
+};
+
 export enum INTERNAL_USER_GROUP {
 
     SUPER_ADMIN = 'BRONTOSAURUS_SUPER_ADMIN',
