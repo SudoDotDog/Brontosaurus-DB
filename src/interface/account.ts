@@ -14,9 +14,20 @@ export const defaultInitialAttemptPoints: number = 100;
 export type AccountActions = {
 
     CREATE: undefined;
+    RESET_PASSWORD: undefined;
     UPDATE_CONTACT: undefined;
     UPDATE_GROUP: undefined;
-    RESET_PASSWORD: undefined;
+};
+
+export const validateAccountAction = (action: keyof AccountActions): boolean => {
+
+    const keys: Array<keyof AccountActions> = [
+        "CREATE",
+        "RESET_PASSWORD",
+        "UPDATE_CONTACT",
+        "UPDATE_GROUP",
+    ];
+    return keys.includes(action);
 };
 
 export interface IAccountConfig {
