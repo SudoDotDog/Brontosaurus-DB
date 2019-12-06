@@ -26,9 +26,6 @@ export const connect = (database: string, logConfig?: ConnectLogConfig): Mongoos
             useNewUrlParser: true,
             useUnifiedTopology: true,
 
-            autoReconnect: true,
-            reconnectTries: 150,
-            reconnectInterval: 1000,
             poolSize: 5,
         },
     );
