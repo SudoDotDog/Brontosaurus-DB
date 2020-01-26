@@ -1,6 +1,6 @@
 {
   "name": "@brontosaurus/db",
-  "version": "3.6.6",
+  "version": "3.7.0",
   "description": ":ocean: Schema for brontosaurus",
   "repository": {
     "type": "git",
@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/SudoDotDog/Brontosaurus-DB#readme",
   "dependencies": {
-    "@brontosaurus/core": "^3.0.0",
-    "@brontosaurus/definition": "^3.0.0",
+    "@brontosaurus/core": "^3.1.0",
+    "@brontosaurus/definition": "^3.1.0",
     "@sudoo/bark": "^2.7.1",
-    "mongoose": "^5.8.7",
+    "mongoose": "^5.8.9",
     "speakeasy": "^2.0.0"
   },
   "devDependencies": {
