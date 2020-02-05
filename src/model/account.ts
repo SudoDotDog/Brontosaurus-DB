@@ -6,9 +6,11 @@
 
 import { Basics } from "@brontosaurus/definition";
 import { _Random } from "@sudoo/bark/random";
+import { randomApiKey, randomUnique } from "@sudoo/random";
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
 import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER } from "../interface/account";
+import { SpecialPassword } from "../interface/common";
 import { generateURL } from "../util/2fa";
 import { garblePassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
@@ -142,6 +144,8 @@ export interface IAccountModel extends IAccount, Document {
     setPassword(password: string): IAccountModel;
     setTempPassword(): IAccountModel;
     resetMint(): IAccountModel;
+    generateApplicationPassword(by: ObjectID, expireAt: Date, tails?: number): IAccountModel;
+    generateTemporaryPassword(by: ObjectID, expireAt: Date, tails?: number): IAccountModel;
     verifyPassword(password: string): boolean;
     pushHistory<T extends keyof AccountActions>(
         action: T,
@@ -286,6 +290,42 @@ AccountSchema.methods.resetMint = function (this: IAccountModel): IAccountModel 
 
     this.mint = _Random.unique();
 
+    return this;
+};
+
+AccountSchema.methods.generateApplicationPassword = function (this: IAccountModel, by: ObjectID, expireAt: Date, tails: number = 3): IAccountModel {
+
+    const password: string = randomApiKey(tails);
+    const saltedPassword: string = garblePassword(password, this.salt);
+    const specialPassword: SpecialPassword = {
+        id: randomUnique(),
+        by,
+        expireAt,
+        createdAt: new Date(),
+        password: saltedPassword,
+    };
+    this.applicationPasswords = [
+        ...this.applicationPasswords,
+        specialPassword,
+    ];
+    return this;
+};
+
+AccountSchema.methods.generateTemporaryPassword = function (this: IAccountModel, by: ObjectID, expireAt: Date, tails: number = 3): IAccountModel {
+
+    const password: string = randomApiKey(tails);
+    const saltedPassword: string = garblePassword(password, this.salt);
+    const specialPassword: SpecialPassword = {
+        id: randomUnique(),
+        by,
+        expireAt,
+        createdAt: new Date(),
+        password: saltedPassword,
+    };
+    this.temporaryPasswords = [
+        ...this.applicationPasswords,
+        specialPassword,
+    ];
     return this;
 };
 
