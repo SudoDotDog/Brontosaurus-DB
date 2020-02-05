@@ -13,6 +13,8 @@ export type SpecialPassword = {
     readonly expireAt: Date;
     readonly createdAt: Date;
     readonly password: string;
+
+    suspendedAt?: Date;
 };
 
 export type History = {

@@ -144,8 +144,10 @@ export interface IAccountModel extends IAccount, Document {
     setPassword(password: string): IAccountModel;
     setTempPassword(): IAccountModel;
     resetMint(): IAccountModel;
-    generateApplicationPassword(by: ObjectID, expireAt: Date, tails?: number): IAccountModel;
-    generateTemporaryPassword(by: ObjectID, expireAt: Date, tails?: number): IAccountModel;
+    generateApplicationPassword(by: ObjectID, expireAt: Date, tails?: number): string;
+    suspendApplicationPassword(id: string): boolean;
+    generateTemporaryPassword(by: ObjectID, expireAt: Date, tails?: number): string;
+    suspendTemporaryPassword(id: string): boolean;
     verifyPassword(password: string): boolean;
     verifySpecialPasswords(password: string): boolean;
     pushHistory<T extends keyof AccountActions>(
@@ -294,7 +296,7 @@ AccountSchema.methods.resetMint = function (this: IAccountModel): IAccountModel 
     return this;
 };
 
-AccountSchema.methods.generateApplicationPassword = function (this: IAccountModel, by: ObjectID, expireAt: Date, tails: number = 3): IAccountModel {
+AccountSchema.methods.generateApplicationPassword = function (this: IAccountModel, by: ObjectID, expireAt: Date, tails: number = 3): string {
 
     const password: string = randomApiKey(tails);
     const saltedPassword: string = garblePassword(password, this.salt);
@@ -309,10 +311,24 @@ AccountSchema.methods.generateApplicationPassword = function (this: IAccountMode
         ...this.applicationPasswords,
         specialPassword,
     ];
-    return this;
+    return password;
 };
 
-AccountSchema.methods.generateTemporaryPassword = function (this: IAccountModel, by: ObjectID, expireAt: Date, tails: number = 3): IAccountModel {
+AccountSchema.methods.suspendApplicationPassword = function (this: IAccountModel, id: string): boolean {
+
+    for (const applicationPassword of this.applicationPasswords) {
+        if (applicationPassword.id === id) {
+            if (Boolean(applicationPassword.suspendedAt)) {
+                return false;
+            }
+            applicationPassword.suspendedAt = new Date();
+            return true;
+        }
+    }
+    return false;
+};
+
+AccountSchema.methods.generateTemporaryPassword = function (this: IAccountModel, by: ObjectID, expireAt: Date, tails: number = 3): string {
 
     const password: string = randomApiKey(tails);
     const saltedPassword: string = garblePassword(password, this.salt);
@@ -327,7 +343,21 @@ AccountSchema.methods.generateTemporaryPassword = function (this: IAccountModel,
         ...this.applicationPasswords,
         specialPassword,
     ];
-    return this;
+    return password;
+};
+
+AccountSchema.methods.suspendTemporaryPassword = function (this: IAccountModel, id: string): boolean {
+
+    for (const temporaryPassword of this.temporaryPasswords) {
+        if (temporaryPassword.id === id) {
+            if (Boolean(temporaryPassword.suspendedAt)) {
+                return false;
+            }
+            temporaryPassword.suspendedAt = new Date();
+            return true;
+        }
+    }
+    return false;
 };
 
 AccountSchema.methods.verifyPassword = function (this: IAccountModel, password: string): boolean {

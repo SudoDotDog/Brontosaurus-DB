@@ -56,4 +56,8 @@ export const SpecialPasswordSchema = new Schema({
         type: String,
         requiredPaths: true,
     },
+    suspendedAt: {
+        type: Date,
+        required: false,
+    },
 }, { _id: false });
