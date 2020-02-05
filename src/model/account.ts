@@ -12,7 +12,7 @@ import { Document, model, Model, Schema } from "mongoose";
 import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER } from "../interface/account";
 import { SpecialPassword } from "../interface/common";
 import { generateURL } from "../util/2fa";
-import { garblePassword } from "../util/auth";
+import { garblePassword, verifySpecialPassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
 import { SpecialPasswordSchema } from "./common";
 
@@ -147,6 +147,7 @@ export interface IAccountModel extends IAccount, Document {
     generateApplicationPassword(by: ObjectID, expireAt: Date, tails?: number): IAccountModel;
     generateTemporaryPassword(by: ObjectID, expireAt: Date, tails?: number): IAccountModel;
     verifyPassword(password: string): boolean;
+    verifySpecialPasswords(password: string): boolean;
     pushHistory<T extends keyof AccountActions>(
         action: T,
         application: ObjectID,
@@ -334,6 +335,25 @@ AccountSchema.methods.verifyPassword = function (this: IAccountModel, password: 
     const saltedPassword: string = garblePassword(password, this.salt);
 
     return this.password === saltedPassword;
+};
+
+AccountSchema.methods.verifySpecialPasswords = function (this: IAccountModel, password: string): boolean {
+
+    const saltedPassword: string = garblePassword(password, this.salt);
+
+    for (const applicationPassword of this.applicationPasswords) {
+        if (verifySpecialPassword(saltedPassword, applicationPassword)) {
+            return true;
+        }
+    }
+
+    for (const temporaryPassword of this.temporaryPasswords) {
+        if (verifySpecialPassword(saltedPassword, temporaryPassword)) {
+            return true;
+        }
+    }
+
+    return false;
 };
 
 export const AccountModel: Model<IAccountModel> = model<IAccountModel>('Account', AccountSchema);
