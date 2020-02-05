@@ -20,7 +20,8 @@
     "@brontosaurus/core": "^3.1.0",
     "@brontosaurus/definition": "^3.1.0",
     "@sudoo/bark": "^2.7.1",
-    "mongoose": "^5.8.9",
+    "@sudoo/random": "^2.1.0",
+    "mongoose": "^5.8.11",
     "speakeasy": "^2.0.0"
   },
   "devDependencies": {

@@ -121,6 +121,7 @@ export interface IApplicationModel extends IApplication, Document {
 
 ApplicationSchema.methods.refreshGreen = function (this: IApplicationModel): IApplicationModel {
 
+    // tslint:disable-next-line: no-magic-numbers
     this.green = trustable(new Date(), undefined, 64);
 
     return this;
