@@ -17,6 +17,10 @@ export const garblePassword = (password: string, salt: string): string => {
 
 export const verifySpecialPassword = (garbledPassword: string, specialPassword: SpecialPassword): boolean => {
 
+    if (Boolean(specialPassword.suspendedAt) || Boolean(specialPassword.suspendedBy)) {
+        return false;
+    }
+
     const presentTime: number = new Date().getTime();
     const expireTime: number = specialPassword.expireAt.getTime();
 

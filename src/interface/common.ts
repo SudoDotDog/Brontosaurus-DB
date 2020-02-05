@@ -14,7 +14,7 @@ export type SpecialPassword = {
     readonly createdAt: Date;
     readonly password: string;
 
-    suspendedBy?: string;
+    suspendedBy?: ObjectID;
     suspendedAt?: Date;
 };
 

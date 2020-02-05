@@ -145,9 +145,9 @@ export interface IAccountModel extends IAccount, Document {
     setTempPassword(): IAccountModel;
     resetMint(): IAccountModel;
     generateApplicationPassword(by: ObjectID, expireAt: Date, tails?: number): string;
-    suspendApplicationPassword(id: string, by: string): boolean;
+    suspendApplicationPassword(id: string, by: ObjectID): boolean;
     generateTemporaryPassword(by: ObjectID, expireAt: Date, tails?: number): string;
-    suspendTemporaryPassword(id: string, by: string): boolean;
+    suspendTemporaryPassword(id: string, by: ObjectID): boolean;
     verifyPassword(password: string): boolean;
     verifySpecialPasswords(password: string): boolean;
     pushHistory<T extends keyof AccountActions>(
@@ -314,7 +314,7 @@ AccountSchema.methods.generateApplicationPassword = function (this: IAccountMode
     return password;
 };
 
-AccountSchema.methods.suspendApplicationPassword = function (this: IAccountModel, id: string, by: string): boolean {
+AccountSchema.methods.suspendApplicationPassword = function (this: IAccountModel, id: string, by: ObjectID): boolean {
 
     const specialPasswords: SpecialPassword[] = this.applicationPasswords.map((each) => ({
         passwordId: each.passwordId,
@@ -359,7 +359,7 @@ AccountSchema.methods.generateTemporaryPassword = function (this: IAccountModel,
     return password;
 };
 
-AccountSchema.methods.suspendTemporaryPassword = function (this: IAccountModel, id: string, by: string): boolean {
+AccountSchema.methods.suspendTemporaryPassword = function (this: IAccountModel, id: string, by: ObjectID): boolean {
 
     const specialPasswords: SpecialPassword[] = this.temporaryPasswords.map((each) => ({
         passwordId: each.passwordId,

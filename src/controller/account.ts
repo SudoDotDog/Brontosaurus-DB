@@ -576,3 +576,41 @@ export const getAccountsByQueryLean = async (query: Record<string, any>): Promis
 
     return await AccountModel.find(query).lean();
 };
+
+export const getAccountsByUsernames = async (usernames: string[]): Promise<IAccountModel[]> => {
+
+    const anchors: string[] = usernames.map((username: string) => fitAnchor(username));
+    return await AccountModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    });
+};
+
+export const getAccountsByUsernamesLean = async (usernames: string[]): Promise<IAccount[]> => {
+
+    const anchors: string[] = usernames.map((username: string) => fitAnchor(username));
+    return await AccountModel.find({
+        anchor: {
+            $in: anchors,
+        },
+    }).lean();
+};
+
+export const getAccountsByIds = async (ids: string[] | ObjectID[]): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
+        _id: {
+            $in: ids,
+        },
+    });
+};
+
+export const getAccountsByIdsLean = async (ids: string[] | ObjectID[]): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        _id: {
+            $in: ids,
+        },
+    }).lean();
+};

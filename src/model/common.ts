@@ -57,7 +57,7 @@ export const SpecialPasswordSchema = new Schema({
         requiredPaths: true,
     },
     suspendedBy: {
-        type: String,
+        type: Schema.Types.ObjectId,
         required: false,
     },
     suspendedAt: {
