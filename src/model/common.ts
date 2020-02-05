@@ -33,3 +33,27 @@ export const HistorySchema = new Schema({
         required: false,
     },
 }, { _id: false });
+
+export const SpecialPasswordSchema = new Schema({
+
+    id: {
+        type: String,
+        required: true,
+    },
+    by: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
+    expireAt: {
+        type: Date,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+    },
+    password: {
+        type: String,
+        requiredPaths: true,
+    },
+}, { _id: false });

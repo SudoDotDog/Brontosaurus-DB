@@ -6,6 +6,15 @@
 
 import { ObjectID } from "bson";
 
+export type SpecialPassword = {
+
+    readonly id: string;
+    readonly by: ObjectID;
+    readonly expireAt: Date;
+    readonly createdAt: Date;
+    readonly password: string;
+};
+
 export type History = {
 
     readonly action: string;

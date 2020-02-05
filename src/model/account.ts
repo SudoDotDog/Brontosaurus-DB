@@ -12,6 +12,7 @@ import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER }
 import { generateURL } from "../util/2fa";
 import { garblePassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
+import { SpecialPasswordSchema } from "./common";
 
 const AccountSchema: Schema = new Schema(
     {
@@ -57,6 +58,16 @@ const AccountSchema: Schema = new Schema(
         password: {
             type: String,
             required: true,
+        },
+        temporaryPasswords: {
+            type: [SpecialPasswordSchema],
+            required: true,
+            default: [],
+        },
+        applicationPasswords: {
+            type: [SpecialPasswordSchema],
+            required: true,
+            default: [],
         },
         phone: {
             type: String,
@@ -255,6 +266,7 @@ AccountSchema.methods.removeGroup = function (this: IAccountModel, id: ObjectID)
 
 AccountSchema.methods.setTempPassword = function (this: IAccountModel): IAccountModel {
 
+    // tslint:disable-next-line: no-magic-numbers
     const tempPassword: string = _Random.random(6);
     this.setPassword(tempPassword);
 
