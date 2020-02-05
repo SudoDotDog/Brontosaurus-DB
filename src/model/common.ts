@@ -36,7 +36,7 @@ export const HistorySchema = new Schema({
 
 export const SpecialPasswordSchema = new Schema({
 
-    id: {
+    passwordId: {
         type: String,
         required: true,
     },
@@ -55,6 +55,10 @@ export const SpecialPasswordSchema = new Schema({
     password: {
         type: String,
         requiredPaths: true,
+    },
+    suspendedBy: {
+        type: String,
+        required: false,
     },
     suspendedAt: {
         type: Date,

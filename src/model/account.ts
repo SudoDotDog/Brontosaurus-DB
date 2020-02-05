@@ -145,9 +145,9 @@ export interface IAccountModel extends IAccount, Document {
     setTempPassword(): IAccountModel;
     resetMint(): IAccountModel;
     generateApplicationPassword(by: ObjectID, expireAt: Date, tails?: number): string;
-    suspendApplicationPassword(id: string): boolean;
+    suspendApplicationPassword(id: string, by: string): boolean;
     generateTemporaryPassword(by: ObjectID, expireAt: Date, tails?: number): string;
-    suspendTemporaryPassword(id: string): boolean;
+    suspendTemporaryPassword(id: string, by: string): boolean;
     verifyPassword(password: string): boolean;
     verifySpecialPasswords(password: string): boolean;
     pushHistory<T extends keyof AccountActions>(
@@ -301,7 +301,7 @@ AccountSchema.methods.generateApplicationPassword = function (this: IAccountMode
     const password: string = randomApiKey(tails);
     const saltedPassword: string = garblePassword(password, this.salt);
     const specialPassword: SpecialPassword = {
-        id: randomUnique(),
+        passwordId: randomUnique(),
         by,
         expireAt,
         createdAt: new Date(),
@@ -314,14 +314,27 @@ AccountSchema.methods.generateApplicationPassword = function (this: IAccountMode
     return password;
 };
 
-AccountSchema.methods.suspendApplicationPassword = function (this: IAccountModel, id: string): boolean {
+AccountSchema.methods.suspendApplicationPassword = function (this: IAccountModel, id: string, by: string): boolean {
 
-    for (const applicationPassword of this.applicationPasswords) {
-        if (applicationPassword.id === id) {
+    const specialPasswords: SpecialPassword[] = this.applicationPasswords.map((each) => ({
+        passwordId: each.passwordId,
+        by: each.by,
+        expireAt: each.expireAt,
+        createdAt: each.createdAt,
+        password: each.password,
+        suspendedBy: each.suspendedBy,
+        suspendedAt: each.suspendedAt,
+    }));
+
+    for (const applicationPassword of specialPasswords) {
+        if (applicationPassword.passwordId === id) {
             if (Boolean(applicationPassword.suspendedAt)) {
                 return false;
             }
             applicationPassword.suspendedAt = new Date();
+            applicationPassword.suspendedBy = by;
+
+            this.applicationPasswords = specialPasswords;
             return true;
         }
     }
@@ -333,7 +346,7 @@ AccountSchema.methods.generateTemporaryPassword = function (this: IAccountModel,
     const password: string = randomApiKey(tails);
     const saltedPassword: string = garblePassword(password, this.salt);
     const specialPassword: SpecialPassword = {
-        id: randomUnique(),
+        passwordId: randomUnique(),
         by,
         expireAt,
         createdAt: new Date(),
@@ -346,14 +359,27 @@ AccountSchema.methods.generateTemporaryPassword = function (this: IAccountModel,
     return password;
 };
 
-AccountSchema.methods.suspendTemporaryPassword = function (this: IAccountModel, id: string): boolean {
+AccountSchema.methods.suspendTemporaryPassword = function (this: IAccountModel, id: string, by: string): boolean {
 
-    for (const temporaryPassword of this.temporaryPasswords) {
-        if (temporaryPassword.id === id) {
-            if (Boolean(temporaryPassword.suspendedAt)) {
+    const specialPasswords: SpecialPassword[] = this.temporaryPasswords.map((each) => ({
+        passwordId: each.passwordId,
+        by: each.by,
+        expireAt: each.expireAt,
+        createdAt: each.createdAt,
+        password: each.password,
+        suspendedBy: each.suspendedBy,
+        suspendedAt: each.suspendedAt,
+    }));
+
+    for (const applicationPassword of specialPasswords) {
+        if (applicationPassword.passwordId === id) {
+            if (Boolean(applicationPassword.suspendedAt)) {
                 return false;
             }
-            temporaryPassword.suspendedAt = new Date();
+            applicationPassword.suspendedAt = new Date();
+            applicationPassword.suspendedBy = by;
+
+            this.temporaryPasswords = specialPasswords;
             return true;
         }
     }
