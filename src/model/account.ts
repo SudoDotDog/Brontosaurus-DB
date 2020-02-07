@@ -353,7 +353,7 @@ AccountSchema.methods.generateTemporaryPassword = function (this: IAccountModel,
         password: saltedPassword,
     };
     this.temporaryPasswords = [
-        ...this.applicationPasswords,
+        ...this.temporaryPasswords,
         specialPassword,
     ];
     return password;
