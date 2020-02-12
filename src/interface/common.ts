@@ -6,6 +6,13 @@
 
 import { ObjectID } from "bson";
 
+export type ResetToken = {
+
+    readonly password: string;
+    readonly createdAt: Date;
+    readonly expireAt: Date;
+};
+
 export type SpecialPassword = {
 
     readonly passwordId: string;

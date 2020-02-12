@@ -34,6 +34,22 @@ export const HistorySchema = new Schema({
     },
 }, { _id: false });
 
+export const ResetTokenSchema = new Schema({
+
+    password: {
+        type: String,
+        required: true,
+    },
+    expireAt: {
+        type: Date,
+        required: true,
+    },
+    createdAt: {
+        type: Date,
+        required: true,
+    },
+}, { _id: false });
+
 export const SpecialPasswordSchema = new Schema({
 
     passwordId: {
@@ -54,7 +70,7 @@ export const SpecialPasswordSchema = new Schema({
     },
     password: {
         type: String,
-        requiredPaths: true,
+        required: true,
     },
     suspendedBy: {
         type: Schema.Types.ObjectId,

@@ -5,7 +5,7 @@
  */
 
 import { ObjectID } from "bson";
-import { History, SpecialPassword } from "./common";
+import { History, ResetToken, SpecialPassword } from "./common";
 
 export const INFOS_SPLITTER = ':*:';
 
@@ -52,6 +52,8 @@ export interface IAccountConfig {
 export interface IAccount extends IAccountConfig {
 
     decorators: ObjectID[];
+
+    resetTokens: ResetToken[];
 
     temporaryPasswords: SpecialPassword[];
     applicationPasswords: SpecialPassword[];

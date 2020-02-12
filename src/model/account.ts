@@ -14,7 +14,7 @@ import { SpecialPassword } from "../interface/common";
 import { generateURL } from "../util/2fa";
 import { garblePassword, verifySpecialPassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
-import { SpecialPasswordSchema } from "./common";
+import { ResetTokenSchema, SpecialPasswordSchema } from "./common";
 
 const AccountSchema: Schema = new Schema(
     {
@@ -60,6 +60,11 @@ const AccountSchema: Schema = new Schema(
         password: {
             type: String,
             required: true,
+        },
+        resetTokens: {
+            type: [ResetTokenSchema],
+            required: true,
+            default: [],
         },
         temporaryPasswords: {
             type: [SpecialPasswordSchema],
