@@ -32,6 +32,9 @@ export type Preferences = {
     readonly registerInfo: RegisterInfo;
     readonly prepared: boolean;
 
+    readonly mailerTransport: any;
+    readonly mailerSource: string;
+
     readonly accountName: string;
     readonly systemName: string;
     readonly commandCenterName: string;
