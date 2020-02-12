@@ -444,7 +444,7 @@ AccountSchema.methods.verifySpecialPasswords = function (this: IAccountModel, pa
     return false;
 };
 
-AccountSchema.methods.verifyResetTokens = function (this: IAccountModel, password: string): boolean {
+AccountSchema.methods.verifyResetToken = function (this: IAccountModel, password: string): boolean {
 
     const saltedPassword: string = garblePassword(password, this.salt);
 
