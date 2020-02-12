@@ -6,13 +6,13 @@
 
 import { Basics } from "@brontosaurus/definition";
 import { _Random } from "@sudoo/bark/random";
-import { randomApiKey, randomUnique } from "@sudoo/random";
+import { randomApiKey, randomString, randomUnique } from "@sudoo/random";
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
 import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER } from "../interface/account";
-import { SpecialPassword } from "../interface/common";
+import { ResetToken, SpecialPassword } from "../interface/common";
 import { generateURL } from "../util/2fa";
-import { garblePassword, verifySpecialPassword } from "../util/auth";
+import { garblePassword, verifyResetToken, verifySpecialPassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
 import { ResetTokenSchema, SpecialPasswordSchema } from "./common";
 
@@ -153,8 +153,11 @@ export interface IAccountModel extends IAccount, Document {
     suspendApplicationPassword(id: string, by: ObjectID): boolean;
     generateTemporaryPassword(by: ObjectID, expireAt: Date, tails?: number): string;
     suspendTemporaryPassword(id: string, by: ObjectID): boolean;
+    generateResetToken(expireAt: Date): string;
     verifyPassword(password: string): boolean;
     verifySpecialPasswords(password: string): boolean;
+    verifyResetToken(password: string): boolean;
+    clearResetTokens(): IAccountModel;
     pushHistory<T extends keyof AccountActions>(
         action: T,
         application: ObjectID,
@@ -364,6 +367,22 @@ AccountSchema.methods.generateTemporaryPassword = function (this: IAccountModel,
     return password;
 };
 
+AccountSchema.methods.generateResetToken = function (this: IAccountModel, expireAt: Date): string {
+
+    const password: string = randomString();
+    const saltedPassword: string = garblePassword(password, this.salt);
+    const resetToken: ResetToken = {
+        expireAt,
+        createdAt: new Date(),
+        password: saltedPassword,
+    };
+    this.resetTokens = [
+        ...this.resetTokens,
+        resetToken,
+    ];
+    return password;
+};
+
 AccountSchema.methods.suspendTemporaryPassword = function (this: IAccountModel, id: string, by: ObjectID): boolean {
 
     const specialPasswords: SpecialPassword[] = this.temporaryPasswords.map((each) => ({
@@ -415,6 +434,25 @@ AccountSchema.methods.verifySpecialPasswords = function (this: IAccountModel, pa
     }
 
     return false;
+};
+
+AccountSchema.methods.verifyResetTokens = function (this: IAccountModel, password: string): boolean {
+
+    const saltedPassword: string = garblePassword(password, this.salt);
+
+    for (const resetToken of this.resetTokens) {
+        if (verifyResetToken(saltedPassword, resetToken)) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+AccountSchema.methods.clearResetTokens = function (this: IAccountModel): IAccountModel {
+
+    this.resetTokens = [];
+    return this;
 };
 
 export const AccountModel: Model<IAccountModel> = model<IAccountModel>('Account', AccountSchema);

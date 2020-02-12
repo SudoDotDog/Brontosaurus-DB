@@ -5,7 +5,7 @@
  */
 
 import { createHash, Hash } from 'crypto';
-import { SpecialPassword } from '../interface/common';
+import { SpecialPassword, ResetToken } from '../interface/common';
 
 export const garblePassword = (password: string, salt: string): string => {
 
@@ -29,4 +29,16 @@ export const verifySpecialPassword = (garbledPassword: string, specialPassword: 
     }
 
     return garbledPassword === specialPassword.password;
+};
+
+export const verifyResetToken = (garbledPassword: string, resetToken: ResetToken): boolean => {
+
+    const presentTime: number = new Date().getTime();
+    const expireTime: number = resetToken.expireAt.getTime();
+
+    if (presentTime > expireTime) {
+        return false;
+    }
+
+    return garbledPassword === resetToken.password;
 };
