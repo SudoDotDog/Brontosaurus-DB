@@ -140,6 +140,7 @@ export interface IAccountModel extends IAccount, Document {
 
     resetAttempt(amount?: number): IAccountModel;
     useAttemptPoint(point: number): IAccountModel;
+    addAttemptPoint(point: number): IAccountModel;
     generateAndSetTwoFA(systemName?: string): string;
     verifyTwoFA(code: string): boolean;
     getInfoRecords(): Record<string, Basics>;
@@ -169,7 +170,14 @@ export interface IAccountModel extends IAccount, Document {
 
 AccountSchema.methods.useAttemptPoint = function (this: IAccountModel, point: number): IAccountModel {
 
-    this.attemptPoints = this.attemptPoints - point;
+    this.attemptPoints = this.attemptPoints - Math.abs(point);
+
+    return this;
+};
+
+AccountSchema.methods.addAttemptPoint = function (this: IAccountModel, point: number): IAccountModel {
+
+    this.attemptPoints = this.attemptPoints + Math.abs(point);
 
     return this;
 };
