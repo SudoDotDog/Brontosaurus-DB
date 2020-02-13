@@ -45,6 +45,9 @@ export type Preferences = {
     readonly globalFavicon: string;
     readonly globalHelpLink: string;
     readonly globalPrivacyPolicy: string;
+
+    readonly indexPage: string;
+    readonly entryPage: string;
 };
 
 export interface IPreferenceConfig {
