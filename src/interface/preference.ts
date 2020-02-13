@@ -33,7 +33,8 @@ export type Preferences = {
     readonly prepared: boolean;
 
     readonly mailerTransport: any;
-    readonly mailerSource: string;
+    readonly mailerSourceResetPassword: string;
+    readonly mailerSourceNotification: string;
 
     readonly accountName: string;
     readonly systemName: string;
