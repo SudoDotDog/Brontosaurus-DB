@@ -238,7 +238,6 @@ AccountSchema.methods.getBeaconRecords = function (this: IAccountModel): Record<
     }, {} as Record<string, Basics>);
 };
 
-
 AccountSchema.methods.pushHistory = function <T extends keyof AccountActions>(
     this: IAccountModel,
     action: T,
