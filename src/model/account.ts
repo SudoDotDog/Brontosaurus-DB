@@ -148,7 +148,7 @@ export interface IAccountModel extends IAccount, Document {
     addGroup(id: ObjectID): IAccountModel;
     removeGroup(id: ObjectID): IAccountModel;
     setPassword(password: string): IAccountModel;
-    setTempPassword(): IAccountModel;
+    setTempPassword(length?: number): IAccountModel;
     resetMint(): IAccountModel;
     generateApplicationPassword(by: ObjectID, expireAt: Date, tails?: number): string;
     suspendApplicationPassword(id: string, by: ObjectID): boolean;
@@ -286,10 +286,9 @@ AccountSchema.methods.removeGroup = function (this: IAccountModel, id: ObjectID)
     return this;
 };
 
-AccountSchema.methods.setTempPassword = function (this: IAccountModel): IAccountModel {
+AccountSchema.methods.setTempPassword = function (this: IAccountModel, length: number = 8): IAccountModel {
 
-    // tslint:disable-next-line: no-magic-numbers
-    const tempPassword: string = _Random.random(6);
+    const tempPassword: string = _Random.random(length);
     this.setPassword(tempPassword);
 
     return this;
