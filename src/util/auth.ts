@@ -5,7 +5,7 @@
  */
 
 import { createHash, Hash } from 'crypto';
-import { SpecialPassword, ResetToken } from '../interface/common';
+import { ResetToken, SpecialPassword } from '../interface/common';
 
 export const garblePassword = (password: string, salt: string): string => {
 

@@ -156,6 +156,8 @@ export interface IAccountModel extends IAccount, Document {
     suspendTemporaryPassword(id: string, by: ObjectID): boolean;
     generateResetToken(expireAt: Date): string;
     verifyPassword(password: string): boolean;
+    verifyTemporaryPassword(password: string): boolean;
+    verifyApplicationPassword(password: string): boolean;
     verifySpecialPasswords(password: string): boolean;
     verifyResetToken(password: string): boolean;
     clearResetTokens(): IAccountModel;
@@ -423,7 +425,20 @@ AccountSchema.methods.verifyPassword = function (this: IAccountModel, password: 
     return this.password === saltedPassword;
 };
 
-AccountSchema.methods.verifySpecialPasswords = function (this: IAccountModel, password: string): boolean {
+AccountSchema.methods.verifyTemporaryPassword = function (this: IAccountModel, password: string): boolean {
+
+    const saltedPassword: string = garblePassword(password, this.salt);
+
+    for (const temporaryPassword of this.temporaryPasswords) {
+        if (verifySpecialPassword(saltedPassword, temporaryPassword)) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+AccountSchema.methods.verifyApplicationPassword = function (this: IAccountModel, password: string): boolean {
 
     const saltedPassword: string = garblePassword(password, this.salt);
 
@@ -433,13 +448,13 @@ AccountSchema.methods.verifySpecialPasswords = function (this: IAccountModel, pa
         }
     }
 
-    for (const temporaryPassword of this.temporaryPasswords) {
-        if (verifySpecialPassword(saltedPassword, temporaryPassword)) {
-            return true;
-        }
-    }
-
     return false;
+};
+
+AccountSchema.methods.verifySpecialPasswords = function (this: IAccountModel, password: string): boolean {
+
+    return this.verifyTemporaryPassword(password)
+        || this.verifyApplicationPassword(password);
 };
 
 AccountSchema.methods.verifyResetToken = function (this: IAccountModel, password: string): boolean {
