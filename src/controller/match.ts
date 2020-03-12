@@ -4,27 +4,11 @@
  * @description Match
  */
 
+import { AccountNamespaceMatch, MATCH_FAILS_REASON } from "../data/match";
 import { IAccountModel } from "../model/account";
 import { INamespaceModel } from "../model/namespace";
 import { getAccountByUsernameAndNamespace } from "./account";
 import { getNamespaceByNamespace } from "./namespace";
-
-export enum MATCH_FAILS_REASON {
-
-    NAMESPACE_NOT_FOUND = "NAMESPACE_NOT_FOUND",
-    ACCOUNT_NOT_FOUND = "ACCOUNT_NOT_FOUND",
-}
-
-export type AccountNamespaceMatch = {
-
-    readonly succeed: true;
-    readonly account: IAccountModel;
-    readonly namespace: INamespaceModel;
-} | {
-
-    readonly succeed: false;
-    readonly reason: MATCH_FAILS_REASON;
-};
 
 export const getAccountNamespaceMatchByUsernameAndNamespace = async (username: string, namespace: string): Promise<AccountNamespaceMatch> => {
 
