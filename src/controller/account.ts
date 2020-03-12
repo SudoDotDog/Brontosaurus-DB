@@ -16,6 +16,7 @@ import { parseInfo } from "../util/token";
 export const createOnLimboUnsavedAccount = (
     username: string,
     password: string,
+    namespace: ObjectID,
     displayName?: string,
     email?: string,
     phone?: string,
@@ -37,6 +38,7 @@ export const createOnLimboUnsavedAccount = (
 
         anchor,
         username,
+        namespace,
         displayName,
         password: garblePassword(password, salt),
         email,
@@ -59,6 +61,7 @@ export const createOnLimboUnsavedAccount = (
 export const createUnsavedAccount = (
     username: string,
     password: string,
+    namespace: ObjectID,
     displayName?: string,
     email?: string,
     phone?: string,
@@ -80,6 +83,7 @@ export const createUnsavedAccount = (
 
         anchor,
         username,
+        namespace,
         displayName,
         password: garblePassword(password, salt),
         email,

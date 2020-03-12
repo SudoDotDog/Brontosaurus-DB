@@ -35,6 +35,8 @@ export interface IAccountConfig {
     readonly anchor: string;
     readonly username: string;
 
+    namespace: ObjectID;
+
     password: string;
     mint: string;
     salt: string;

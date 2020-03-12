@@ -34,6 +34,11 @@ const AccountSchema: Schema = new Schema(
             required: true,
             unique: true,
         },
+        namespace: {
+            type: Schema.Types.ObjectId,
+            index: true,
+            required: true,
+        },
         displayName: {
             type: String,
             required: false,
