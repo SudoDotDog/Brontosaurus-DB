@@ -1,39 +1,30 @@
 /**
  * @author WMXPY
  * @namespace Brontosaurus_DB_Model
- * @description Tag
+ * @description Namespace
  */
 
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { ITag, TagActions } from "../interface/tag";
+import { INamespace, NamespaceActions } from "../interface/namespace";
 import { HistorySchema } from "./common";
 
-const TagSchema: Schema = new Schema(
+const NamespaceSchema: Schema = new Schema(
     {
         active: {
             type: Boolean,
             required: true,
             default: true,
         },
-        anchor: {
+        domain: {
             type: String,
-            required: true,
-            unique: true,
             index: true,
-        },
-        name: {
-            type: String,
             required: true,
-            unique: true,
         },
-        decorators: {
-            type: [Schema.Types.ObjectId],
-            required: true,
-            default: [],
-        },
-        description: {
+        namespace: {
             type: String,
+            index: true,
+            required: true,
         },
         history: {
             type: [HistorySchema],
@@ -49,25 +40,25 @@ const TagSchema: Schema = new Schema(
     },
 );
 
-export interface ITagModel extends ITag, Document {
+export interface INamespaceModel extends INamespace, Document {
 
-    pushHistory<T extends keyof TagActions>(
+    pushHistory<T extends keyof NamespaceActions>(
         action: T,
         application: ObjectID,
         by: ObjectID,
         content: string,
-        extra: TagActions[T],
-    ): ITagModel;
+        extra: NamespaceActions[T],
+    ): INamespaceModel;
 }
 
-TagSchema.methods.pushHistory = function <T extends keyof TagActions>(
-    this: ITagModel,
+NamespaceSchema.methods.pushHistory = function <T extends keyof NamespaceActions>(
+    this: INamespaceModel,
     action: T,
     application: ObjectID,
     by: ObjectID,
     content: string,
-    extra: TagActions[T],
-): ITagModel {
+    extra: NamespaceActions[T],
+): INamespaceModel {
 
     this.history = [
         ...this.history,
@@ -84,4 +75,4 @@ TagSchema.methods.pushHistory = function <T extends keyof TagActions>(
     return this;
 };
 
-export const TagModel: Model<ITagModel> = model<ITagModel>('Tag', TagSchema);
+export const NamespaceModel: Model<INamespaceModel> = model<INamespaceModel>('Namespace', NamespaceSchema);

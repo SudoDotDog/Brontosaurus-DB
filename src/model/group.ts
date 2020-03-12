@@ -7,6 +7,7 @@
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
 import { GroupActions, IGroup } from "../interface/group";
+import { HistorySchema } from "./common";
 
 const GroupSchema: Schema = new Schema(
     {
@@ -35,7 +36,7 @@ const GroupSchema: Schema = new Schema(
             type: String,
         },
         history: {
-            type: [String],
+            type: [HistorySchema],
             required: true,
             default: [],
         },

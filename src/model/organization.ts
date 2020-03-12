@@ -7,6 +7,7 @@
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
 import { IOrganization, OrganizationActions } from "../interface/organization";
+import { HistorySchema } from "./common";
 
 const OrganizationSchema: Schema = new Schema(
     {
@@ -47,7 +48,7 @@ const OrganizationSchema: Schema = new Schema(
             index: true,
         },
         history: {
-            type: [String],
+            type: [HistorySchema],
             required: true,
             default: [],
         },

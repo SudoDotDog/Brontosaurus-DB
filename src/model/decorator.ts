@@ -7,6 +7,7 @@
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
 import { DecoratorActions, IDecorator } from "../interface/decorator";
+import { HistorySchema } from "./common";
 
 const DecoratorSchema: Schema = new Schema(
     {
@@ -40,7 +41,7 @@ const DecoratorSchema: Schema = new Schema(
             default: [],
         },
         history: {
-            type: [String],
+            type: [HistorySchema],
             required: true,
             default: [],
         },

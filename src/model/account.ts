@@ -14,7 +14,7 @@ import { ResetToken, SpecialPassword } from "../interface/common";
 import { generateURL } from "../util/2fa";
 import { garblePassword, verifyResetToken, verifySpecialPassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
-import { ResetTokenSchema, SpecialPasswordSchema } from "./common";
+import { HistorySchema, ResetTokenSchema, SpecialPasswordSchema } from "./common";
 
 const AccountSchema: Schema = new Schema(
     {
@@ -123,7 +123,7 @@ const AccountSchema: Schema = new Schema(
         },
 
         history: {
-            type: [String],
+            type: [HistorySchema],
             required: true,
             default: [],
         },

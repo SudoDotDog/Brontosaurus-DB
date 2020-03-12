@@ -7,6 +7,7 @@
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
 import { IPreference, PreferenceActions } from "../interface/preference";
+import { HistorySchema } from "./common";
 
 const PreferenceSchema: Schema = new Schema(
     {
@@ -25,7 +26,7 @@ const PreferenceSchema: Schema = new Schema(
             required: true,
         },
         history: {
-            type: [String],
+            type: [HistorySchema],
             required: true,
             default: [],
         },

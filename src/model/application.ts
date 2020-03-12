@@ -9,6 +9,7 @@ import { trustable } from "@sudoo/bark/random";
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
 import { ApplicationActions, IApplication } from "../interface/application";
+import { HistorySchema } from "./common";
 
 const ApplicationSchema: Schema = new Schema(
     {
@@ -91,7 +92,7 @@ const ApplicationSchema: Schema = new Schema(
             required: true,
         },
         history: {
-            type: [String],
+            type: [HistorySchema],
             required: true,
             default: [],
         },
