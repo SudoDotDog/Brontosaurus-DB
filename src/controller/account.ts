@@ -165,6 +165,24 @@ export const getAccountsByGroupsLean = async (groups: Array<string | ObjectID>):
     }).lean();
 };
 
+export const getAccountByUsernameAndNamespace = async (username: string, namespace: ObjectID): Promise<IAccountModel | null> => {
+
+    const anchor: string = fitAnchor(username);
+    return await AccountModel.findOne({
+        anchor,
+        namespace,
+    });
+};
+
+export const getAccountByUsernameAndNamespaceLean = async (username: string, namespace: ObjectID): Promise<IAccount | null> => {
+
+    const anchor: string = fitAnchor(username);
+    return await AccountModel.findOne({
+        anchor,
+        namespace,
+    }).lean();
+};
+
 export const getAccountByUsername = async (username: string): Promise<IAccountModel | null> => {
 
     const anchor: string = fitAnchor(username);

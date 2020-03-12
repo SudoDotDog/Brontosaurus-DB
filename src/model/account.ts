@@ -26,13 +26,11 @@ const AccountSchema: Schema = new Schema(
         anchor: {
             type: String,
             required: true,
-            unique: true,
             index: true,
         },
         username: {
             type: String,
             required: true,
-            unique: true,
         },
         namespace: {
             type: Schema.Types.ObjectId,

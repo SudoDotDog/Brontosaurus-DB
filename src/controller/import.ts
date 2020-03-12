@@ -9,11 +9,12 @@ import * as ApplicationController from "./application";
 import * as DecoratorController from "./decorator";
 import * as GroupController from "./group";
 import * as InformationController from "./information";
+import * as MatchController from "./match";
 import * as NamespaceController from "./namespace";
 import * as OrganizationController from "./organization";
 import * as PreferenceController from "./preference";
 import * as TagController from "./tag";
 
-export { AccountController, ApplicationController, DecoratorController, GroupController, InformationController, NamespaceController, OrganizationController, PreferenceController, TagController };
+export { AccountController, ApplicationController, DecoratorController, GroupController, InformationController, MatchController, NamespaceController, OrganizationController, PreferenceController, TagController };
 
 
