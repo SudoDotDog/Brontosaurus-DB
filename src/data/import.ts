@@ -8,4 +8,5 @@ export * from "./account";
 export * from "./common";
 export * from "./contact";
 export * from "./group";
+export * from "./namespace";
 

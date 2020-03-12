@@ -19,11 +19,13 @@ const NamespaceSchema: Schema = new Schema(
         domain: {
             type: String,
             index: true,
+            unique: true,
             required: true,
         },
         namespace: {
             type: String,
             index: true,
+            unique: true,
             required: true,
         },
         history: {
