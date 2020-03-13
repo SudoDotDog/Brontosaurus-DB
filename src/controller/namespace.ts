@@ -4,7 +4,7 @@
  * @description Namespace
  */
 
-import { BRONTOSAURUS_NAMESPACE } from "@brontosaurus/core";
+import { DEFAULT_BRONTOSAURUS_NAMESPACE } from "@brontosaurus/definition";
 import { ObjectID } from "bson";
 import { parseDomainToNamespace, parseNamespaceToDomain } from "../data/namespace";
 import { INamespace, INamespaceConfig } from "../interface/namespace";
@@ -13,7 +13,7 @@ import { INamespaceModel, NamespaceModel } from "../model/namespace";
 export const getBrontosaurusDefaultNamespace = async (): Promise<INamespaceModel> => {
 
     const createdDefaultNamespace: INamespaceModel | null = await NamespaceModel.findOne({
-        namespace: BRONTOSAURUS_NAMESPACE.DEFAULT,
+        namespace: DEFAULT_BRONTOSAURUS_NAMESPACE.DEFAULT,
     });
 
     if (createdDefaultNamespace) {
@@ -21,8 +21,8 @@ export const getBrontosaurusDefaultNamespace = async (): Promise<INamespaceModel
     }
 
     const defaultNamespace: INamespaceModel = new NamespaceModel({
-        domain: parseNamespaceToDomain(BRONTOSAURUS_NAMESPACE.DEFAULT),
-        namespace: BRONTOSAURUS_NAMESPACE.DEFAULT,
+        domain: parseNamespaceToDomain(DEFAULT_BRONTOSAURUS_NAMESPACE.DEFAULT),
+        namespace: DEFAULT_BRONTOSAURUS_NAMESPACE.DEFAULT,
     });
 
     await defaultNamespace.save();
@@ -32,7 +32,7 @@ export const getBrontosaurusDefaultNamespace = async (): Promise<INamespaceModel
 export const getBrontosaurusAdminNamespace = async (): Promise<INamespaceModel> => {
 
     const createdDefaultNamespace: INamespaceModel | null = await NamespaceModel.findOne({
-        namespace: BRONTOSAURUS_NAMESPACE.ADMIN,
+        namespace: DEFAULT_BRONTOSAURUS_NAMESPACE.ADMIN,
     });
 
     if (createdDefaultNamespace) {
@@ -40,8 +40,8 @@ export const getBrontosaurusAdminNamespace = async (): Promise<INamespaceModel> 
     }
 
     const defaultNamespace: INamespaceModel = new NamespaceModel({
-        domain: parseNamespaceToDomain(BRONTOSAURUS_NAMESPACE.ADMIN),
-        namespace: BRONTOSAURUS_NAMESPACE.ADMIN,
+        domain: parseNamespaceToDomain(DEFAULT_BRONTOSAURUS_NAMESPACE.ADMIN),
+        namespace: DEFAULT_BRONTOSAURUS_NAMESPACE.ADMIN,
     });
 
     await defaultNamespace.save();
