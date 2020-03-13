@@ -183,37 +183,23 @@ export const getAccountByUsernameAndNamespaceLean = async (username: string, nam
     }).lean();
 };
 
-export const getAccountByUsername = async (username: string): Promise<IAccountModel | null> => {
+export const getActiveAccountByUsernameAndNamespace = async (username: string, namespace: ObjectID): Promise<IAccountModel | null> => {
 
     const anchor: string = fitAnchor(username);
     return await AccountModel.findOne({
+        active: true,
         anchor,
+        namespace,
     });
 };
 
-export const getAccountByUsernameLean = async (username: string): Promise<IAccount | null> => {
+export const getActiveAccountByUsernameAndNamespaceLean = async (username: string, namespace: ObjectID): Promise<IAccount | null> => {
 
     const anchor: string = fitAnchor(username);
     return await AccountModel.findOne({
-        anchor,
-    }).lean();
-};
-
-export const getActiveAccountByUsername = async (username: string): Promise<IAccountModel | null> => {
-
-    const anchor: string = fitAnchor(username);
-    return await AccountModel.findOne({
-        anchor,
         active: true,
-    });
-};
-
-export const getActiveAccountByUsernameLean = async (username: string): Promise<IAccount | null> => {
-
-    const anchor: string = fitAnchor(username);
-    return await AccountModel.findOne({
         anchor,
-        active: true,
+        namespace,
     }).lean();
 };
 
@@ -519,15 +505,15 @@ export const getAllAccountsByPageLean = async (limit: number, page: number): Pro
     return accounts;
 };
 
-export const isAccountDuplicatedByUsername = async (username: string): Promise<boolean> => {
+export const isAccountDuplicatedByUsernameAndNamespace = async (username: string, namespace: ObjectID): Promise<boolean> => {
 
-    const account: IAccountModel | null = await getAccountByUsername(username);
+    const account: IAccountModel | null = await getAccountByUsernameAndNamespace(username, namespace);
     return Boolean(account);
 };
 
-export const resetAccountPassword = async (username: string, newPassword: string): Promise<IAccountModel | null> => {
+export const resetAccountPassword = async (username: string, namespace: ObjectID, newPassword: string): Promise<IAccountModel | null> => {
 
-    const account: IAccountModel | null = await getAccountByUsername(username);
+    const account: IAccountModel | null = await getAccountByUsernameAndNamespace(username, namespace);
 
     if (!account) {
         return null;
