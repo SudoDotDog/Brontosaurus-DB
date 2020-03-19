@@ -21,6 +21,7 @@ export const getBrontosaurusDefaultNamespace = async (): Promise<INamespaceModel
     }
 
     const defaultNamespace: INamespaceModel = new NamespaceModel({
+        name: 'Brontosaurus Default',
         domain: parseNamespaceToDomain(DEFAULT_BRONTOSAURUS_NAMESPACE.DEFAULT),
         namespace: DEFAULT_BRONTOSAURUS_NAMESPACE.DEFAULT,
     });
@@ -40,6 +41,7 @@ export const getBrontosaurusAdminNamespace = async (): Promise<INamespaceModel> 
     }
 
     const defaultNamespace: INamespaceModel = new NamespaceModel({
+        name: 'Brontosaurus Admin',
         domain: parseNamespaceToDomain(DEFAULT_BRONTOSAURUS_NAMESPACE.ADMIN),
         namespace: DEFAULT_BRONTOSAURUS_NAMESPACE.ADMIN,
     });
@@ -157,6 +159,22 @@ export const createUnsavedNamespaceByDomain = (
 ): INamespaceModel => {
 
     const namespace: string = parseDomainToNamespace(domain);
+    const fixedDomain: string = domain.toLowerCase();
+    const fixedNamespace: string = namespace.toLowerCase();
+
+    const config: INamespaceConfig = {
+        domain: fixedDomain,
+        namespace: fixedNamespace,
+    };
+
+    return new NamespaceModel(config);
+};
+
+export const createUnsavedNamespaceByNamespace = (
+    namespace: string,
+): INamespaceModel => {
+
+    const domain: string = parseNamespaceToDomain(namespace);
     const fixedDomain: string = domain.toLowerCase();
     const fixedNamespace: string = namespace.toLowerCase();
 

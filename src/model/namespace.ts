@@ -16,6 +16,9 @@ const NamespaceSchema: Schema = new Schema(
             required: true,
             default: true,
         },
+        name: {
+            type: String,
+        },
         domain: {
             type: String,
             index: true,

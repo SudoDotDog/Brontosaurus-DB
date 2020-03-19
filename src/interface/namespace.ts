@@ -22,6 +22,7 @@ export const validateNamespaceAction = (action: keyof NamespaceActions): boolean
 
 export interface INamespaceConfig {
 
+    name?: string;
     domain: string;
     namespace: string;
 }
