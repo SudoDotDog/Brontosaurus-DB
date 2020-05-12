@@ -10,6 +10,7 @@ import { IAccount } from "../interface/account";
 import { IOrganization, IOrganizationConfig, OrganizationDetail } from "../interface/organization";
 import { AccountModel } from "../model/account";
 import { IOrganizationModel, OrganizationModel } from "../model/organization";
+import { parseObjectIDList } from "../util/object-id";
 
 export const getOrganizationById = async (id: ObjectID): Promise<IOrganizationModel | null> => {
 
@@ -104,40 +105,40 @@ export const getOrganizationByNamesLean = async (names: string[]): Promise<IOrga
     }).lean();
 };
 
-export const getActiveOrganizationsByTags = async (tags: string[]): Promise<IOrganizationModel[]> => {
+export const getActiveOrganizationsByTags = async (tags: Array<string | ObjectID>): Promise<IOrganizationModel[]> => {
 
     return await OrganizationModel.find({
         tags: {
-            $in: tags,
+            $in: parseObjectIDList(tags),
         },
         active: true,
     });
 };
 
-export const getActiveOrganizationsByTagsLean = async (tags: string[]): Promise<IOrganization[]> => {
+export const getActiveOrganizationsByTagsLean = async (tags: Array<string | ObjectID>): Promise<IOrganization[]> => {
 
     return await OrganizationModel.find({
         tags: {
-            $in: tags,
+            $in: parseObjectIDList(tags),
         },
         active: true,
     }).lean();
 };
 
-export const getOrganizationsByTags = async (tags: string[]): Promise<IOrganizationModel[]> => {
+export const getOrganizationsByTags = async (tags: Array<string | ObjectID>): Promise<IOrganizationModel[]> => {
 
     return await OrganizationModel.find({
         tags: {
-            $in: tags,
+            $in: parseObjectIDList(tags),
         },
     });
 };
 
-export const getOrganizationsByTagsLean = async (tags: string[]): Promise<IOrganization[]> => {
+export const getOrganizationsByTagsLean = async (tags: Array<string | ObjectID>): Promise<IOrganization[]> => {
 
     return await OrganizationModel.find({
         tags: {
-            $in: tags,
+            $in: parseObjectIDList(tags),
         },
     }).lean();
 };
