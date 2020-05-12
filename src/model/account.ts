@@ -32,6 +32,10 @@ const AccountSchema: Schema = new Schema(
             type: String,
             required: true,
         },
+        avatar: {
+            type: String,
+            required: false,
+        },
         namespace: {
             type: Schema.Types.ObjectId,
             index: true,

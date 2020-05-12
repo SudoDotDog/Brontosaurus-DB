@@ -45,6 +45,7 @@ export interface IAccountConfig {
     groups: ObjectID[];
     tags: ObjectID[];
 
+    avatar?: string;
     displayName?: string;
     email?: string;
     phone?: string;
