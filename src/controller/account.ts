@@ -11,6 +11,7 @@ import { fitAnchor } from "../data/common";
 import { IAccount, IAccountConfig } from "../interface/account";
 import { AccountModel, IAccountModel } from "../model/account";
 import { garblePassword } from "../util/auth";
+import { parseObjectIDList } from "../util/object-id";
 import { parseInfo } from "../util/token";
 
 export const createOnLimboUnsavedAccount = (
@@ -116,14 +117,14 @@ export const getAccountsByOrganizationLean = async (organization: string | Objec
 export const getAccountsByGroup = async (group: string | ObjectID): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
-        groups: group,
+        groups: group as ObjectID,
     });
 };
 
 export const getAccountsByGroupLean = async (group: string | ObjectID): Promise<IAccount[]> => {
 
     return await AccountModel.find({
-        groups: group,
+        groups: group as ObjectID,
     }).lean();
 };
 
@@ -131,7 +132,7 @@ export const getActiveAccountsByGroups = async (groups: Array<string | ObjectID>
 
     return await AccountModel.find({
         groups: {
-            $in: groups,
+            $in: parseObjectIDList(groups),
         },
         active: true,
     });
@@ -141,7 +142,7 @@ export const getActiveAccountsByGroupsLean = async (groups: Array<string | Objec
 
     return await AccountModel.find({
         groups: {
-            $in: groups,
+            $in: parseObjectIDList(groups),
         },
         active: true,
     }).lean();
@@ -151,7 +152,7 @@ export const getAccountsByGroups = async (groups: Array<string | ObjectID>): Pro
 
     return await AccountModel.find({
         groups: {
-            $in: groups,
+            $in: parseObjectIDList(groups),
         },
     });
 };
@@ -160,7 +161,7 @@ export const getAccountsByGroupsLean = async (groups: Array<string | ObjectID>):
 
     return await AccountModel.find({
         groups: {
-            $in: groups,
+            $in: parseObjectIDList(groups),
         },
     }).lean();
 };
@@ -244,40 +245,40 @@ export const getTotalActiveAccountPages = async (limit: number): Promise<number>
         active: true,
     })) / limit;
 
-export const getActiveAccountsByTags = async (tags: string[]): Promise<IAccountModel[]> => {
+export const getActiveAccountsByTags = async (tags: Array<string | ObjectID>): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
         tags: {
-            $in: tags,
+            $in: parseObjectIDList(tags),
         },
         active: true,
     });
 };
 
-export const getActiveAccountsByTagsLean = async (tags: string[]): Promise<IAccount[]> => {
+export const getActiveAccountsByTagsLean = async (tags: Array<string | ObjectID>): Promise<IAccount[]> => {
 
     return await AccountModel.find({
         tags: {
-            $in: tags,
+            $in: parseObjectIDList(tags),
         },
         active: true,
     }).lean();
 };
 
-export const getAccountsByTags = async (tags: string[]): Promise<IAccountModel[]> => {
+export const getAccountsByTags = async (tags: Array<string | ObjectID>): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
         tags: {
-            $in: tags,
+            $in: parseObjectIDList(tags),
         },
     });
 };
 
-export const getAccountsByTagsLean = async (tags: string[]): Promise<IAccount[]> => {
+export const getAccountsByTagsLean = async (tags: Array<string | ObjectID>): Promise<IAccount[]> => {
 
     return await AccountModel.find({
         tags: {
-            $in: tags,
+            $in: parseObjectIDList(tags),
         },
     }).lean();
 };
