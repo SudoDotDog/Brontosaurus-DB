@@ -16,6 +16,7 @@ export interface IAttemptConfig {
     readonly platform: string;
     readonly userAgent: string;
     readonly source: string;
+    readonly proxySources: string[];
 
     readonly application: ObjectID;
 }

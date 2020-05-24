@@ -34,6 +34,11 @@ const AttemptSchema: Schema = new Schema(
             type: String,
             required: true,
         },
+        proxySources: {
+            type: String,
+            required: true,
+            default: [],
+        },
         application: {
             type: Schema.Types.ObjectId,
             required: true,
