@@ -35,7 +35,7 @@ const AttemptSchema: Schema = new Schema(
             required: true,
         },
         proxySources: {
-            type: String,
+            type: [String],
             required: true,
             default: [],
         },
