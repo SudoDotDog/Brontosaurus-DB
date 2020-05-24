@@ -48,6 +48,11 @@ const ApplicationSchema: Schema = new Schema(
             type: Number,
             required: true,
         },
+        redirection: {
+            type: [String],
+            required: true,
+            default: [],
+        },
         groups: {
             type: [Schema.Types.ObjectId],
             required: true,

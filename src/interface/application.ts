@@ -50,6 +50,8 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
     publicKey: string;
     privateKey: string;
 
+    redirection: string[];
+
     groups: ObjectID[];
     requires: ObjectID[];
 }
