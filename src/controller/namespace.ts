@@ -289,6 +289,10 @@ export const getActiveNamespacesByPage = async (keyword: string, limit: number, 
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const fixed: string = keyword.toLowerCase();
     const regexp: RegExp = new RegExp(fixed, 'i');
     const namespaces: INamespaceModel[] = await NamespaceModel.find({
@@ -303,6 +307,10 @@ export const getActiveNamespacesByPage = async (keyword: string, limit: number, 
 export const getActiveNamespacesByPageLean = async (keyword: string, limit: number, page: number): Promise<INamespace[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -323,6 +331,10 @@ export const getNamespacesByPage = async (keyword: string, limit: number, page: 
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const fixed: string = keyword.toLowerCase();
     const regexp: RegExp = new RegExp(fixed, 'i');
     const namespaces: INamespaceModel[] = await NamespaceModel.find({
@@ -336,6 +348,10 @@ export const getNamespacesByPage = async (keyword: string, limit: number, page: 
 export const getNamespacesByPageLean = async (keyword: string, limit: number, page: number): Promise<INamespace[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -355,6 +371,10 @@ export const getAllActiveNamespacesByPage = async (limit: number, page: number):
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const namespaces: INamespaceModel[] = await NamespaceModel.find({
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
@@ -364,6 +384,10 @@ export const getAllActiveNamespacesByPage = async (limit: number, page: number):
 export const getAllActiveNamespacesByPageLean = async (limit: number, page: number): Promise<INamespace[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -379,6 +403,10 @@ export const getAllNamespacesByPage = async (limit: number, page: number): Promi
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const namespaces: INamespaceModel[] = await NamespaceModel.find({
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
     return namespaces;
@@ -387,6 +415,10 @@ export const getAllNamespacesByPage = async (limit: number, page: number): Promi
 export const getAllNamespacesByPageLean = async (limit: number, page: number): Promise<INamespace[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 

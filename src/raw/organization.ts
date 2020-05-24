@@ -45,6 +45,10 @@ export const getActiveOrganizationsByRawPage = async (keyword: string, limit: nu
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const regexp: RegExp = new RegExp(keyword, 'i');
     const organizations: IOrganizationModel[] = await OrganizationModel.find({
         name: {
@@ -58,6 +62,10 @@ export const getActiveOrganizationsByRawPage = async (keyword: string, limit: nu
 export const getOrganizationsByRawPage = async (keyword: string, limit: number, page: number): Promise<IOrganizationModel[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 

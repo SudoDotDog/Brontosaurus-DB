@@ -224,6 +224,10 @@ export const getActiveGroupsByPage = async (keyword: string, limit: number, page
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(anchor, 'i');
     const groups: IGroupModel[] = await GroupModel.find({
@@ -238,6 +242,10 @@ export const getActiveGroupsByPage = async (keyword: string, limit: number, page
 export const getActiveGroupsByPageLean = async (keyword: string, limit: number, page: number): Promise<IGroup[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -258,6 +266,10 @@ export const getGroupsByPage = async (keyword: string, limit: number, page: numb
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(anchor, 'i');
     const groups: IGroupModel[] = await GroupModel.find({
@@ -271,6 +283,10 @@ export const getGroupsByPage = async (keyword: string, limit: number, page: numb
 export const getGroupsByPageLean = async (keyword: string, limit: number, page: number): Promise<IGroup[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -290,6 +306,10 @@ export const getAllActiveGroupsByPage = async (limit: number, page: number): Pro
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const groups: IGroupModel[] = await GroupModel.find({
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
@@ -299,6 +319,10 @@ export const getAllActiveGroupsByPage = async (limit: number, page: number): Pro
 export const getAllActiveGroupsByPageLean = async (limit: number, page: number): Promise<IGroup[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -314,6 +338,10 @@ export const getAllGroupsByPage = async (limit: number, page: number): Promise<I
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const groups: IGroupModel[] = await GroupModel.find({})
         .skip(page * limit).limit(limit).sort({ _id: -1 });
     return groups;
@@ -322,6 +350,10 @@ export const getAllGroupsByPage = async (limit: number, page: number): Promise<I
 export const getAllGroupsByPageLean = async (limit: number, page: number): Promise<IGroup[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 

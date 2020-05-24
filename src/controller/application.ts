@@ -161,6 +161,10 @@ export const getActiveApplicationsByPage = async (keyword: string, limit: number
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(keyword, 'i');
     const anchorRegExp: RegExp = new RegExp(anchor);
@@ -183,6 +187,10 @@ export const getActiveApplicationsByPage = async (keyword: string, limit: number
 export const getActiveApplicationsByPageLean = async (keyword: string, limit: number, page: number): Promise<IApplication[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -211,6 +219,10 @@ export const getApplicationsByPage = async (keyword: string, limit: number, page
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(keyword, 'i');
     const anchorRegExp: RegExp = new RegExp(anchor);
@@ -232,6 +244,10 @@ export const getApplicationsByPage = async (keyword: string, limit: number, page
 export const getApplicationsByPageLean = async (keyword: string, limit: number, page: number): Promise<IApplication[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -259,6 +275,10 @@ export const getAllActiveApplicationsByPage = async (limit: number, page: number
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const applications: IApplicationModel[] = await ApplicationModel.find({
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
@@ -268,6 +288,10 @@ export const getAllActiveApplicationsByPage = async (limit: number, page: number
 export const getAllActiveApplicationsByPageLean = async (limit: number, page: number): Promise<IApplication[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -283,6 +307,10 @@ export const getAllApplicationsByPage = async (limit: number, page: number): Pro
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const applications: IApplicationModel[] = await ApplicationModel.find({})
         .skip(page * limit).limit(limit).sort({ _id: -1 });
     return applications;
@@ -291,6 +319,10 @@ export const getAllApplicationsByPage = async (limit: number, page: number): Pro
 export const getAllApplicationsByPageLean = async (limit: number, page: number): Promise<IApplication[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 

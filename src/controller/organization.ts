@@ -271,6 +271,10 @@ export const getActiveOrganizationsByPage = async (keyword: string, limit: numbe
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(anchor, 'i');
     const organizations: IOrganizationModel[] = await OrganizationModel.find({
@@ -285,6 +289,10 @@ export const getActiveOrganizationsByPage = async (keyword: string, limit: numbe
 export const getActiveOrganizationsByPageLean = async (keyword: string, limit: number, page: number): Promise<IOrganization[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -305,6 +313,10 @@ export const getOrganizationsByPage = async (keyword: string, limit: number, pag
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(anchor, 'i');
     const organizations: IOrganizationModel[] = await OrganizationModel.find({
@@ -318,6 +330,10 @@ export const getOrganizationsByPage = async (keyword: string, limit: number, pag
 export const getOrganizationsByPageLean = async (keyword: string, limit: number, page: number): Promise<IOrganization[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -337,6 +353,10 @@ export const getAllActiveOrganizationsByPage = async (limit: number, page: numbe
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const organizations: IOrganizationModel[] = await OrganizationModel.find({
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
@@ -346,6 +366,10 @@ export const getAllActiveOrganizationsByPage = async (limit: number, page: numbe
 export const getAllActiveOrganizationsByPageLean = async (limit: number, page: number): Promise<IOrganization[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -361,6 +385,10 @@ export const getAllOrganizationsByPage = async (limit: number, page: number): Pr
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const organizations: IOrganizationModel[] = await OrganizationModel.find({})
         .skip(page * limit).limit(limit).sort({ _id: -1 });
     return organizations;
@@ -369,6 +397,10 @@ export const getAllOrganizationsByPage = async (limit: number, page: number): Pr
 export const getAllOrganizationsByPageLean = async (limit: number, page: number): Promise<IOrganization[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 

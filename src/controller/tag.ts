@@ -226,6 +226,10 @@ export const getActiveTagsByPage = async (keyword: string, limit: number, page: 
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(anchor, 'i');
     const tags: ITagModel[] = await TagModel.find({
@@ -240,6 +244,10 @@ export const getActiveTagsByPage = async (keyword: string, limit: number, page: 
 export const getActiveTagsByPageLean = async (keyword: string, limit: number, page: number): Promise<ITag[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -260,6 +268,10 @@ export const getTagsByPage = async (keyword: string, limit: number, page: number
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const anchor: string = fitAnchor(keyword);
     const regexp: RegExp = new RegExp(anchor, 'i');
     const tags: ITagModel[] = await TagModel.find({
@@ -273,6 +285,10 @@ export const getTagsByPage = async (keyword: string, limit: number, page: number
 export const getTagsByPageLean = async (keyword: string, limit: number, page: number): Promise<ITag[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -292,6 +308,10 @@ export const getAllActiveTagsByPage = async (limit: number, page: number): Promi
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const tags: ITagModel[] = await TagModel.find({
         active: true,
     }).skip(page * limit).limit(limit).sort({ _id: -1 });
@@ -301,6 +321,10 @@ export const getAllActiveTagsByPage = async (limit: number, page: number): Promi
 export const getAllActiveTagsByPageLean = async (limit: number, page: number): Promise<ITag[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
@@ -316,6 +340,10 @@ export const getAllTagsByPage = async (limit: number, page: number): Promise<ITa
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const tags: ITagModel[] = await TagModel.find({})
         .skip(page * limit).limit(limit).sort({ _id: -1 });
     return tags;
@@ -324,6 +352,10 @@ export const getAllTagsByPage = async (limit: number, page: number): Promise<ITa
 export const getAllTagsByPageLean = async (limit: number, page: number): Promise<ITag[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 

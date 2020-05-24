@@ -38,6 +38,10 @@ export const getActiveAccountsByRawPage = async (keyword: string, limit: number,
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const regexp: RegExp = new RegExp(keyword, 'i');
     const accounts: IAccountModel[] = await AccountModel.find({
         username: {
@@ -51,6 +55,10 @@ export const getActiveAccountsByRawPage = async (keyword: string, limit: number,
 export const getAccountsByRawPage = async (keyword: string, limit: number, page: number): Promise<IAccountModel[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 

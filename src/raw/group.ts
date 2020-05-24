@@ -45,6 +45,10 @@ export const getActiveGroupsByRawPage = async (keyword: string, limit: number, p
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const regexp: RegExp = new RegExp(keyword, 'i');
     const groups: IGroupModel[] = await GroupModel.find({
         name: {
@@ -58,6 +62,10 @@ export const getActiveGroupsByRawPage = async (keyword: string, limit: number, p
 export const getGroupsByRawPage = async (keyword: string, limit: number, page: number): Promise<IGroupModel[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 

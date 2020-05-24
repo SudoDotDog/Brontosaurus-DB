@@ -45,6 +45,10 @@ export const getActiveDecoratorsByRawPage = async (keyword: string, limit: numbe
         return [];
     }
 
+    if (limit < 1) {
+        return [];
+    }
+
     const regexp: RegExp = new RegExp(keyword, 'i');
     const decorators: IDecoratorModel[] = await DecoratorModel.find({
         name: {
@@ -58,6 +62,10 @@ export const getActiveDecoratorsByRawPage = async (keyword: string, limit: numbe
 export const getDecoratorsByRawPage = async (keyword: string, limit: number, page: number): Promise<IDecoratorModel[]> => {
 
     if (page < 0) {
+        return [];
+    }
+
+    if (limit < 1) {
         return [];
     }
 
