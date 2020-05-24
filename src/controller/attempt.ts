@@ -18,9 +18,11 @@ export const createUnsavedAttempt = (config: IAttemptConfig): IAttemptModel => {
 
 export const getAttemptsByAccount = async (account: ObjectID | string): Promise<IAttemptModel[]> => {
 
-    return await AttemptModel.find({
+    const attempts: IAttemptModel[] = await AttemptModel.find({
         account,
     });
+
+    return attempts;
 };
 
 export const getAttemptsByAccountAndPage = async (account: ObjectID | string, limit: number, page: number): Promise<IAttemptModel[]> => {
@@ -33,7 +35,9 @@ export const getAttemptsByAccountAndPage = async (account: ObjectID | string, li
         return [];
     }
 
-    return await AttemptModel.find({
+    const attempts: IAttemptModel[] = await AttemptModel.find({
         account,
-    });
+    }).skip(page * limit).limit(limit);
+
+    return attempts;
 };
