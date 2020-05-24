@@ -12,6 +12,7 @@ const AttemptSchema: Schema = new Schema(
         account: {
             type: Schema.Types.ObjectId,
             required: true,
+            index: true,
         },
         succeed: {
             type: Boolean,
@@ -36,6 +37,16 @@ const AttemptSchema: Schema = new Schema(
         application: {
             type: Schema.Types.ObjectId,
             required: true,
+        },
+        identifier: {
+            type: String,
+            required: true,
+            index: true,
+        },
+        at: {
+            type: Date,
+            required: true,
+            index: true,
         },
     },
     {

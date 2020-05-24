@@ -22,6 +22,7 @@ export interface IAttemptConfig {
 
 export interface IAttempt extends IAttemptConfig {
 
+    readonly identifier: string;
     readonly at: Date;
 
     readonly createdAt: Date;
