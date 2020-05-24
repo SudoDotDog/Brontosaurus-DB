@@ -1,16 +1,19 @@
 /**
  * @author WMXPY
  * @namespace Brontosaurus_DB_Interface
- * @description Account
+ * @description Attempt
  */
 
 import { ObjectID } from "bson";
 
 export interface IAttemptConfig {
 
-    readonly at: Date;
     readonly account: ObjectID;
 
+    readonly succeed: boolean;
+    readonly failedReason?: string;
+
+    readonly platform: string;
     readonly userAgent: string;
     readonly source: string;
 
@@ -18,6 +21,8 @@ export interface IAttemptConfig {
 }
 
 export interface IAttempt extends IAttemptConfig {
+
+    readonly at: Date;
 
     readonly createdAt: Date;
     readonly updatedAt: Date;
