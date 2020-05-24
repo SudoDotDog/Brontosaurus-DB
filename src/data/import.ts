@@ -10,4 +10,3 @@ export * from "./contact";
 export * from "./group";
 export * from "./match";
 export * from "./namespace";
-
