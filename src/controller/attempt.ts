@@ -62,3 +62,14 @@ export const getAttemptsByAccountAndPage = async (account: ObjectID | string, li
 
     return attempts;
 };
+
+export const getSelectedAccountAttemptPages = async (account: ObjectID | string, limit: number): Promise<number> => {
+
+    if (limit <= 0) {
+        return Infinity;
+    }
+
+    return (await AttemptModel.countDocuments({
+        account,
+    })) / limit;
+};

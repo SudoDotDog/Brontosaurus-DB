@@ -221,10 +221,20 @@ export const getAccountByIdLean = async (id: ObjectID | string): Promise<IAccoun
     }).lean();
 };
 
-export const getTotalAccountPages = async (limit: number): Promise<number> =>
-    (await AccountModel.estimatedDocumentCount({})) / limit;
+export const getTotalAccountPages = async (limit: number): Promise<number> => {
+
+    if (limit <= 0) {
+        return Infinity;
+    }
+
+    return (await AccountModel.estimatedDocumentCount({})) / limit;
+};
 
 export const getSelectedActiveAccountPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (limit <= 0) {
+        return Infinity;
+    }
 
     if (keyword) {
         return await getActiveAccountPagesByKeyword(limit, keyword);
@@ -234,16 +244,26 @@ export const getSelectedActiveAccountPages = async (limit: number, keyword?: str
 
 export const getSelectedAccountPages = async (limit: number, keyword?: string): Promise<number> => {
 
+    if (limit <= 0) {
+        return Infinity;
+    }
+
     if (keyword) {
         return await getAccountPagesByKeyword(limit, keyword);
     }
     return await getTotalAccountPages(limit);
 };
 
-export const getTotalActiveAccountPages = async (limit: number): Promise<number> =>
-    (await AccountModel.countDocuments({
+export const getTotalActiveAccountPages = async (limit: number): Promise<number> => {
+
+    if (limit <= 0) {
+        return Infinity;
+    }
+
+    return (await AccountModel.countDocuments({
         active: true,
     })) / limit;
+};
 
 export const getActiveAccountsByTags = async (tags: Array<string | ObjectID>): Promise<IAccountModel[]> => {
 
