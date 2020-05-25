@@ -30,6 +30,10 @@ const AttemptSchema: Schema = new Schema(
             type: String,
             required: true,
         },
+        target: {
+            type: String,
+            required: true,
+        },
         source: {
             type: String,
             required: true,
