@@ -6,6 +6,7 @@
 
 import { Brontosaurus, BrontosaurusKey } from "@brontosaurus/core";
 import { trustable } from "@sudoo/bark/random";
+import { ObjectID } from "bson";
 import { fitAnchor } from "../data/common";
 import { ApplicationOthersConfig, IApplication, IApplicationConfig } from "../interface/application";
 import { ApplicationModel, IApplicationModel } from "../model/application";
@@ -37,6 +38,22 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
         requires: [],
     };
     return new ApplicationModel(config);
+};
+
+export const getApplicationById = async (id: ObjectID | string): Promise<IApplication | null> => {
+
+    return await ApplicationModel.findOne({
+        _id: id,
+    });
+};
+
+export const getApplicationsByIds = async (ids: Array<ObjectID | string>): Promise<IApplication[]> => {
+
+    return await ApplicationModel.find({
+        _id: {
+            $in: ids,
+        },
+    });
 };
 
 export const getAllApplications = async (): Promise<IApplicationModel[]> => ApplicationModel.find({});
