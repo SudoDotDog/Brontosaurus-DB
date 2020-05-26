@@ -24,7 +24,19 @@ export class ApplicationCacheAgent {
 
     public async getApplication(id: ObjectID | string): Promise<IApplicationModel | null> {
 
+        const stringId: string = typeof id === 'string' ? id : id.toHexString();
+
+        if (this._applicationMap.has(stringId)) {
+            return this._applicationMap.get(stringId) as IApplicationModel;
+        }
+
         const application: IApplicationModel | null = await getApplicationById(id);
-        return application;
+
+        if (application) {
+            this._applicationMap.set(stringId, application);
+            return application;
+        }
+
+        return null;
     }
 }
