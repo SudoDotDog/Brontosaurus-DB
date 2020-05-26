@@ -4,6 +4,7 @@
  * @description Index
  */
 
+export * from "./agent/import";
 export * from "./controller/import";
 export * from "./data/import";
 export * from "./db";
