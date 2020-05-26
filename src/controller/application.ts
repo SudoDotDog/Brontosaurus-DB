@@ -40,14 +40,14 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
     return new ApplicationModel(config);
 };
 
-export const getApplicationById = async (id: ObjectID | string): Promise<IApplication | null> => {
+export const getApplicationById = async (id: ObjectID | string): Promise<IApplicationModel | null> => {
 
     return await ApplicationModel.findOne({
         _id: id,
     });
 };
 
-export const getApplicationsByIds = async (ids: Array<ObjectID | string>): Promise<IApplication[]> => {
+export const getApplicationsByIds = async (ids: Array<ObjectID | string>): Promise<IApplicationModel[]> => {
 
     return await ApplicationModel.find({
         _id: {
