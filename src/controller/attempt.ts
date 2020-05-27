@@ -58,7 +58,7 @@ export const getAttemptsByAccountAndPage = async (account: ObjectID | string, li
 
     const attempts: IAttemptModel[] = await AttemptModel.find({
         account,
-    }).skip(page * limit).limit(limit);
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
 
     return attempts;
 };
