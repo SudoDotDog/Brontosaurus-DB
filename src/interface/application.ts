@@ -19,6 +19,12 @@ export type ApplicationActions = {
     CREATE: undefined;
 };
 
+export type ApplicationRedirection = {
+
+    readonly name: string;
+    readonly regexp: string;
+};
+
 export const validateApplicationAction = (action: keyof ApplicationActions): boolean => {
 
     const keys: Array<keyof ApplicationActions> = [
@@ -50,7 +56,7 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
     publicKey: string;
     privateKey: string;
 
-    redirection: string[];
+    redirection: ApplicationRedirection[];
 
     groups: ObjectID[];
     requires: ObjectID[];

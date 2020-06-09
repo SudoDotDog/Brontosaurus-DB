@@ -11,6 +11,18 @@ import { Document, model, Model, Schema } from "mongoose";
 import { ApplicationActions, IApplication } from "../interface/application";
 import { HistorySchema } from "./common";
 
+export const ApplicationRedirectionSchema = new Schema({
+
+    name: {
+        type: String,
+        required: true,
+    },
+    regexp: {
+        type: String,
+        required: true,
+    },
+}, { _id: false });
+
 const ApplicationSchema: Schema = new Schema(
     {
         active: {
@@ -49,7 +61,7 @@ const ApplicationSchema: Schema = new Schema(
             required: true,
         },
         redirection: {
-            type: [String],
+            type: [ApplicationRedirectionSchema],
             required: true,
             default: [],
         },
