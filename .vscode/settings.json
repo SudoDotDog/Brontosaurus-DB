@@ -11,6 +11,7 @@
         "devtool",
         "ifeq",
         "otpauth",
+        "redirections",
         "setx",
         "splited",
         "totp",

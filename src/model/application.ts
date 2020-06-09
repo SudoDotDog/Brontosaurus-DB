@@ -60,7 +60,7 @@ const ApplicationSchema: Schema = new Schema(
             type: Number,
             required: true,
         },
-        redirection: {
+        redirections: {
             type: [ApplicationRedirectionSchema],
             required: true,
             default: [],

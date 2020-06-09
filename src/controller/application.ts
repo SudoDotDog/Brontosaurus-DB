@@ -33,7 +33,7 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
         expire,
         publicKey: secret.public,
         privateKey: secret.private,
-        redirection: [],
+        redirections: [],
         groups: [],
         requires: [],
     };
