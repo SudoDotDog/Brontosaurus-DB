@@ -10,7 +10,7 @@ import { IAccountModel } from "../model/import";
 
 export class AccountCacheAgent {
 
-    public static create() {
+    public static create(): AccountCacheAgent {
 
         return new AccountCacheAgent();
     }

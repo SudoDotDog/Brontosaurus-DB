@@ -6,6 +6,7 @@
         "WMXPY",
         "Webhook",
         "bson",
+        "camelcase",
         "codecov",
         "connor",
         "devtool",
@@ -20,6 +21,8 @@
         "tshook",
         "zipcode"
     ],
-    "tslint.configFile": "typescript/tslint.json",
+    "eslint.options": {
+        "configFile": "./typescript/.eslintrc.json"
+    },
     "files.eol": "\n"
 }

@@ -7,6 +7,7 @@
 
 import { expect } from 'chai';
 import * as Chance from "chance";
+// eslint-disable-next-line camelcase
 import { Deprecated_generateKey, generateURL } from '../../../src/util/2fa';
 
 describe('Given [2fa] helper functions', (): void => {
@@ -28,6 +29,7 @@ describe('Given [2fa] helper functions', (): void => {
         const key: string = await Deprecated_generateKey();
         const url: string = await generateURL(name, account, key);
 
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
         expect(url.length).to.be.greaterThan(30);
     });
 });

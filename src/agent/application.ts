@@ -10,7 +10,7 @@ import { IApplicationModel } from "../model/application";
 
 export class ApplicationCacheAgent {
 
-    public static create() {
+    public static create(): ApplicationCacheAgent {
 
         return new ApplicationCacheAgent();
     }

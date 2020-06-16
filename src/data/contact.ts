@@ -20,8 +20,8 @@ export const validateEmail = (email: string): EMAIL_VALIDATE_RESPONSE => {
         return EMAIL_VALIDATE_RESPONSE.NO_AT_SIGN;
     }
 
-    const user: string = splited[0] as string;
-    const domain: string = splited[1] as string;
+    const user: string = splited[0];
+    const domain: string = splited[1];
 
     if (!/^[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$/igm.test(domain)) {
         return EMAIL_VALIDATE_RESPONSE.INVALID_DOMAIN;
@@ -47,6 +47,7 @@ export enum PHONE_VALIDATE_RESPONSE {
     OK = "OK",
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const validatePhone = (phone: string): PHONE_VALIDATE_RESPONSE => {
 
     return PHONE_VALIDATE_RESPONSE.OK;
