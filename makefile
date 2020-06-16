@@ -21,12 +21,25 @@ build:
 
 tests:
 	@echo "[INFO] Testing with Mocha"
-	@NODE_ENV=test $(mocha)
+	@NODE_ENV=test \
+	$(mocha) --config test/.mocharc.json
 
 cov:
 	@echo "[INFO] Testing with Nyc and Mocha"
 	@NODE_ENV=test \
-	nyc $(mocha)
+	nyc $(mocha) --config test/.mocharc.json
+
+lint:
+	@echo "[INFO] Linting"
+	@NODE_ENV=production \
+	$(eslint) . --ext .ts,.tsx \
+	--config ./typescript/.eslintrc.json
+
+lint-fix:
+	@echo "[INFO] Linting and Fixing"
+	@NODE_ENV=development \
+	$(eslint) . --ext .ts,.tsx \
+	--config ./typescript/.eslintrc.json --fix
 
 install:
 	@echo "[INFO] Installing dev Dependencies"
@@ -51,3 +64,7 @@ clean-linux:
 publish: install tests license build
 	@echo "[INFO] Publishing package"
 	@cd app && npm publish --access=public
+
+publish-dry-run: install tests license build
+	@echo "[INFO] Publishing package (Dry Run)"
+	@cd app && npm publish --access=public --dry-run
