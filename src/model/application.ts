@@ -30,12 +30,19 @@ const ApplicationSchema: Schema = new Schema(
             required: true,
             default: true,
         },
+
         anchor: {
             type: String,
             required: true,
             unique: true,
             index: true,
         },
+        key: {
+            type: String,
+            required: true,
+            unique: true,
+        },
+
         avatar: {
             type: String,
             required: false,
@@ -56,30 +63,7 @@ const ApplicationSchema: Schema = new Schema(
             type: String,
             required: false,
         },
-        expire: {
-            type: Number,
-            required: true,
-        },
-        redirections: {
-            type: [ApplicationRedirectionSchema],
-            required: true,
-            default: [],
-        },
-        groups: {
-            type: [Schema.Types.ObjectId],
-            required: true,
-            default: [],
-        },
-        requires: {
-            type: [Schema.Types.ObjectId],
-            required: true,
-            default: [],
-        },
-        key: {
-            type: String,
-            required: true,
-            unique: true,
-        },
+
         name: {
             type: String,
             required: true,
@@ -100,6 +84,11 @@ const ApplicationSchema: Schema = new Schema(
             required: true,
             default: false,
         },
+
+        expire: {
+            type: Number,
+            required: true,
+        },
         publicKey: {
             type: String,
             required: true,
@@ -108,6 +97,44 @@ const ApplicationSchema: Schema = new Schema(
             type: String,
             required: true,
         },
+
+        redirections: {
+            type: [ApplicationRedirectionSchema],
+            required: true,
+            default: [],
+        },
+        iFrameProtocol: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        postProtocol: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        alertProtocol: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+        noneProtocol: {
+            type: Boolean,
+            required: true,
+            default: false,
+        },
+
+        groups: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
+        requires: {
+            type: [Schema.Types.ObjectId],
+            required: true,
+            default: [],
+        },
+
         history: {
             type: [HistorySchema],
             required: true,

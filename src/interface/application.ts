@@ -57,6 +57,10 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
     privateKey: string;
 
     redirections: ApplicationRedirection[];
+    iFrameProtocol: boolean;
+    postProtocol: boolean;
+    alertProtocol: boolean;
+    noneProtocol: boolean;
 
     groups: ObjectID[];
     requires: ObjectID[];

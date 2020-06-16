@@ -23,17 +23,26 @@ export const createUnsavedApplication = (name: string, key: string, expire: numb
         key,
 
         avatar: others.avatar,
+        backgroundImage: others.backgroundImage,
+        favicon: others.favicon,
         helpLink: others.helpLink,
         privacyPolicy: others.privacyPolicy,
-        backgroundImage: others.backgroundImage,
+
+        name,
         green: tempGreen,
         greenAccess: false,
         portalAccess: false,
-        name,
+
         expire,
         publicKey: secret.public,
         privateKey: secret.private,
+
         redirections: [],
+        iFrameProtocol: false,
+        postProtocol: false,
+        alertProtocol: false,
+        noneProtocol: false,
+
         groups: [],
         requires: [],
     };
