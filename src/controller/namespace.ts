@@ -50,21 +50,21 @@ export const getBrontosaurusAdminNamespace = async (): Promise<INamespaceModel> 
     return defaultNamespace;
 };
 
-export const getNamespaceById = async (id: ObjectID): Promise<INamespaceModel | null> => {
+export const getNamespaceById = async (id: ObjectID | string): Promise<INamespaceModel | null> => {
 
     return await NamespaceModel.findOne({
         _id: id,
     });
 };
 
-export const getONamespaceByIdLean = async (id: ObjectID): Promise<INamespace | null> => {
+export const getONamespaceByIdLean = async (id: ObjectID | string): Promise<INamespace | null> => {
 
     return await NamespaceModel.findOne({
         _id: id,
     }).lean();
 };
 
-export const getNamespacesByIds = async (ids: ObjectID[]): Promise<INamespaceModel[]> => {
+export const getNamespacesByIds = async (ids: Array<ObjectID | string>): Promise<INamespaceModel[]> => {
 
     return await NamespaceModel.find({
         _id: {
@@ -73,7 +73,7 @@ export const getNamespacesByIds = async (ids: ObjectID[]): Promise<INamespaceMod
     });
 };
 
-export const getNamespacesByIdsLean = async (ids: ObjectID[]): Promise<INamespace[]> => {
+export const getNamespacesByIdsLean = async (ids: Array<ObjectID | string>): Promise<INamespace[]> => {
 
     return await NamespaceModel.find({
         _id: {
