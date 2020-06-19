@@ -21,21 +21,21 @@ export const createUnsavedGroup = (name: string, description?: string): IGroupMo
     return new GroupModel(config);
 };
 
-export const getGroupById = async (id: ObjectID): Promise<IGroupModel | null> => {
+export const getGroupById = async (id: ObjectID | string): Promise<IGroupModel | null> => {
 
     return await GroupModel.findOne({
         _id: id,
     });
 };
 
-export const getGroupByIdLean = async (id: ObjectID): Promise<IGroup | null> => {
+export const getGroupByIdLean = async (id: ObjectID | string): Promise<IGroup | null> => {
 
     return await GroupModel.findOne({
         _id: id,
     }).lean();
 };
 
-export const getGroupsByIds = async (ids: ObjectID[]): Promise<IGroupModel[]> => {
+export const getGroupsByIds = async (ids: Array<ObjectID | string>): Promise<IGroupModel[]> => {
 
     return await GroupModel.find({
         _id: {
@@ -44,7 +44,7 @@ export const getGroupsByIds = async (ids: ObjectID[]): Promise<IGroupModel[]> =>
     });
 };
 
-export const getGroupsByIdsLean = async (ids: ObjectID[]): Promise<IGroup[]> => {
+export const getGroupsByIdsLean = async (ids: Array<ObjectID | string>): Promise<IGroup[]> => {
 
     return await GroupModel.find({
         _id: {
