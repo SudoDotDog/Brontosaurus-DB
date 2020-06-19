@@ -21,14 +21,14 @@ export const createUnsavedTag = (name: string, description?: string): ITagModel 
     return new TagModel(config);
 };
 
-export const getTagById = async (id: ObjectID): Promise<ITagModel | null> => {
+export const getTagById = async (id: ObjectID | string): Promise<ITagModel | null> => {
 
     return await TagModel.findOne({
         _id: id,
     });
 };
 
-export const getTagByIdLean = async (id: ObjectID): Promise<ITag | null> => {
+export const getTagByIdLean = async (id: ObjectID | string): Promise<ITag | null> => {
 
     return await TagModel.findOne({
         _id: id,
