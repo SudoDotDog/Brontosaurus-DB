@@ -9,10 +9,10 @@ import { _Random } from "@sudoo/bark/random";
 import { randomApiKey, randomString, randomUnique } from "@sudoo/random";
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER, PreviousPasswordReason } from "../interface/account";
+import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER, PreviousPasswordReason, PreviousPassword } from "../interface/account";
 import { ResetToken, SpecialPassword } from "../interface/common";
 import { generateURL } from "../util/2fa";
-import { garblePassword, verifyResetToken, verifySpecialPassword } from "../util/auth";
+import { garblePassword, verifyResetToken, verifySpecialPassword, verifyPreviousPassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
 import { HistorySchema, ResetTokenSchema, SpecialPasswordSchema } from "./common";
 
@@ -185,6 +185,7 @@ export interface IAccountModel extends IAccount, Document {
     suspendTemporaryPassword(id: string, by: ObjectID): boolean;
     generateResetToken(expireAt: Date): string;
     verifyPassword(password: string): boolean;
+    verifyPreviousPassword(password: string): PreviousPassword | null;
     verifyTemporaryPassword(password: string): boolean;
     verifyApplicationPassword(password: string): boolean;
     verifySpecialPasswords(password: string): boolean;
@@ -471,6 +472,19 @@ AccountSchema.methods.verifyPassword = function (this: IAccountModel, password: 
 
     return this.password === saltedPassword;
 };
+
+AccountSchema.methods.verifyPreviousPassword = function (this: IAccountModel, password: string): PreviousPassword | null {
+
+    const saltedPassword: string = garblePassword(password, this.salt);
+
+    for (const previousPassword of this.previousPasswords) {
+        if (verifyPreviousPassword(saltedPassword, previousPassword)) {
+            return previousPassword;
+        }
+    }
+
+    return null;
+}
 
 AccountSchema.methods.verifyTemporaryPassword = function (this: IAccountModel, password: string): boolean {
 
