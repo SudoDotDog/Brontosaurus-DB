@@ -9,12 +9,28 @@ import { _Random } from "@sudoo/bark/random";
 import { randomApiKey, randomString, randomUnique } from "@sudoo/random";
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER } from "../interface/account";
+import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER, PreviousPasswordReason } from "../interface/account";
 import { ResetToken, SpecialPassword } from "../interface/common";
 import { generateURL } from "../util/2fa";
 import { garblePassword, verifyResetToken, verifySpecialPassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
 import { HistorySchema, ResetTokenSchema, SpecialPasswordSchema } from "./common";
+
+const PreviousPasswordSchema: Schema = new Schema({
+
+    password: {
+        type: String,
+        required: true,
+    },
+    reason: {
+        type: String,
+        required: true,
+    },
+    changedAt: {
+        type: Date,
+        required: true,
+    },
+}, { _id: false });
 
 const AccountSchema: Schema = new Schema(
     {
@@ -67,6 +83,11 @@ const AccountSchema: Schema = new Schema(
         password: {
             type: String,
             required: true,
+        },
+        previousPasswords: {
+            type: [PreviousPasswordSchema],
+            required: true,
+            default: [],
         },
         resetTokens: {
             type: [ResetTokenSchema],
@@ -155,6 +176,7 @@ export interface IAccountModel extends IAccount, Document {
     addGroup(id: ObjectID): IAccountModel;
     removeGroup(id: ObjectID): IAccountModel;
     setPassword(password: string): IAccountModel;
+    addPreviousPassword(password: string, reason: PreviousPasswordReason): IAccountModel;
     setTempPassword(length?: number): IAccountModel;
     resetMint(): IAccountModel;
     generateApplicationPassword(by: ObjectID, expireAt: Date, tails?: number): string;
@@ -303,11 +325,29 @@ AccountSchema.methods.setTempPassword = function (this: IAccountModel, length: n
     return this;
 };
 
-AccountSchema.methods.setPassword = function (this: IAccountModel, password: string): IAccountModel {
+AccountSchema.methods.setPassword = function (this: IAccountModel, password: string, reason: PreviousPasswordReason): IAccountModel {
 
+    const oldPassword: string = this.password;
     const saltedPassword: string = garblePassword(password, this.salt);
+
     this.password = saltedPassword;
+    this.addPreviousPassword(oldPassword, reason);
+
     this.resetMint();
+
+    return this;
+};
+
+AccountSchema.methods.addPreviousPassword = function (this: IAccountModel, password: string, reason: PreviousPasswordReason): IAccountModel {
+
+    this.previousPasswords = [
+        ...this.previousPasswords,
+        {
+            password,
+            reason,
+            changedAt: new Date(),
+        },
+    ];
 
     return this;
 };

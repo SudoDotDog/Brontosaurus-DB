@@ -30,6 +30,15 @@ export const validateAccountAction = (action: keyof AccountActions): boolean => 
     return keys.includes(action);
 };
 
+export type PreviousPasswordReason = 'change' | 'reset';
+
+export type PreviousPassword = {
+
+    readonly password: string;
+    readonly reason: PreviousPasswordReason;
+    readonly changedAt: Date;
+};
+
 export interface IAccountConfig {
 
     readonly anchor: string;
@@ -38,6 +47,7 @@ export interface IAccountConfig {
     namespace: ObjectID;
 
     password: string;
+    previousPasswords: PreviousPassword[];
     mint: string;
     salt: string;
     infos: string[];
