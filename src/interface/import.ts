@@ -13,5 +13,6 @@ export * from "./group";
 export * from "./namespace";
 export * from "./organization";
 export * from "./preference";
+export * from "./reset";
 export * from "./tag";
 
