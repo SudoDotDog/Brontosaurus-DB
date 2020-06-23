@@ -175,7 +175,7 @@ export interface IAccountModel extends IAccount, Document {
     getBeaconRecords(): Record<string, Basics>;
     addGroup(id: ObjectID): IAccountModel;
     removeGroup(id: ObjectID): IAccountModel;
-    setPassword(password: string): IAccountModel;
+    setPassword(password: string, reason: PreviousPasswordReason): IAccountModel;
     addPreviousPassword(password: string, reason: PreviousPasswordReason): IAccountModel;
     setTempPassword(length?: number): IAccountModel;
     resetMint(): IAccountModel;
@@ -320,7 +320,7 @@ AccountSchema.methods.removeGroup = function (this: IAccountModel, id: ObjectID)
 AccountSchema.methods.setTempPassword = function (this: IAccountModel, length: number = 8): IAccountModel {
 
     const tempPassword: string = _Random.random(length);
-    this.setPassword(tempPassword);
+    this.setPassword(tempPassword, 'temp');
 
     return this;
 };

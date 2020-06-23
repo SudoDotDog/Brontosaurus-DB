@@ -582,7 +582,7 @@ export const resetAccountPassword = async (username: string, namespace: ObjectID
         return null;
     }
 
-    account.setPassword(newPassword);
+    account.setPassword(newPassword, 'reset');
 
     await account.save();
     return account;

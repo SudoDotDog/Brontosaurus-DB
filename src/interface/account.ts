@@ -30,7 +30,7 @@ export const validateAccountAction = (action: keyof AccountActions): boolean => 
     return keys.includes(action);
 };
 
-export type PreviousPasswordReason = 'change' | 'reset';
+export type PreviousPasswordReason = 'change' | 'reset' | 'temp';
 
 export type PreviousPassword = {
 
