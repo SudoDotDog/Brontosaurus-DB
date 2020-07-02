@@ -188,6 +188,42 @@ export const getAccountsByTagAndPageLean = async (tag: string | ObjectID, limit:
     }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
 };
 
+export const getAccountsByNamespace = async (namespace: string | ObjectID): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
+        namespace: namespace as ObjectID,
+    }).sort({ _id: -1 });
+};
+
+export const getAccountsByNamespaceAndPage = async (namespace: string | ObjectID, limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0 || limit < 1) {
+        return [];
+    }
+
+    return await AccountModel.find({
+        namespace: namespace as ObjectID,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
+};
+
+export const getAccountsByNamespaceLean = async (namespace: string | ObjectID): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        namespace: namespace as ObjectID,
+    }).sort({ _id: -1 }).lean();
+};
+
+export const getAccountsByNamespaceAndPageLean = async (namespace: string | ObjectID, limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0 || limit < 1) {
+        return [];
+    }
+
+    return await AccountModel.find({
+        namespace: namespace as ObjectID,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+};
+
 export const getActiveAccountsByGroups = async (groups: Array<string | ObjectID>): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
