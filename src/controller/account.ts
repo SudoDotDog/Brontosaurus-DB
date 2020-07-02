@@ -105,15 +105,49 @@ export const createUnsavedAccount = (
 export const getAccountsByOrganization = async (organization: string | ObjectID): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
-        organization,
-    });
+        organization: organization as ObjectID,
+    }).sort({ _id: -1 });
+};
+
+export const getAccountsByOrganizationAndPage = async (organization: string | ObjectID, limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0 || limit < 1) {
+        return [];
+    }
+
+    return await AccountModel.find({
+        organization: organization as ObjectID,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
 };
 
 export const getAccountsByOrganizationLean = async (organization: string | ObjectID): Promise<IAccount[]> => {
 
     return await AccountModel.find({
-        organization,
-    }).lean();
+        organization: organization as ObjectID,
+    }).sort({ _id: -1 }).lean();
+};
+
+export const getAccountsByOrganizationAndPageLean = async (organization: string | ObjectID, limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0 || limit < 1) {
+        return [];
+    }
+
+    return await AccountModel.find({
+        organization: organization as ObjectID,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+};
+
+export const getAccountsByOrganizationPages = async (organization: ObjectID | string, limit: number): Promise<number> => {
+
+    if (limit <= 0) {
+        return Infinity;
+    }
+
+    const count: number = await AccountModel.countDocuments({
+        organization: organization as ObjectID,
+    });
+    return Math.ceil(count / limit);
 };
 
 export const getAccountsByGroup = async (group: string | ObjectID): Promise<IAccountModel[]> => {
