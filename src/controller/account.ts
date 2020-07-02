@@ -260,6 +260,54 @@ export const getAccountsByNamespacePages = async (namespace: ObjectID | string, 
     return Math.ceil(count / limit);
 };
 
+export const getAccountsByDecorator = async (decorator: string | ObjectID): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
+        decorators: decorator as ObjectID,
+    }).sort({ _id: -1 });
+};
+
+export const getAccountsByDecoratorAndPage = async (decorator: string | ObjectID, limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0 || limit < 1) {
+        return [];
+    }
+
+    return await AccountModel.find({
+        decorators: decorator as ObjectID,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
+};
+
+export const getAccountsByDecoratorLean = async (decorator: string | ObjectID): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        decorators: decorator as ObjectID,
+    }).sort({ _id: -1 }).lean();
+};
+
+export const getAccountsByDecoratorAndPageLean = async (decorator: string | ObjectID, limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0 || limit < 1) {
+        return [];
+    }
+
+    return await AccountModel.find({
+        decorators: decorator as ObjectID,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+};
+
+export const getAccountsByDecoratorPages = async (decorator: ObjectID | string, limit: number): Promise<number> => {
+
+    if (limit <= 0) {
+        return Infinity;
+    }
+
+    const count: number = await AccountModel.countDocuments({
+        decorators: decorator as ObjectID,
+    });
+    return Math.ceil(count / limit);
+};
+
 export const getActiveAccountsByGroups = async (groups: Array<string | ObjectID>): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
