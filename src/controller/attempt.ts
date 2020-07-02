@@ -76,7 +76,8 @@ export const getSelectedAccountAttemptPages = async (account: ObjectID | string,
         return Infinity;
     }
 
-    return (await AttemptModel.countDocuments({
+    const count: number = await AttemptModel.countDocuments({
         account,
-    })) / limit;
+    });
+    return Math.ceil(count / limit);
 };

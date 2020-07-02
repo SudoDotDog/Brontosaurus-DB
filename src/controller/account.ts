@@ -152,6 +152,18 @@ export const getAccountsByGroupAndPageLean = async (group: string | ObjectID, li
     }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
 };
 
+export const getAccountsByGroupPages = async (group: ObjectID | string, limit: number): Promise<number> => {
+
+    if (limit <= 0) {
+        return Infinity;
+    }
+
+    const count: number = await AccountModel.countDocuments({
+        groups: group as ObjectID,
+    });
+    return Math.ceil(count / limit);
+};
+
 export const getAccountsByTag = async (tag: string | ObjectID): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
@@ -188,6 +200,18 @@ export const getAccountsByTagAndPageLean = async (tag: string | ObjectID, limit:
     }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
 };
 
+export const getAccountsByTagPages = async (tag: ObjectID | string, limit: number): Promise<number> => {
+
+    if (limit <= 0) {
+        return Infinity;
+    }
+
+    const count: number = await AccountModel.countDocuments({
+        tags: tag as ObjectID,
+    });
+    return Math.ceil(count / limit);
+};
+
 export const getAccountsByNamespace = async (namespace: string | ObjectID): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
@@ -222,6 +246,18 @@ export const getAccountsByNamespaceAndPageLean = async (namespace: string | Obje
     return await AccountModel.find({
         namespace: namespace as ObjectID,
     }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+};
+
+export const getAccountsByNamespacePages = async (namespace: ObjectID | string, limit: number): Promise<number> => {
+
+    if (limit <= 0) {
+        return Infinity;
+    }
+
+    const count: number = await AccountModel.countDocuments({
+        namespace: namespace as ObjectID,
+    });
+    return Math.ceil(count / limit);
 };
 
 export const getActiveAccountsByGroups = async (groups: Array<string | ObjectID>): Promise<IAccountModel[]> => {
