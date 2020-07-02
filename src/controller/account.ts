@@ -152,6 +152,42 @@ export const getAccountsByGroupAndPageLean = async (group: string | ObjectID, li
     }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
 };
 
+export const getAccountsByTag = async (tag: string | ObjectID): Promise<IAccountModel[]> => {
+
+    return await AccountModel.find({
+        tags: tag as ObjectID,
+    }).sort({ _id: -1 });
+};
+
+export const getAccountsByTagAndPage = async (tag: string | ObjectID, limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0 || limit < 1) {
+        return [];
+    }
+
+    return await AccountModel.find({
+        tags: tag as ObjectID,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 });
+};
+
+export const getAccountsByTagLean = async (tag: string | ObjectID): Promise<IAccount[]> => {
+
+    return await AccountModel.find({
+        tags: tag as ObjectID,
+    }).sort({ _id: -1 }).lean();
+};
+
+export const getAccountsByTagAndPageLean = async (tag: string | ObjectID, limit: number, page: number): Promise<IAccountModel[]> => {
+
+    if (page < 0 || limit < 1) {
+        return [];
+    }
+
+    return await AccountModel.find({
+        tags: tag as ObjectID,
+    }).skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
+};
+
 export const getActiveAccountsByGroups = async (groups: Array<string | ObjectID>): Promise<IAccountModel[]> => {
 
     return await AccountModel.find({
