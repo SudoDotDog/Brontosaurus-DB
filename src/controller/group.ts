@@ -361,3 +361,13 @@ export const getAllGroupsByPageLean = async (limit: number, page: number): Promi
         .skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return groups;
 };
+
+export const getGroupsByQuery = async (query: Record<string, any>): Promise<IGroupModel[]> => {
+
+    return await GroupModel.find(query);
+};
+
+export const getGroupsByQueryLean = async (query: Record<string, any>): Promise<IGroup[]> => {
+
+    return await GroupModel.find(query).lean();
+};

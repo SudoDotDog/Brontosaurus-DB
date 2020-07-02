@@ -380,3 +380,13 @@ export const refreshGreen = async (applicationKey: string): Promise<IApplication
     await application.save();
     return application;
 };
+
+export const getApplicationsByQuery = async (query: Record<string, any>): Promise<IApplicationModel[]> => {
+
+    return await ApplicationModel.find(query);
+};
+
+export const getApplicationsByQueryLean = async (query: Record<string, any>): Promise<IApplication[]> => {
+
+    return await ApplicationModel.find(query).lean();
+};

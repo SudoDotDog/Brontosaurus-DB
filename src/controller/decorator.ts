@@ -361,3 +361,13 @@ export const getAllDecoratorsByPageLean = async (limit: number, page: number): P
         .skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return decorators;
 };
+
+export const getDecoratorsByQuery = async (query: Record<string, any>): Promise<IDecoratorModel[]> => {
+
+    return await DecoratorModel.find(query);
+};
+
+export const getDecoratorsByQueryLean = async (query: Record<string, any>): Promise<IDecorator[]> => {
+
+    return await DecoratorModel.find(query).lean();
+};

@@ -363,3 +363,13 @@ export const getAllTagsByPageLean = async (limit: number, page: number): Promise
         .skip(page * limit).limit(limit).sort({ _id: -1 }).lean();
     return tags;
 };
+
+export const getTagsByQuery = async (query: Record<string, any>): Promise<ITagModel[]> => {
+
+    return await TagModel.find(query);
+};
+
+export const getTagsByQueryLean = async (query: Record<string, any>): Promise<ITag[]> => {
+
+    return await TagModel.find(query).lean();
+};

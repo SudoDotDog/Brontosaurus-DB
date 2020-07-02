@@ -6,7 +6,7 @@
 
 import { randomUnique } from "@sudoo/random";
 import { ObjectID } from "bson";
-import { IAttemptConfig } from "../interface/attempt";
+import { IAttempt, IAttemptConfig } from "../interface/attempt";
 import { AttemptModel, IAttemptModel } from "../model/attempt";
 
 export const createUnsavedAttempt = (config: IAttemptConfig): IAttemptModel => {
@@ -80,4 +80,14 @@ export const getSelectedAccountAttemptPages = async (account: ObjectID | string,
         account,
     });
     return Math.ceil(count / limit);
+};
+
+export const getAttemptsByQuery = async (query: Record<string, any>): Promise<IAttemptModel[]> => {
+
+    return await AttemptModel.find(query);
+};
+
+export const getAttemptsByQueryLean = async (query: Record<string, any>): Promise<IAttempt[]> => {
+
+    return await AttemptModel.find(query).lean();
 };
