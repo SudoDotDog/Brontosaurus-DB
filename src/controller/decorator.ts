@@ -126,6 +126,14 @@ export const isDecoratorDuplicatedById = async (id: ObjectID): Promise<boolean> 
     return Boolean(decorator);
 };
 
+export const getSelectedDecoratorPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getDecoratorPagesByKeyword(limit, keyword);
+    }
+    return await getTotalDecoratorPages(limit);
+};
+
 export const getSelectedActiveDecoratorPages = async (limit: number, keyword?: string): Promise<number> => {
 
     if (keyword) {

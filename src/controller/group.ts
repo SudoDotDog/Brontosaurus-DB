@@ -126,6 +126,14 @@ export const isGroupDuplicatedById = async (id: ObjectID): Promise<boolean> => {
     return Boolean(group);
 };
 
+export const getSelectedGroupPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getGroupPagesByKeyword(limit, keyword);
+    }
+    return await getTotalGroupPages(limit);
+};
+
 export const getSelectedActiveGroupPages = async (limit: number, keyword?: string): Promise<number> => {
 
     if (keyword) {

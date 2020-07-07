@@ -128,6 +128,14 @@ export const isTagDuplicatedById = async (id: ObjectID): Promise<boolean> => {
     return Boolean(tag);
 };
 
+export const getSelectedTagPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getTagPagesByKeyword(limit, keyword);
+    }
+    return await getTotalTagPages(limit);
+};
+
 export const getSelectedActiveTagPages = async (limit: number, keyword?: string): Promise<number> => {
 
     if (keyword) {
