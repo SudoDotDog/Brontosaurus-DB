@@ -95,6 +95,14 @@ export const getTotalApplicationPages = async (limit: number): Promise<number> =
     return (await ApplicationModel.estimatedDocumentCount({})) / limit;
 };
 
+export const getSelectedApplicationPages = async (limit: number, keyword?: string): Promise<number> => {
+
+    if (keyword) {
+        return await getApplicationPagesByKeyword(limit, keyword);
+    }
+    return await getTotalApplicationPages(limit);
+};
+
 export const getSelectedActiveApplicationPages = async (limit: number, keyword?: string): Promise<number> => {
 
     if (keyword) {
