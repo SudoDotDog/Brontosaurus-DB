@@ -7,19 +7,6 @@
 
 export type RegisterInfoType = 'string' | 'number' | 'email' | 'password';
 
-export type PreferenceActions = {
-
-    CREATE: undefined;
-};
-
-export const validatePreferenceAction = (action: keyof PreferenceActions): boolean => {
-
-    const keys: Array<keyof PreferenceActions> = [
-        "CREATE",
-    ];
-    return keys.includes(action);
-};
-
 export type RegisterInfo = {
 
     name: string;

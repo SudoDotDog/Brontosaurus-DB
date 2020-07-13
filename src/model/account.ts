@@ -9,12 +9,12 @@ import { _Random } from "@sudoo/bark/random";
 import { randomApiKey, randomString, randomUnique } from "@sudoo/random";
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { AccountActions, defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER, PreviousPasswordReason, PreviousPassword } from "../interface/account";
+import { defaultInitialAttemptPoints, IAccount, INFOS_SPLITTER, PreviousPassword, PreviousPasswordReason } from "../interface/account";
 import { ResetToken, SpecialPassword } from "../interface/common";
 import { generateURL } from "../util/2fa";
-import { garblePassword, verifyResetToken, verifySpecialPassword, verifyPreviousPassword } from "../util/auth";
+import { garblePassword, verifyPreviousPassword, verifyResetToken, verifySpecialPassword } from "../util/auth";
 import { generateKey, verifyCode } from "../util/verify";
-import { HistorySchema, ResetTokenSchema, SpecialPasswordSchema } from "./common";
+import { ResetTokenSchema, SpecialPasswordSchema } from "./common";
 
 const PreviousPasswordSchema: Schema = new Schema({
 
@@ -149,12 +149,6 @@ const AccountSchema: Schema = new Schema(
             type: String,
             required: true,
         },
-
-        history: {
-            type: [HistorySchema],
-            required: true,
-            default: [],
-        },
     },
     {
         timestamps: {
@@ -191,13 +185,6 @@ export interface IAccountModel extends IAccount, Document {
     verifySpecialPasswords(password: string): boolean;
     verifyResetToken(password: string): boolean;
     clearResetTokens(): IAccountModel;
-    pushHistory<T extends keyof AccountActions>(
-        action: T,
-        application: ObjectID,
-        by: ObjectID,
-        content: string,
-        extra: AccountActions[T],
-    ): IAccountModel;
 }
 
 AccountSchema.methods.useAttemptPoint = function (this: IAccountModel, point: number): IAccountModel {
@@ -268,30 +255,6 @@ AccountSchema.methods.getBeaconRecords = function (this: IAccountModel): Record<
         }
         return previous;
     }, {} as Record<string, Basics>);
-};
-
-AccountSchema.methods.pushHistory = function <T extends keyof AccountActions>(
-    this: IAccountModel,
-    action: T,
-    application: ObjectID,
-    by: ObjectID,
-    content: string,
-    extra: AccountActions[T],
-): IAccountModel {
-
-    this.history = [
-        ...this.history,
-        {
-            action,
-            application,
-            at: new Date(),
-            by,
-            content,
-            extra,
-        },
-    ];
-
-    return this;
 };
 
 AccountSchema.methods.addGroup = function (this: IAccountModel, id: ObjectID): IAccountModel {

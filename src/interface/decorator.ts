@@ -6,19 +6,6 @@
 
 import { ObjectID } from "bson";
 
-export type DecoratorActions = {
-
-    CREATE: undefined;
-};
-
-export const validateDecoratorAction = (action: keyof DecoratorActions): boolean => {
-
-    const keys: Array<keyof DecoratorActions> = [
-        "CREATE",
-    ];
-    return keys.includes(action);
-};
-
 export interface IDecoratorConfig {
 
     readonly anchor: string;

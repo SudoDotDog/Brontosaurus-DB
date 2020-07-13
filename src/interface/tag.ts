@@ -6,19 +6,6 @@
 
 import { ObjectID } from "bson";
 
-export type TagActions = {
-
-    CREATE: undefined;
-};
-
-export const validateTagAction = (action: keyof TagActions): boolean => {
-
-    const keys: Array<keyof TagActions> = [
-        "CREATE",
-    ];
-    return keys.includes(action);
-};
-
 export enum INTERNAL_TAG {
 
     DEFAULT = "DEFAULT",

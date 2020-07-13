@@ -4,10 +4,8 @@
  * @description Decorator
  */
 
-import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { DecoratorActions, IDecorator } from "../interface/decorator";
-import { HistorySchema } from "./common";
+import { IDecorator } from "../interface/decorator";
 
 const DecoratorSchema: Schema = new Schema(
     {
@@ -40,11 +38,6 @@ const DecoratorSchema: Schema = new Schema(
             required: true,
             default: [],
         },
-        history: {
-            type: [HistorySchema],
-            required: true,
-            default: [],
-        },
     },
     {
         timestamps: {
@@ -55,38 +48,6 @@ const DecoratorSchema: Schema = new Schema(
 );
 
 export interface IDecoratorModel extends IDecorator, Document {
-
-    pushHistory<T extends keyof DecoratorActions>(
-        action: T,
-        application: ObjectID,
-        by: ObjectID,
-        content: string,
-        extra: DecoratorActions[T],
-    ): IDecoratorModel;
 }
-
-DecoratorSchema.methods.pushHistory = function <T extends keyof DecoratorActions>(
-    this: IDecoratorModel,
-    action: T,
-    application: ObjectID,
-    by: ObjectID,
-    content: string,
-    extra: DecoratorActions[T],
-): IDecoratorModel {
-
-    this.history = [
-        ...this.history,
-        {
-            action,
-            application,
-            at: new Date(),
-            by,
-            content,
-            extra,
-        },
-    ];
-
-    return this;
-};
 
 export const DecoratorModel: Model<IDecoratorModel> = model<IDecoratorModel>('Decorator', DecoratorSchema);

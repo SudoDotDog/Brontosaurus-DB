@@ -4,10 +4,8 @@
  * @description Organization
  */
 
-import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { IOrganization, OrganizationActions } from "../interface/organization";
-import { HistorySchema } from "./common";
+import { IOrganization } from "../interface/organization";
 
 const OrganizationSchema: Schema = new Schema(
     {
@@ -47,11 +45,6 @@ const OrganizationSchema: Schema = new Schema(
             required: true,
             index: true,
         },
-        history: {
-            type: [HistorySchema],
-            required: true,
-            default: [],
-        },
     },
     {
         timestamps: {
@@ -62,38 +55,6 @@ const OrganizationSchema: Schema = new Schema(
 );
 
 export interface IOrganizationModel extends IOrganization, Document {
-
-    pushHistory<T extends keyof OrganizationActions>(
-        action: T,
-        application: ObjectID,
-        by: ObjectID,
-        content: string,
-        extra: OrganizationActions[T],
-    ): IOrganizationModel;
 }
-
-OrganizationSchema.methods.pushHistory = function <T extends keyof OrganizationActions>(
-    this: IOrganizationModel,
-    action: T,
-    application: ObjectID,
-    by: ObjectID,
-    content: string,
-    extra: OrganizationActions[T],
-): IOrganizationModel {
-
-    this.history = [
-        ...this.history,
-        {
-            action,
-            application,
-            at: new Date(),
-            by,
-            content,
-            extra,
-        },
-    ];
-
-    return this;
-};
 
 export const OrganizationModel: Model<IOrganizationModel> = model<IOrganizationModel>('Organization', OrganizationSchema);

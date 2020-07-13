@@ -6,10 +6,8 @@
 
 import { Brontosaurus, BrontosaurusKey } from "@brontosaurus/core";
 import { trustable } from "@sudoo/bark/random";
-import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { ApplicationActions, IApplication } from "../interface/application";
-import { HistorySchema } from "./common";
+import { IApplication } from "../interface/application";
 
 export const ApplicationRedirectionSchema = new Schema({
 
@@ -134,12 +132,6 @@ const ApplicationSchema: Schema = new Schema(
             required: true,
             default: [],
         },
-
-        history: {
-            type: [HistorySchema],
-            required: true,
-            default: [],
-        },
     },
     {
         timestamps: {
@@ -155,18 +147,10 @@ export interface IApplicationModel extends IApplication, Document {
     refreshKey(): IApplicationModel;
     toggleGreenAccess(): IApplicationModel;
     togglePortalAccess(): IApplicationModel;
-    pushHistory<T extends keyof ApplicationActions>(
-        action: T,
-        application: ObjectID,
-        by: ObjectID,
-        content: string,
-        extra: ApplicationActions[T],
-    ): IApplicationModel;
 }
 
 ApplicationSchema.methods.refreshGreen = function (this: IApplicationModel): IApplicationModel {
 
-    // tslint:disable-next-line: no-magic-numbers
     this.green = trustable(new Date(), undefined, 64);
 
     return this;
@@ -191,30 +175,6 @@ ApplicationSchema.methods.toggleGreenAccess = function (this: IApplicationModel)
 ApplicationSchema.methods.togglePortalAccess = function (this: IApplicationModel): IApplicationModel {
 
     this.portalAccess = !Boolean(this.portalAccess);
-    return this;
-};
-
-ApplicationSchema.methods.pushHistory = function <T extends keyof ApplicationActions>(
-    this: IApplicationModel,
-    action: T,
-    application: ObjectID,
-    by: ObjectID,
-    content: string,
-    extra: ApplicationActions[T],
-): IApplicationModel {
-
-    this.history = [
-        ...this.history,
-        {
-            action,
-            application,
-            at: new Date(),
-            by,
-            content,
-            extra,
-        },
-    ];
-
     return this;
 };
 
