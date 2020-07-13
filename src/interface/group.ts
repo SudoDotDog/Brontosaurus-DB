@@ -5,7 +5,6 @@
  */
 
 import { ObjectID } from "bson";
-import { History } from "./common";
 
 export type GroupActions = {
 
@@ -41,7 +40,6 @@ export interface IGroup extends IGroupConfig {
     decorators: ObjectID[];
 
     active: boolean;
-    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

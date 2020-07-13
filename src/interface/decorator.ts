@@ -5,7 +5,6 @@
  */
 
 import { ObjectID } from "bson";
-import { History } from "./common";
 
 export type DecoratorActions = {
 
@@ -34,7 +33,6 @@ export interface IDecorator extends IDecoratorConfig {
     removableGroups: ObjectID[];
 
     active: boolean;
-    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

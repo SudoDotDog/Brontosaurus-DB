@@ -4,7 +4,6 @@
  * @description Namespace
  */
 
-import { History } from "./common";
 
 export type NamespaceActions = {
 
@@ -29,7 +28,6 @@ export interface INamespaceConfig {
 export interface INamespace extends INamespaceConfig {
 
     active: boolean;
-    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

@@ -4,8 +4,6 @@
  * @description Webhook
  */
 
-import { History } from "./common";
-
 export type WebhookActions = {
 
     CREATE: undefined;
@@ -43,7 +41,6 @@ export interface IWebhook extends IWebhookConfig {
     hooks: WEBHOOK_EVENT[];
 
     active: boolean;
-    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;
