@@ -32,8 +32,6 @@ export interface IRecord<
     A extends keyof RecordCategory[C],
     > extends IRecordConfig<C, A> {
 
-    readonly at: Date;
-
     readonly createdAt: Date;
     readonly updatedAt: Date;
 }

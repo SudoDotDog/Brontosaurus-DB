@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace Brontosaurus_DB_Record
- * @description Record
+ * @description Account
  */
 
 import { ObjectID } from "bson";
