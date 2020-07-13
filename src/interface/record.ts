@@ -28,8 +28,8 @@ export interface IRecordConfig<
 }
 
 export interface IRecord<
-    C extends keyof RecordCategory,
-    A extends keyof RecordCategory[C],
+    C extends keyof RecordCategory = any,
+    A extends keyof RecordCategory[C] = any,
     > extends IRecordConfig<C, A> {
 
     readonly createdAt: Date;

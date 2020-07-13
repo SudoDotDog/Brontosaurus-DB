@@ -43,9 +43,9 @@ const RecordSchema: Schema = new Schema(
 );
 
 export interface IRecordModel<
-    C extends keyof RecordCategory,
-    A extends keyof RecordCategory[C],
+    C extends keyof RecordCategory = any,
+    A extends keyof RecordCategory[C] = any,
     > extends IRecord<C, A>, Document {
 }
 
-export const RecordModel: Model<IRecordModel<any, any>> = model<IRecordModel<any, any>>('Record', RecordSchema);
+export const RecordModel: Model<IRecordModel> = model<IRecordModel>('Record', RecordSchema);
