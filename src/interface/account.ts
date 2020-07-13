@@ -5,7 +5,7 @@
  */
 
 import { ObjectID } from "bson";
-import { History, ResetToken, SpecialPassword } from "./common";
+import { ResetToken, SpecialPassword } from "./common";
 
 export const INFOS_SPLITTER = ':*:';
 
@@ -75,8 +75,6 @@ export interface IAccount extends IAccountConfig {
     attemptPoints: number;
     limbo: boolean;
     twoFA?: string;
-
-    history: History[];
 
     readonly createdAt: Date;
     readonly updatedAt: Date;

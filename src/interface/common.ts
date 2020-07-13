@@ -24,13 +24,3 @@ export type SpecialPassword = {
     suspendedBy?: ObjectID;
     suspendedAt?: Date;
 };
-
-export type History = {
-
-    readonly action: string;
-    readonly application: ObjectID;
-    readonly by: ObjectID;
-    readonly at: Date;
-    readonly content: string;
-    readonly extra?: any;
-};
