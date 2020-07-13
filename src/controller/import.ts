@@ -14,8 +14,9 @@ import * as MatchController from "./match";
 import * as NamespaceController from "./namespace";
 import * as OrganizationController from "./organization";
 import * as PreferenceController from "./preference";
+import * as RecordController from "./record";
 import * as ResetController from "./reset";
 import * as TagController from "./tag";
 
-export { AccountController, ApplicationController, AttemptController, DecoratorController, GroupController, InformationController, MatchController, NamespaceController, OrganizationController, PreferenceController, ResetController, TagController };
+export { AccountController, ApplicationController, AttemptController, DecoratorController, GroupController, InformationController, MatchController, NamespaceController, OrganizationController, PreferenceController, RecordController, ResetController, TagController };
 
