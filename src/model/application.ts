@@ -122,17 +122,18 @@ const ApplicationSchema: Schema = new Schema(
             default: false,
         },
 
-        groups: {
+        groups: { // Only account with these group can access this application
             type: [Schema.Types.ObjectId],
             required: true,
             default: [],
         },
-        tags: {
+
+        requires: { // Only show these groups in token
             type: [Schema.Types.ObjectId],
             required: true,
             default: [],
         },
-        requires: {
+        requireTags: { // Only show these tags in token
             type: [Schema.Types.ObjectId],
             required: true,
             default: [],
