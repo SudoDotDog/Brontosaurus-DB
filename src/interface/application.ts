@@ -48,9 +48,10 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
     alertProtocol: boolean;
     noneProtocol: boolean;
 
-    groups: ObjectID[];
-    tags: ObjectID[];
-    requires: ObjectID[];
+    groups: ObjectID[]; // Only account with these group can access this application
+
+    requires: ObjectID[]; // Only show these groups in token
+    tags: ObjectID[]; // Only show these tags in token
 }
 
 export interface IApplication extends IApplicationConfig {
