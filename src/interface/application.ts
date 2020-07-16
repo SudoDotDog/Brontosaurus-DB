@@ -49,6 +49,7 @@ export interface IApplicationConfig extends ApplicationOthersConfig {
     noneProtocol: boolean;
 
     groups: ObjectID[];
+    tags: ObjectID[];
     requires: ObjectID[];
 }
 
