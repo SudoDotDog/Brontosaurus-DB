@@ -447,7 +447,7 @@ AccountSchema.methods.verifyPreviousPassword = function (this: IAccountModel, pa
     }
 
     return null;
-}
+};
 
 AccountSchema.methods.verifyTemporaryPassword = function (this: IAccountModel, password: string): boolean {
 
