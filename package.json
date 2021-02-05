@@ -1,6 +1,6 @@
 {
   "name": "@brontosaurus/db",
-  "version": "3.23.1",
+  "version": "3.24.0",
   "description": ":ocean: Schema for brontosaurus",
   "repository": {
     "type": "git",
@@ -21,13 +21,13 @@
     "@brontosaurus/definition": "^3.4.1",
     "@sudoo/bark": "^2.7.2",
     "@sudoo/random": "^2.1.1",
-    "mongoose": "^5.10.7",
+    "@sudoo/triforce-mongoose": "^1.4.4",
     "speakeasy": "^2.0.0"
   },
   "devDependencies": {
     "@sudoo/io": "^1.8.0",
     "@sudoo/mock": "^1.5.0",
-    "@sudoo/triforce": "^2.9.2",
+    "@sudoo/triforce": "^2.9.14",
     "@sudoo/triforce-mongoose-dev": "^1.4.4",
     "@types/speakeasy": "^2.0.5"
   },
