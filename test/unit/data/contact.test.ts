@@ -55,6 +55,42 @@ describe('Given [Validate Email] helper function', (): void => {
         expect(result).to.be.equal(EMAIL_VALIDATE_RESPONSE.OK);
     });
 
+    it('should be able to validate email OK - dot - 1', (): void => {
+
+        const username: string = 'hello.world@mail.com';
+
+        const result: EMAIL_VALIDATE_RESPONSE = validateEmail(username);
+
+        expect(result).to.be.equal(EMAIL_VALIDATE_RESPONSE.OK);
+    });
+
+    it('should be able to validate email OK - sub domain - 1', (): void => {
+
+        const username: string = '5@hello.mail.com';
+
+        const result: EMAIL_VALIDATE_RESPONSE = validateEmail(username);
+
+        expect(result).to.be.equal(EMAIL_VALIDATE_RESPONSE.OK);
+    });
+
+    it('should be able to validate email OK - sub domain - 2', (): void => {
+
+        const username: string = '5@some.hello.mail.com';
+
+        const result: EMAIL_VALIDATE_RESPONSE = validateEmail(username);
+
+        expect(result).to.be.equal(EMAIL_VALIDATE_RESPONSE.OK);
+    });
+
+    it('should be able to validate email OK - sub domain - 3', (): void => {
+
+        const username: string = '5@233.mail.com';
+
+        const result: EMAIL_VALIDATE_RESPONSE = validateEmail(username);
+
+        expect(result).to.be.equal(EMAIL_VALIDATE_RESPONSE.OK);
+    });
+
     it('should be able to validate invalid username - 1', (): void => {
 
         const username: string = '_something@mail.com';
