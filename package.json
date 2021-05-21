@@ -20,7 +20,7 @@
     "@brontosaurus/core": "^3.4.1",
     "@brontosaurus/definition": "^3.4.1",
     "@sudoo/bark": "^2.7.2",
-    "@sudoo/random": "^2.1.1",
+    "@sudoo/random": "^2.2.0",
     "@sudoo/triforce-mongoose": "^1.4.4",
     "speakeasy": "^2.0.0"
   },
