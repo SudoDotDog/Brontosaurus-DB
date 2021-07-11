@@ -21,7 +21,7 @@ export const ApplicationRedirectionSchema = new Schema({
     },
 }, { _id: false });
 
-const ApplicationSchema: Schema = new Schema(
+const ApplicationSchema: Schema<IApplicationModel> = new Schema(
     {
         active: {
             type: Boolean,

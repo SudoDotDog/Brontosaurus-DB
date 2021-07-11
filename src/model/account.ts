@@ -32,7 +32,7 @@ const PreviousPasswordSchema: Schema = new Schema({
     },
 }, { _id: false });
 
-const AccountSchema: Schema = new Schema(
+const AccountSchema: Schema<IAccountModel> = new Schema(
     {
         active: {
             type: Boolean,
