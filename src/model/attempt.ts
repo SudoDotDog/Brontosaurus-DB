@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IAttempt } from "../interface/attempt";
 
-const AttemptSchema: Schema = new Schema(
+const AttemptSchema: Schema<IAttemptModel> = new Schema(
     {
         account: {
             type: Schema.Types.ObjectId,

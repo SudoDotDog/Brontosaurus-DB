@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IDecorator } from "../interface/decorator";
 
-const DecoratorSchema: Schema = new Schema(
+const DecoratorSchema: Schema<IDecoratorModel> = new Schema(
     {
         active: {
             type: Boolean,

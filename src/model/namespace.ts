@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { INamespace } from "../interface/namespace";
 
-const NamespaceSchema: Schema = new Schema(
+const NamespaceSchema: Schema<INamespaceModel> = new Schema(
     {
         active: {
             type: Boolean,

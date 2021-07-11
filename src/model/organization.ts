@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IOrganization } from "../interface/organization";
 
-const OrganizationSchema: Schema = new Schema(
+const OrganizationSchema: Schema<IOrganizationModel> = new Schema(
     {
         active: {
             type: Boolean,

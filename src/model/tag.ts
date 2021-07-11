@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { ITag } from "../interface/tag";
 
-const TagSchema: Schema = new Schema(
+const TagSchema: Schema<ITagModel> = new Schema(
     {
         active: {
             type: Boolean,

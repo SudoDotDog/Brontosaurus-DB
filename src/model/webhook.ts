@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IWebhook } from "../interface/webhook";
 
-const WebhookSchema: Schema = new Schema(
+const WebhookSchema: Schema<IWebhookModel> = new Schema(
     {
         active: {
             type: Boolean,

@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IRecord, RecordCategory } from "../interface/record";
 
-const RecordSchema: Schema = new Schema(
+const RecordSchema: Schema<IRecordModel> = new Schema(
     {
         application: {
             type: Schema.Types.ObjectId,

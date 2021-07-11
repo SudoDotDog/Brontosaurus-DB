@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IGroup } from "../interface/group";
 
-const GroupSchema: Schema = new Schema(
+const GroupSchema: Schema<IGroupModel> = new Schema(
     {
         active: {
             type: Boolean,

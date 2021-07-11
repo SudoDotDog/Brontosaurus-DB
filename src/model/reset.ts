@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IReset } from "../interface/reset";
 
-const ResetSchema: Schema = new Schema(
+const ResetSchema: Schema<IResetModel> = new Schema(
     {
         account: {
             type: Schema.Types.ObjectId,

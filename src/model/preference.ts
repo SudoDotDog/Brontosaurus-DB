@@ -7,7 +7,7 @@
 import { Document, model, Model, Schema } from "mongoose";
 import { IPreference } from "../interface/preference";
 
-const PreferenceSchema: Schema = new Schema(
+const PreferenceSchema: Schema<IPreferenceModel> = new Schema(
     {
         active: {
             type: Boolean,
