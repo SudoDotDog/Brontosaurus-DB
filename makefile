@@ -8,7 +8,9 @@ ts_node := node_modules/.bin/ts-node
 mocha := node_modules/.bin/mocha
 eslint := node_modules/.bin/eslint
 
-.IGNORE: clean-linux
+# Build functions
+build_utils := node_modules/.bin/build-utils
+license_package := node_modules/.bin/license-package
 
 main: dev
 
@@ -56,20 +58,16 @@ outdated: install
 
 license: clean
 	@echo "[INFO] Sign files"
-	@NODE_ENV=development $(ts_node) script/license.ts
+	@NODE_ENV=development $(license_package) license app
 
-clean: clean-linux
+clean:
 	@echo "[INFO] Cleaning release files"
-	@NODE_ENV=development $(ts_node) script/clean-app.ts
-
-clean-linux:
-	@echo "[INFO] Cleaning dist files"
-	@rm -rf coverage
+	@NODE_ENV=development $(build_utils) clean-path app
 
 publish: install tests lint license build
 	@echo "[INFO] Publishing package"
 	@cd app && npm publish --access=public
 
 publish-dry-run: install tests lint license build
-	@echo "[INFO] Publishing package (Dry Run)"
+	@echo "[INFO] Publishing package"
 	@cd app && npm publish --access=public --dry-run
