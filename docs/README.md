@@ -5,4 +5,12 @@
 [![npm version](https://badge.fury.io/js/%40brontosaurus%2Fdb.svg)](https://www.npmjs.com/package/@brontosaurus/db)
 [![downloads](https://img.shields.io/npm/dm/@brontosaurus/db.svg)](https://www.npmjs.com/package/@brontosaurus/db)
 
-:ocean: Schema for brontosaurus
+Schema for brontosaurus
+
+## Install
+
+```sh
+yarn add @brontosaurus/db
+# Or
+npm install @brontosaurus/db --save
+```
